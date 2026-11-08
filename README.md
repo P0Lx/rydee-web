@@ -1,0 +1,19 @@
+# Rydee: strona internetowa
+
+Statyczna strona (Astro): strona główna, pomoc, polityka prywatności, licencje. Języki PL i EN.
+
+```bash
+npm install
+npm run dev
+npm run build
+```
+
+- `content/help/{pl,en}.json` - jedyne źródło pomocy. Strona buduje z niego `/pomoc` i `/en/help`, a aplikacja pobiera `/help/{pl,en}.json`.
+- `npm run sync:app` - kopiuje pomoc i licencje natywne do `../rydee-app/assets` (kopia wbudowana). Uruchom po każdej zmianie pomocy i przed wydaniem aplikacji.
+- `npm run licenses` - odświeża `src/data/licenses.json` z zależności aplikacji. Biblioteki natywne dopisuje się ręcznie w `scripts/native.mjs`.
+- `src/site.ts` - dane firmy i kontakt (`null` jest widoczne na stronie jako pole do uzupełnienia).
+- `src/data/privacy.ts` - polityka prywatności. Przy zmianie przepływu danych w aplikacji zaktualizuj także mapę danych i datę.
+- Domena: `SITE_URL` przy budowaniu (domyślnie `https://rydee.app`, także w `public/robots.txt`).
+- Publikacja: `firebase.json` wskazuje na `dist`.
+
+Bez cookies, analityki i zewnętrznych zasobów. Jeśli to się zmieni, trzeba zmienić politykę prywatności.

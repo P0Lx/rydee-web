@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "lang": "pl",
+  "sections": [
+    { "id": "start", "title": "Pierwsze kroki", "icon": "speed", "tint": "blue", "articles": [
+      { "id": "ekran-glowny", "q": "Co widać na ekranie głównym?", "a": ["U góry jest prędkość, pod nią kafelki z licznikami, a na dole widgety, na przykład mapa, pogoda albo tętno."], "keywords": "licznik ekran start" },
+      { "id": "strony", "q": "Jak zobaczyć więcej kafelków i widgetów?", "a": ["Przesuń kafelki albo widgety w bok, żeby przejść na kolejną stronę."], "keywords": "przesuwanie strona" },
+      { "id": "wysokosc", "q": "Jak zmienić wielkość obszarów ekranu?", "a": ["Przeciągnij uchwyt pod prędkością albo nad widgetami."], "keywords": "rozmiar uchwyt proporcje" },
+      { "id": "wskaznik", "q": "Jak zmienić wskaźnik prędkości i kafelek?", "a": ["Przytrzymaj prędkość, żeby wybrać wskaźnik. Przytrzymaj kafelek, żeby zmienić pokazywany licznik."], "keywords": "łuk pasek pierścień licznik" },
+      { "id": "wyglad", "q": "Gdzie zmienić wygląd aplikacji?", "a": ["W menu wybierzesz styl, tryb jasny lub ciemny, wskaźnik prędkości i jasność ekranu."], "keywords": "motyw ciemny jasny styl jasność" }
+    ] },
+    { "id": "nagrywanie", "title": "Nagrywanie", "icon": "record", "tint": "red", "articles": [
+      { "id": "start-nagrywania", "q": "Jak nagrać przejazd?", "a": ["Przycisk ● rozpoczyna nagrywanie, a ‖ je wstrzymuje."], "keywords": "start zapis rozpocznij" },
+      { "id": "koniec", "q": "Jak zakończyć nagrywanie?", "a": ["W pauzie naciśnij ■ i wybierz Zapisz albo Usuń. Pustego przejazdu aplikacja nie zapisuje."], "keywords": "stop zapisz usuń" },
+      { "id": "autopauza", "q": "Co robi autopauza?", "a": ["Wstrzymuje nagrywanie na postoju i wznawia je po ruszeniu. Włączysz ją przełącznikiem w menu."], "keywords": "postój pauza automatyczna" }
+    ] },
+    { "id": "przejazdy", "title": "Przejazdy", "icon": "rides", "tint": "green", "articles": [
+      { "id": "lista", "q": "Jak korzystać z listy przejazdów?", "a": ["Dotknij nazwy miesiąca, żeby go zwinąć lub rozwinąć. Pod nazwą znajdziesz podsumowanie miesiąca."], "keywords": "miesiąc historia" },
+      { "id": "usuwanie", "q": "Jak usunąć przejazd?", "a": ["Przesuń przejazd w lewo. Przytrzymaj przejazd, żeby zaznaczyć kilka i usunąć je razem."], "keywords": "kasowanie zaznaczanie" },
+      { "id": "szczegoly", "q": "Co pokazują szczegóły przejazdu?", "a": ["Mapę, podsumowanie i wykresy. Przeciągnij palcem po wykresie, a to miejsce pokaże się na mapie. Przeciągnij arkusz z danymi, żeby zmniejszyć albo powiększyć mapę."], "keywords": "wykres analiza mapa" },
+      { "id": "kolor-sladu", "q": "Jak pokolorować ślad na mapie?", "a": ["W szczegółach przejazdu przycisk na mapie zmienia kolor śladu: według prędkości albo nachylenia. W Premium także według stref tętna."], "keywords": "ślad kolor strefy" },
+      { "id": "analiza", "q": "Co daje pełna analiza?", "a": ["Wykres mocy, czas w strefach, najlepsze odcinki, kalorie i pogodę przejazdu. Dane są zapisywane także w wersji darmowej, więc po zakupie analiza obejmie też starsze przejazdy."], "keywords": "strefy moc kalorie najlepsze odcinki", "tags": ["premium"] },
+      { "id": "eksport", "q": "Jak wyeksportować przejazd?", "a": ["W menu przejazdu wybierz Udostępnij GPX. Plik zawiera pełne dane, także z czujników. Eksport FIT jest dostępny w Premium."], "keywords": "gpx fit udostępnij plik garmin" },
+      { "id": "import", "q": "Jak zaimportować plik GPX?", "a": ["Otwórz plik GPX w Rydee, na przykład z menedżera plików. Możesz dodać go jako przejazd, a w Premium także nawigować po tej trasie."], "keywords": "gpx import plik trasa" },
+      { "id": "podjazdy", "q": "Czym jest lista Podjazdy?", "a": ["To przejechane przez Ciebie podjazdy wraz z rekordami i przejazdami każdego z nich. Sekcja podjazdów jest też w szczegółach przejazdu."], "keywords": "wzniesienie rekord", "tags": ["premium"] }
+    ] },
+    { "id": "widgety", "title": "Widgety", "icon": "widgets", "tint": "purple", "articles": [
+      { "id": "wybor-widgetow", "q": "Jak wybrać widgety?", "a": ["Na ekranie Widgety wybierzesz, które pokazywać i w jakiej kolejności. Na dole widgetu możesz przełączyć zakres danych."], "keywords": "kolejność zakres" },
+      { "id": "teren", "q": "Co pokazuje widget Teren?", "a": ["Prędkość i kadencję na tle wysokości, nachylenie oraz podjazdy i zjazdy."], "keywords": "wysokość nachylenie" },
+      { "id": "tetno", "q": "Co pokazuje widget Tętno?", "a": ["Historię oraz tętno bieżące, średnie i maksymalne. W Premium także strefy, czas w strefach i dryf. Wymaga pulsometru."], "keywords": "puls serce strefy" },
+      { "id": "okrazenia", "q": "Jak działa widget Okrążenia?", "a": ["Działa w trakcie nagrywania i liczy okrążenia z dystansu: co 1, 2, 3, 5 albo 10 km lub mil. Pokazuje różnicę do poprzedniego oraz najlepsze, średnie i najwolniejsze okrążenie."], "keywords": "lap dystans" },
+      { "id": "moc", "q": "Co pokazuje widget Moc?", "a": ["Moc z 3, 10 i 30 sekund, W/kg, NP, IF, TSS, pracę w kJ oraz strefy. Wymaga czujnika mocy."], "keywords": "wat ftp miernik", "tags": ["premium"] },
+      { "id": "podjazd", "q": "Co pokazuje widget Podjazd?", "a": ["Wykryty podjazd, VAM i profil za Tobą. Przy nawigacji albo na znanym podjeździe także profil przed Tobą, a na znanym podjeździe różnicę do rekordu."], "keywords": "vam nachylenie profil rekord", "tags": ["premium"] },
+      { "id": "muzyka", "q": "Jak działa widget Muzyka?", "a": ["Pokazuje, co gra w innej aplikacji, na przykład w Spotify. Tytuł i okładka pojawią się po przyznaniu dostępu do powiadomień. Dotknij nazwy aplikacji, żeby wybrać inny odtwarzacz.", "Sterowanie odtwarzaniem i głośnością jest dostępne w Premium."], "keywords": "spotify odtwarzacz powiadomienia", "platforms": ["android"] }
+    ] },
+    { "id": "mapa", "title": "Mapa, nawigacja i pogoda", "icon": "map", "tint": "cyan", "articles": [
+      { "id": "gesty", "q": "Jak obsługiwać mapę?", "a": ["Przesuwaj i przybliżaj dwoma palcami albo przyciskami + i −. Przycisk w prawym górnym rogu przełącza między północą a kierunkiem jazdy u góry."], "keywords": "przybliżanie orientacja kompas północ" },
+      { "id": "nawigacja", "q": "Jak włączyć nawigację?", "a": ["Przycisk nawigacji na mapie otwiera wybór celu: wyszukiwanie, punkt na mapie (przytrzymaj) albo ulubione."], "keywords": "trasa cel adres ulubione", "tags": ["premium"] },
+      { "id": "wskazowki", "q": "Co pokazuje pasek wskazówek?", "a": ["Następny manewr i czas dotarcia. Sygnał dźwiękowy ostrzega przed skrętem i po zjeździe z trasy."], "keywords": "manewr skręt dźwięk zjazd z trasy", "tags": ["premium"] },
+      { "id": "pogoda", "q": "Co oznaczają kolory wiatru?", "a": ["Widget pogody pokazuje wiatr względem kierunku jazdy: czerwony pod wiatr, zielony z wiatrem, szary boczny. W wersji darmowej strzałka pokazuje wiatr względem północy."], "keywords": "wiatr pogoda prognoza met norway" }
+    ] },
+    { "id": "czujniki", "title": "Czujniki i radar", "icon": "bluetooth", "tint": "indigo", "articles": [
+      { "id": "dodawanie", "q": "Jak dodać czujnik?", "a": ["Otwórz w menu pozycję Czujniki. Obsługiwane są pulsometr, kadencja, moc i radar Garmin Varia. Czujnik mocy i radar wymagają Premium."], "keywords": "bluetooth ble pulsometr kadencja parowanie" },
+      { "id": "radar", "q": "Jak działa radar?", "a": ["Pojazdy z radaru widać na pasku przy prawej krawędzi ekranu. Sygnał dźwiękowy ostrzega o nowym pojeździe."], "keywords": "varia garmin pojazd samochód", "tags": ["premium"] }
+    ] },
+    { "id": "konto", "title": "Integracje, wersje i dane", "icon": "link", "tint": "orange", "articles": [
+      { "id": "strava", "q": "Jak połączyć Stravę?", "a": ["Otwórz Integracje w menu i połącz konto Strava. Możesz wysyłać przejazdy i oglądać ulubione segmenty. Strava jest dostępna za darmo w każdej wersji."], "keywords": "wysyłanie segmenty integracja" },
+      { "id": "health-connect", "q": "Jak zapisywać przejazdy w Health Connect?", "a": ["W Integracjach połącz Health Connect i wybierz zgody. Możesz włączyć zapis automatyczny albo zapisać przejazd z jego menu. Rydee tylko zapisuje dane i niczego z Health Connect nie czyta."], "keywords": "zdrowie trening zgody", "tags": ["premium"], "platforms": ["android"] },
+      { "id": "premium", "q": "Czym różni się wersja Premium?", "a": ["Premium to jednorazowy zakup bez subskrypcji. Odblokowuje między innymi nawigację, czujnik mocy, radar, podjazdy, strefy, pełną analizę i wszystkie style."], "keywords": "cena zakup darmowa subskrypcja" },
+      { "id": "konto-rydee", "q": "Czy potrzebuję konta?", "a": ["Nie. Rydee działa bez konta. Twoje przejazdy i ustawienia są na telefonie oraz w jego kopii zapasowej, jeśli ją włączysz."], "keywords": "rejestracja logowanie dane prywatność" },
+      { "id": "kasowanie-danych", "q": "Jak usunąć swoje dane?", "a": ["Usuń przejazdy z listy albo odinstaluj aplikację. Dane przekazane wcześniej Stravie lub Health Connect usuwasz w tych usługach."], "keywords": "usuwanie prywatność rodo" }
+    ] }
+  ]
+}

@@ -1,0 +1,85 @@
+---
+// Uproszczony podgląd ekranu głównego Rydee; wartości ustawiają skrypty strony.
+interface Props { labels: Record<string, string>; id?: string; }
+const { labels: t, id } = Astro.props;
+const segments = Array.from({ length: 28 }, (_, i) => i);
+const tiles = [['time', t.time, '0:00'], ['dist', t.dist, '0'], ['hr', t.hr, '118'], ['cad', t.cad, '84'], ['ele', t.ele, '210'], ['grade', t.grade, '0%']];
+const bars = Array.from({ length: 26 }, (_, i) => 38 + Math.round(30 * Math.abs(Math.sin(i * 0.6)) + 18 * Math.abs(Math.sin(i * 0.23))));
+const route = 'M20 135C60 120 58 82 100 76s60 30 92 12 26-58 70-70';
+---
+<div class="phone" id={id} data-style="minimal" data-mode="dark" data-gauge="segments" role="img" aria-label={t.aria}>
+  <div class="ph-screen">
+    <div class="ph-speed">
+      <div class="ph-num"><b data-v="speed">27</b><small>km/h</small></div>
+      <div class="g-seg" aria-hidden="true">{segments.map((i) => <i data-seg={i} />)}</div>
+      <svg class="g-arc" viewBox="0 0 200 110" aria-hidden="true"><path class="tr" d="M12 104a88 88 0 0 1 176 0" pathLength="100"/><path class="fl" d="M12 104a88 88 0 0 1 176 0" pathLength="100"/></svg>
+      <svg class="g-ring" viewBox="0 0 200 200" aria-hidden="true"><circle class="tr" cx="100" cy="100" r="90" pathLength="100"/><circle class="fl" cx="100" cy="100" r="90" pathLength="100"/></svg>
+    </div>
+    <div class="ph-tiles">
+      {tiles.map(([k, label, v]) => <div class="tile"><span>{label}</span><b data-v={k}>{v}</b></div>)}
+    </div>
+    <div class="ph-widget">
+      <div class="w on" data-w="map"><svg viewBox="0 0 280 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><g class="m-roads"><path d="M-10 40 300 90M60-10 110 170M210-10 170 170M-10 120 300 30"/></g><path class="m-track" pathLength="100" d={route}/><path class="m-done" pathLength="100" d={route}/></svg><em>{t.map}</em></div>
+      <div class="w" data-w="hr"><div class="bars" aria-hidden="true">{bars.map((h) => <i style={`height:${h}%`} />)}</div><em>{t.hrw}</em></div>
+      <div class="w" data-w="climb"><svg viewBox="0 0 280 150" preserveAspectRatio="none" aria-hidden="true"><path class="c-area" d="M0 150V134C60 128 110 114 160 92s80-28 120-32V150z"/></svg><div class="wb"><b data-v="vam">0</b><span>VAM m/h</span></div><em>{t.climb}</em></div>
+      <div class="w" data-w="post"><div class="post"><div><b>62</b><span>km</span></div><div><b>2:31</b><span>h</span></div><div><b>620</b><span>m ↑</span></div><div><b>213</b><span>W</span></div></div><em>{t.after}</em></div>
+    </div>
+    <div class="ph-radar" aria-hidden="true"><i></i><i></i></div>
+  </div>
+</div>
+<style is:global>
+.phone { --p-bg:#08090b; --p-card:#17181c; --p-ink:#fff; --p-mut:#9a9da4; --p-acc:#ff5040; --p-line:#292b31; --p-r:14px; --p-num:var(--mono); --p-w:300;
+  width: 300px; max-width: 100%; aspect-ratio: 9/19; padding: 8px; border-radius: 42px; background: #000; border: 1px solid #383a41; box-shadow: 0 40px 90px -30px rgba(0,0,0,.8); container-type: inline-size; }
+.ph-screen { height: 100%; border-radius: 34px; overflow: hidden; background: var(--p-bg); color: var(--p-ink); display: flex; flex-direction: column; gap: 2cqw; padding: 7cqw 3.4cqw 3.4cqw; position: relative; transition: background .3s; font-family: var(--sans); }
+.phone[data-mode='light'] { --p-bg:#f1f2f4; --p-card:#fff; --p-ink:#111214; --p-mut:#62656c; --p-line:#d4d6db; --p-acc:#df3b2c; }
+.phone[data-style='material'] { --p-acc:#4ea1ff; --p-r:24px; --p-w:500; --p-num:var(--sans); }
+.phone[data-style='cupertino'] { --p-acc:#0a84ff; --p-r:18px; --p-w:400; --p-num:var(--sans); }
+.phone[data-style='sport'] { --p-acc:#d7ff3e; --p-r:5px; --p-w:750; --p-num:var(--display); }
+.phone[data-style='sport'][data-mode='light'] { --p-acc:#5d7a00; }
+.phone[data-style='material'][data-mode='light'] { --p-acc:#1565c0; }
+.phone[data-style='cupertino'][data-mode='light'] { --p-acc:#0060df; }
+.phone[data-style='minimal'] .tile { background: none; border-radius: 0; border-bottom: 1px solid var(--p-line); }
+.phone[data-style='minimal'] .ph-speed { background: none; }
+.ph-speed { position: relative; background: var(--p-card); border-radius: var(--p-r); padding: 3cqw; display: grid; justify-items: center; flex: 0 0 auto; height: 46cqw; align-content: center; }
+.ph-num { display: flex; align-items: baseline; gap: 1.5cqw; z-index: 1; }
+.ph-num b { font: var(--p-w) 25cqw/.95 var(--p-num); font-variant-numeric: tabular-nums; letter-spacing: -.03em; transition: color .2s; }
+.ph-num small { font-size: 4.2cqw; color: var(--p-mut); }
+.phone.hyper .ph-num b { color: var(--p-acc); }
+.g-seg { display: none; gap: .7cqw; width: 100%; margin-top: 2.5cqw; height: 5cqw; }
+.g-seg i { flex: 1; background: var(--p-line); border-radius: 1px; }
+.g-seg i.on { background: var(--p-acc); }
+.g-arc, .g-ring { display: none; position: absolute; pointer-events: none; }
+.g-arc { width: 86%; bottom: 3cqw; }
+.g-ring { height: 92%; top: 4%; rotate: -90deg; }
+.g-arc path, .g-ring circle { fill: none; stroke-width: 9; stroke-linecap: round; }
+.tr { stroke: var(--p-line); }
+.fl { stroke: var(--p-acc); stroke-dasharray: 40 100; }
+.phone[data-gauge='segments'] .g-seg { display: flex; }
+.phone[data-gauge='arc'] .g-arc, .phone[data-gauge='ring'] .g-ring { display: block; }
+.phone[data-gauge='ring'] .ph-num b { font-size: 19cqw; }
+.ph-tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5cqw; flex: 0 0 auto; }
+.tile { background: var(--p-card); border-radius: calc(var(--p-r) * .7); padding: 1.8cqw 2.3cqw; min-width: 0; }
+.tile span { display: block; font-size: 3.1cqw; color: var(--p-mut); white-space: nowrap; }
+.tile b { font: var(--p-w) 6.2cqw/1.2 var(--p-num); font-variant-numeric: tabular-nums; }
+.ph-widget { position: relative; flex: 1; min-height: 0; background: var(--p-card); border-radius: var(--p-r); overflow: hidden; }
+.w { position: absolute; inset: 0; opacity: 0; transition: opacity .35s; }
+.w.on { opacity: 1; }
+.w > svg { width: 100%; height: 100%; }
+.w em { position: absolute; left: 3.4cqw; top: 2.6cqw; font: 500 3.4cqw var(--sans); color: var(--p-mut); }
+.m-roads path { stroke: var(--p-line); stroke-width: 7; fill: none; }
+.m-track, .m-done { fill: none; stroke-width: 3.5; stroke-linecap: round; }
+.m-track { stroke: color-mix(in srgb, var(--p-acc) 30%, transparent); }
+.m-done { stroke: var(--p-acc); stroke-dasharray: 0 100; }
+.bars { position: absolute; inset: 22% 3cqw 3cqw; display: flex; align-items: end; gap: .8cqw; }
+.bars i { flex: 1; background: var(--p-acc); border-radius: 2px 2px 0 0; }
+.c-area { fill: var(--p-acc); opacity: .75; }
+.wb { position: absolute; right: 3.4cqw; top: 2.4cqw; text-align: right; }
+.wb b { font: var(--p-w) 7.5cqw/1 var(--p-num); display: block; }
+.wb span { font-size: 3cqw; color: var(--p-mut); }
+.post { position: absolute; inset: 21% 3cqw 3cqw; display: grid; grid-template-columns: 1fr 1fr; gap: 1.5cqw; }
+.post b { font: var(--p-w) 8cqw/1.1 var(--p-num); display: block; }
+.post span { font-size: 3.2cqw; color: var(--p-mut); }
+.ph-radar { position: absolute; right: 0; top: 9%; bottom: 9%; width: 1.8cqw; }
+.ph-radar i { position: absolute; left: 0; width: 100%; height: 6cqw; background: var(--p-acc); border-radius: 2px 0 0 2px; opacity: 0; transition: opacity .2s; }
+.phone.radar .ph-radar i { opacity: 1; }
+</style>

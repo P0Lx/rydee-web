@@ -1,0 +1,67 @@
+---
+import Base from '../layouts/Base.astro';
+import { type Lang } from '../site';
+import data from '../data/licenses.json';
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const c = {
+  pl: { meta: 'Licencje: Rydee', desc: 'Licencje oprogramowania open source oraz autorzy danych używanych w Rydee.', h: 'Na ramionach open source', lead: (n: number) => `Rydee korzysta z ${n} bibliotek open source oraz z otwartych danych. Dziękujemy ich autorom. W aplikacji ta sama lista jest w Pomoc > Licencje.`, data: 'Dane i usługi', native: 'Biblioteki natywne', pkgs: 'Pakiety Dart i Flutter', fonts: 'Czcionki tej strony', big: 'Pełny tekst jest dostępny w aplikacji, w Pomoc > Licencje.', sdk: 'Składnik Flutter SDK (BSD-3-Clause).' },
+  en: { meta: 'Licenses: Rydee', desc: 'Open source licenses and data credits for Rydee.', h: 'Standing on open source', lead: (n: number) => `Rydee uses ${n} open source libraries and open data. Thank you to their authors. In the app, the same list is under Help > Licenses.`, data: 'Data and services', native: 'Native libraries', pkgs: 'Dart and Flutter packages', fonts: 'Fonts on this site', big: 'The full text is available in the app, under Help > Licenses.', sdk: 'Part of the Flutter SDK (BSD-3-Clause).' },
+}[lang];
+const credits: [string, string, string][] = [
+  ['OpenStreetMap', '© OpenStreetMap contributors, ODbL 1.0', 'https://www.openstreetmap.org/copyright'],
+  ['OpenFreeMap', '© OpenFreeMap', 'https://openfreemap.org'],
+  ['OpenMapTiles', '© OpenMapTiles', 'https://openmaptiles.org'],
+  ['Stadia Maps', '© Stadia Maps', 'https://stadiamaps.com'],
+  ['openrouteservice', '© openrouteservice.org by HeiGIT', 'https://openrouteservice.org'],
+  ['Photon', 'komoot, OpenStreetMap data', 'https://photon.komoot.io'],
+  ['MET Norway', 'Norwegian Meteorological Institute, CC BY 4.0', 'https://api.met.no'],
+  ['Strava', 'Powered by Strava', 'https://www.strava.com'],
+];
+---
+<Base lang={lang} route="licenses" title={c.meta} description={c.desc}>
+  <section class="page-hero wrap">
+    <h1>{c.h}</h1>
+    <p class="muted">{c.lead(data.packages.length + data.native.length)}</p>
+  </section>
+  <div class="wrap lic">
+    <section>
+      <h2>{c.data}</h2>
+      <div class="cr">{credits.map(([n, t, u]) => <a href={u} rel="noopener"><b>{n}</b><span class="muted">{t}</span></a>)}</div>
+    </section>
+    <section>
+      <h2>{c.native}</h2>
+      <div class="arts">
+        {data.native.map((p) => <details><summary><span class="q">{p.name} <span class="muted mono">{p.version}</span></span><span class="pt g">{p.license}</span></summary><pre>{p.text}</pre></details>)}
+      </div>
+    </section>
+    <section>
+      <h2>{c.pkgs}</h2>
+      <div class="arts">
+        {data.packages.map((p) => <details><summary><span class="q">{p.name} <span class="muted mono">{p.version}</span></span><span class="pt g">{p.license}</span></summary><pre>{p.text === null ? c.big : p.text || c.sdk}</pre></details>)}
+      </div>
+    </section>
+    <section>
+      <h2>{c.fonts}</h2>
+      <ul class="muted">{data.fonts.map((f) => <li>{f.name}, {f.license}, {f.by}</li>)}</ul>
+    </section>
+  </div>
+</Base>
+<style is:global>
+.lic { display: grid; gap: 50px; margin-top: 14px; }
+.lic h2 { font-size: 1.7rem; margin-bottom: 14px; }
+.cr { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; }
+.cr a { display: grid; padding: 16px 18px; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; text-decoration: none; }
+.cr a:hover { border-color: var(--accent-text); }
+.cr b { font-weight: 600; }
+.cr span { font-size: .9rem; }
+.arts { border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); overflow: hidden; }
+details + details { border-top: 1px solid var(--line); }
+summary { display: flex; gap: 8px; align-items: center; cursor: pointer; padding: 14px 20px; list-style: none; font-weight: 500; }
+summary::-webkit-details-marker { display: none; }
+summary:hover { background: var(--surface-2); }
+summary .q { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.pt { font: 600 .68rem var(--mono); padding: 3px 7px; border-radius: 6px; }
+.pt.g { background: var(--surface-2); color: var(--ink); white-space: nowrap; }
+pre { margin: 0; padding: 4px 20px 20px; font: 400 .78rem/1.5 var(--mono); white-space: pre-wrap; overflow-wrap: anywhere; color: var(--muted); }
+</style>

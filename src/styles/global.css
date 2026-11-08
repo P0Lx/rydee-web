@@ -1,0 +1,88 @@
+@import '@fontsource-variable/bricolage-grotesque/index.css';
+@import '@fontsource-variable/geist/index.css';
+@import '@fontsource-variable/geist-mono/index.css';
+
+:root {
+  --coral: #ff5040;
+  --volt: #d7ff3e;
+  --on-volt: #15170a;
+  --asphalt: #0b0c0e;
+  --display: 'Bricolage Grotesque Variable', system-ui, sans-serif;
+  --sans: 'Geist Variable', system-ui, sans-serif;
+  --mono: 'Geist Mono Variable', ui-monospace, monospace;
+  --radius: 22px;
+  --wrap: min(1180px, 100% - 40px);
+  color-scheme: dark;
+  --bg: #0b0c0e;
+  --surface: #15161a;
+  --surface-2: #1e2025;
+  --line: #2b2d33;
+  --ink: #f5f2ea;
+  --muted: #a3a29b;
+  --accent-text: #ff7a6d;
+}
+:root[data-theme='light'] {
+  color-scheme: light;
+  --bg: #f5f2ea;
+  --surface: #ffffff;
+  --surface-2: #ebe7dc;
+  --line: #d9d4c7;
+  --ink: #121316;
+  --muted: #5c5b54;
+  --accent-text: #c52e1b;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme='dark']) {
+    color-scheme: light;
+    --bg: #f5f2ea;
+    --surface: #ffffff;
+    --surface-2: #ebe7dc;
+    --line: #d9d4c7;
+    --ink: #121316;
+    --muted: #5c5b54;
+    --accent-text: #c52e1b;
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 96px; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 17px/1.6 var(--sans); overflow-x: clip; }
+img, svg { max-width: 100%; display: block; }
+a { color: inherit; }
+h1, h2, h3 { font-family: var(--display); font-weight: 650; line-height: 1.04; letter-spacing: -0.025em; margin: 0; text-wrap: balance; }
+h2 { font-size: clamp(2.2rem, 5.4vw, 4.2rem); }
+h3 { font-size: 1.4rem; line-height: 1.15; letter-spacing: -0.015em; }
+p { margin: 0; }
+button, input { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent-text); outline-offset: 3px; border-radius: 6px; }
+.wrap { width: var(--wrap); margin-inline: auto; }
+.muted { color: var(--muted); }
+.mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.eyebrow { font: 500 0.82rem/1.3 var(--mono); color: var(--accent-text); letter-spacing: 0.02em; }
+.skip { position: fixed; left: 16px; top: -60px; z-index: 100; background: var(--volt); color: var(--on-volt); padding: 10px 16px; border-radius: 10px; }
+.skip:focus { top: 12px; }
+mark.fill { background: var(--volt); color: var(--on-volt); padding: 1px 7px; border-radius: 5px; font-size: 0.9em; }
+
+.nav { position: fixed; z-index: 50; top: 14px; left: 50%; translate: -50% 0; width: min(1180px, 100% - 24px); display: flex; align-items: center; gap: 6px; padding: 7px 8px 7px 12px; border-radius: 18px; background: color-mix(in srgb, var(--surface) 82%, transparent); border: 1px solid color-mix(in srgb, var(--line) 75%, transparent); backdrop-filter: blur(18px) saturate(1.4); -webkit-backdrop-filter: blur(18px) saturate(1.4); }
+.brand { display: flex; gap: 9px; align-items: center; font: 680 1.2rem var(--display); text-decoration: none; letter-spacing: -0.02em; margin-right: auto; }
+.brand img { width: 30px; height: 30px; border-radius: 9px; }
+.nav-links { display: flex; gap: 2px; }
+.nav a.l, .nav .ib { display: inline-flex; align-items: center; justify-content: center; min-height: 40px; padding: 0 13px; border-radius: 11px; text-decoration: none; font-size: 0.93rem; background: none; border: 0; cursor: pointer; }
+.nav a.l:hover, .nav .ib:hover, .nav a.l[aria-current='page'] { background: var(--surface-2); }
+.nav .ib svg { width: 19px; height: 19px; }
+.nav .lang { font-family: var(--mono); font-size: 0.82rem; }
+@media (max-width: 720px) {
+  .nav a.l.opt { display: none; }
+  .nav a.l, .nav .ib { padding: 0 9px; }
+}
+
+.foot { margin-top: 110px; border-top: 1px solid var(--line); padding: 54px 0 40px; font-size: 0.93rem; }
+.foot-grid { display: flex; gap: 40px; justify-content: space-between; flex-wrap: wrap; }
+.foot nav { display: flex; gap: 8px 24px; flex-wrap: wrap; }
+.foot small { display: block; margin-top: 26px; font-size: 0.82rem; line-height: 1.55; max-width: 84ch; }
+
+.page-hero { padding: 150px 0 40px; }
+.page-hero h1 { font-size: clamp(2.8rem, 8vw, 6rem); }
+.page-hero p { margin-top: 18px; max-width: 60ch; font-size: 1.15rem; }
+.btn { display: inline-flex; align-items: center; gap: 8px; min-height: 48px; padding: 0 20px; border-radius: 14px; background: var(--volt); color: var(--on-volt); font-weight: 600; text-decoration: none; border: 0; cursor: pointer; }
+.btn.ghost { background: none; color: inherit; border: 1px solid var(--line); }

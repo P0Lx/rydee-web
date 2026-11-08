@@ -1,0 +1,284 @@
+---
+import Base from '../layouts/Base.astro';
+import Phone from '../components/Phone.astro';
+import { routes, type Lang } from '../site';
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+
+const copy = {
+  pl: {
+    title: 'Rydee: licznik rowerowy na telefon',
+    desc: 'Rydee zamienia telefon w licznik rowerowy: konfigurowalne kafelki i widgety, czujniki Bluetooth, radar, nawigacja i analiza przejazdów. Bez konta.',
+    phone: { aria: 'Podgląd ekranu głównego aplikacji Rydee', time: 'Czas', dist: 'Dystans', hr: 'Tętno', cad: 'Kadencja', ele: 'Wysokość', grade: 'Nachylenie', map: 'Mapa', hrw: 'Tętno', climb: 'Podjazd', after: 'Podsumowanie' },
+    soon: 'Wkrótce w Google Play i App Store',
+    scroll: 'Przewiń i ruszaj',
+    chapters: [
+      { at: 0, w: 'map', k: 'km 0, start', h: 'Telefon na kierownicy. Cała reszta po Twojemu.', p: 'Rydee to licznik rowerowy z GPS, który układasz pod swoją jazdę. Bez konta, bez reklam i bez abonamentu.' },
+      { at: 0.13, w: 'map', k: 'Ekran', h: 'Tylko to, na co patrzysz', p: 'Wybierasz kafelki, widgety i wskaźnik prędkości. Przeciągnięciem zmieniasz proporcje. Cztery style, tryb jasny i ciemny.' },
+      { at: 0.26, w: 'hr', radar: true, k: 'Czujniki', h: 'Tętno, kadencja, moc i to, co nadjeżdża z tyłu', p: 'Rydee łączy się z czujnikami Bluetooth. Radar Garmin Varia pokazuje pojazdy na pasku przy krawędzi ekranu i ostrzega dźwiękiem.' },
+      { at: 0.38, w: 'climb', k: 'Podjazd', h: 'Podjazd liczy się sam', p: 'Nachylenie, VAM i profil. Na znanym podjeździe widzisz, ile tracisz albo zyskujesz względem własnego rekordu.' },
+      { at: 0.52, w: 'map', k: 'Zjazd, powyżej 50 km/h', h: 'A potem nadświetlna', p: 'Przy dużej prędkości ekran rusza razem z Tobą. Efekt nie ma żadnego uzasadnienia poza tym, że jest fajny.' },
+      { at: 0.69, w: 'post', k: 'Po jeździe', h: 'Cała jazda w jednym miejscu', p: 'Mapa, wykresy, strefy i najlepsze odcinki. Przeciągasz palcem po wykresie, a miejsce pokazuje się na mapie. Eksport GPX i FIT, Strava, Health Connect.' },
+      { at: 0.86, w: 'post', k: 'Meta', h: 'Twoje przejazdy to Twoja sprawa', p: 'Przejazdy zostają na telefonie i w jego kopii zapasowej. Żadnego konta w Rydee. Dokładnie opisujemy, co i kiedy opuszcza urządzenie.' },
+    ],
+    fEyebrow: 'Funkcje', fTitle: 'Zbudowany do jazdy, nie do oglądania',
+    features: [
+      ['Nagrywanie odporne na awarie', 'Przejazd trafia do pliku na bieżąco. Autopauza wstrzymuje zapis na postoju i wznawia po ruszeniu.', 'big'],
+      ['Nawigacja rowerowa', 'Szukanie celu, punkt z mapy, trasa z GPX. Wskazówki i sygnał przed skrętem.', 'premium'],
+      ['Wiatr względem jazdy', 'Czerwony pod wiatr, zielony z wiatrem. Prognoza MET Norway.', 'premium'],
+      ['Okrążenia', 'Co 1, 2, 3, 5 albo 10 km, z różnicą do poprzedniego.', ''],
+      ['Strava za darmo', 'Wysyłanie przejazdów z pełnymi danymi i ulubione segmenty, w każdej wersji.', ''],
+      ['Muzyka bez wychodzenia', 'Tytuł i okładka z innej aplikacji. Sterowanie w Premium. Android.', ''],
+      ['Wiele rowerów', 'Osobny profil dla każdego roweru i jego typu trasy.', 'premium'],
+    ],
+    cfgEyebrow: 'Sprawdź sam', cfgTitle: 'Ułóż swój ekran', cfgNote: 'Uproszczony podgląd. W wersji darmowej styl minimalistyczny oraz wskaźnik paskowy i łuk.',
+    style: 'Styl', styles: [['minimal', 'Minimalistyczny'], ['material', 'Material'], ['cupertino', 'Cupertino'], ['sport', 'Sportowy']],
+    mode: 'Tryb', modes: [['dark', 'Ciemny'], ['light', 'Jasny']],
+    gauge: 'Wskaźnik', gauges: [['segments', 'Pasek'], ['arc', 'Łuk'], ['ring', 'Pierścień']],
+    speed: 'Prędkość',
+    pEyebrow: 'Wersje', pTitle: 'Płacisz raz albo wcale', pLead: 'Premium to jednorazowy zakup. Żadnej subskrypcji. Cenę podamy przed premierą.',
+    free: 'Darmowa', premium: 'Premium', yes: 'tak', no: 'nie',
+    rows: [
+      ['Licznik, nagrywanie, autopauza', 1, 1], ['Lista przejazdów, eksport GPX, import GPX', 1, 1], ['Strava: wysyłanie i ulubione segmenty', 1, 1], ['Tętno i kadencja z czujników', 1, 1], ['Widgety Teren, Tętno, Okrążenia', 1, 1],
+      ['Style aplikacji', '1', '4'], ['Wskaźniki prędkości', '2', '6'], ['Strony kafelków', '1', 'wiele'], ['Rowery', '1', 'wiele'], ['Muzyka', 'podgląd', 'sterowanie'], ['Mapa', 'OpenFreeMap', 'Stadia Maps'],
+      ['Nawigacja i trasy z GPX', 0, 1], ['Czujnik mocy, widget Moc', 0, 1], ['Radar Varia', 0, 1], ['Podjazdy i rekordy', 0, 1], ['Strefy tętna i mocy, pełna analiza', 0, 1], ['Wiatr względem kierunku jazdy', 0, 1], ['Eksport FIT, Health Connect', 0, 1],
+    ],
+    helpT: 'Coś niejasnego?', helpP: 'Pomoc odpowiada na najczęstsze pytania. Ta sama treść jest w aplikacji, także bez internetu.', helpB: 'Otwórz pomoc', privB: 'Polityka prywatności',
+  },
+  en: {
+    title: 'Rydee: a bike computer on your phone',
+    desc: 'Rydee turns your phone into a bike computer: configurable tiles and widgets, Bluetooth sensors, radar, navigation and ride analysis. No account.',
+    phone: { aria: 'Preview of the Rydee main screen', time: 'Time', dist: 'Distance', hr: 'Heart rate', cad: 'Cadence', ele: 'Elevation', grade: 'Gradient', map: 'Map', hrw: 'Heart rate', climb: 'Climb', after: 'Summary' },
+    soon: 'Coming soon to Google Play and the App Store',
+    scroll: 'Scroll to ride',
+    chapters: [
+      { at: 0, w: 'map', k: 'km 0, start', h: 'Phone on the bars. Everything else your way.', p: 'Rydee is a GPS bike computer you shape around your riding. No account, no ads and no subscription.' },
+      { at: 0.13, w: 'map', k: 'Screen', h: 'Only what you actually look at', p: 'Pick your tiles, widgets and speed gauge. Drag to change the proportions. Four styles, light and dark.' },
+      { at: 0.26, w: 'hr', radar: true, k: 'Sensors', h: 'Heart rate, cadence, power and what’s coming from behind', p: 'Rydee connects to Bluetooth sensors. A Garmin Varia radar shows vehicles on a bar at the screen edge and warns you with a sound.' },
+      { at: 0.38, w: 'climb', k: 'Climb', h: 'Climbs count themselves', p: 'Gradient, VAM and profile. On a climb you know, see how you compare to your own record.' },
+      { at: 0.52, w: 'map', k: 'Descent, above 50 km/h', h: 'Then, hyperspeed', p: 'At high speed the screen moves with you. There is no reason for this effect except that it’s fun.' },
+      { at: 0.69, w: 'post', k: 'After the ride', h: 'The whole ride in one place', p: 'Map, charts, zones and best efforts. Drag along a chart and the spot appears on the map. GPX and FIT export, Strava, Health Connect.' },
+      { at: 0.86, w: 'post', k: 'Finish', h: 'Your rides are your business', p: 'Rides stay on your phone and in its backup. There is no Rydee account. We spell out exactly what leaves the device, and when.' },
+    ],
+    fEyebrow: 'Features', fTitle: 'Built for riding, not for looking at',
+    features: [
+      ['Crash-proof recording', 'Your ride is written to a file as you go. Auto-pause stops recording when you stop and resumes when you ride on.', 'big'],
+      ['Cycling navigation', 'Search, pick a point on the map, or follow a GPX route. Turn guidance and sound alerts.', 'premium'],
+      ['Wind relative to you', 'Red for headwind, green for tailwind. Forecast by MET Norway.', 'premium'],
+      ['Laps', 'Every 1, 2, 3, 5 or 10 km, with the difference to the previous one.', ''],
+      ['Strava, free', 'Upload rides with full data and see starred segments, in every edition.', ''],
+      ['Music on screen', 'Title and cover from another app. Controls in Premium. Android.', ''],
+      ['Multiple bikes', 'A profile for each bike and its route type.', 'premium'],
+    ],
+    cfgEyebrow: 'Try it', cfgTitle: 'Build your screen', cfgNote: 'Simplified preview. The free edition includes the minimal style, plus the bar and arc gauges.',
+    style: 'Style', styles: [['minimal', 'Minimal'], ['material', 'Material'], ['cupertino', 'Cupertino'], ['sport', 'Sport']],
+    mode: 'Mode', modes: [['dark', 'Dark'], ['light', 'Light']],
+    gauge: 'Gauge', gauges: [['segments', 'Bar'], ['arc', 'Arc'], ['ring', 'Ring']],
+    speed: 'Speed',
+    pEyebrow: 'Editions', pTitle: 'Pay once or not at all', pLead: 'Premium is a one-time purchase, with no subscription. We’ll announce the price before launch.',
+    free: 'Free', premium: 'Premium', yes: 'yes', no: 'no',
+    rows: [
+      ['Computer, recording, auto-pause', 1, 1], ['Ride list, GPX export, GPX import', 1, 1], ['Strava: uploads and starred segments', 1, 1], ['Heart rate and cadence sensors', 1, 1], ['Terrain, Heart rate and Laps widgets', 1, 1],
+      ['App styles', '1', '4'], ['Speed gauges', '2', '6'], ['Tile pages', '1', 'many'], ['Bikes', '1', 'many'], ['Music', 'preview', 'controls'], ['Map', 'OpenFreeMap', 'Stadia Maps'],
+      ['Navigation and GPX routes', 0, 1], ['Power meter, Power widget', 0, 1], ['Varia radar', 0, 1], ['Climbs and records', 0, 1], ['Heart rate and power zones, full analysis', 0, 1], ['Wind relative to your direction', 0, 1], ['FIT export, Health Connect', 0, 1],
+    ],
+    helpT: 'Something unclear?', helpP: 'Help answers the most common questions. The same content is in the app, even without internet.', helpB: 'Open help', privB: 'Privacy policy',
+  },
+}[lang];
+const groups = [
+  { key: 'style', label: copy.style, items: copy.styles },
+  { key: 'mode', label: copy.mode, items: copy.modes },
+  { key: 'gauge', label: copy.gauge, items: copy.gauges },
+];
+const cell = (v: string | number) => (v === 1 ? '●' : v === 0 ? '–' : v);
+const label = (v: string | number) => (v === 1 ? copy.yes : v === 0 ? copy.no : undefined);
+---
+<Base lang={lang} route="home" title={copy.title} description={copy.desc}>
+  <section class="ride" aria-label="Rydee">
+    <div class="stick">
+      <canvas aria-hidden="true"></canvas>
+      <div class="stage">
+        <div class="chapters">
+          {copy.chapters.map((c, i) => (
+            <article class:list={['ch', { on: i === 0 }]} data-at={c.at} data-w={c.w} data-radar={c.radar ? '' : undefined}>
+              <div class="eyebrow">{c.k}</div>
+              {i === 0 ? <h1>{c.h}</h1> : <h2>{c.h}</h2>}
+              <p>{c.p}</p>
+              {i === 0 && <div class="hero-foot"><span class="soon">{copy.soon}</span><span class="mono scrollhint">{copy.scroll} ↓</span></div>}
+            </article>
+          ))}
+        </div>
+        <div class="dev"><Phone labels={copy.phone} /></div>
+      </div>
+      <div class="track" aria-hidden="true">
+        <span class="mono" data-km>0 km</span>
+        <svg class="profile" viewBox="0 0 1000 120" preserveAspectRatio="none">
+          <defs><clipPath id="doneclip"><rect class="p-clip" x="0" y="0" width="0" height="120" /></clipPath></defs>
+          <path class="p-fill" /><path class="p-line" /><path class="p-line p-done" clip-path="url(#doneclip)" />
+        </svg>
+        <i class="p-dot"></i>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec wrap" id="features">
+    <div class="eyebrow">{copy.fEyebrow}</div>
+    <h2>{copy.fTitle}</h2>
+    <div class="bento">
+      {copy.features.map(([t, p, k]) => (
+        <div class:list={['b', { big: k === 'big' }]}>
+          {k === 'premium' && <span class="tag">Premium</span>}
+          <h3>{t}</h3>
+          <p class="muted">{p}</p>
+          {k === 'big' && <svg class="rec" viewBox="0 0 400 60" aria-hidden="true"><path d="M0 44c30-26 44 8 74-6s34-30 66-18 40 30 72 20 38-32 70-24 50 26 118 8" fill="none" stroke="var(--accent-text)" stroke-width="3" stroke-linecap="round"/></svg>}
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="sec wrap cfg">
+    <div>
+      <div class="eyebrow">{copy.cfgEyebrow}</div>
+      <h2>{copy.cfgTitle}</h2>
+      {groups.map((g) => (
+        <fieldset data-group={g.key}>
+          <legend>{g.label}</legend>
+          {g.items.map(([v, l], i) => (
+            <label><input type="radio" name={g.key} value={v} checked={i === 0} /><span>{l}</span></label>
+          ))}
+        </fieldset>
+      ))}
+      <label class="sp"><span>{copy.speed}: <b class="mono" id="cfgv">34</b> km/h</span><input id="cfgs" type="range" min="0" max="60" step="1" value="34" /></label>
+      <p class="muted note">{copy.cfgNote}</p>
+    </div>
+    <div class="cfg-dev"><Phone id="cfgphone" labels={copy.phone} /></div>
+  </section>
+
+  <section class="sec wrap" id="premium">
+    <div class="eyebrow">{copy.pEyebrow}</div>
+    <h2>{copy.pTitle}</h2>
+    <p class="lead muted">{copy.pLead}</p>
+    <div class="tbl" role="region" tabindex="0" aria-label={copy.pEyebrow}>
+      <table>
+        <thead><tr><td></td><th scope="col">{copy.free}</th><th scope="col" class="pr">{copy.premium}</th></tr></thead>
+        <tbody>
+          {copy.rows.map(([n, a, b]) => (
+            <tr><th scope="row">{n}</th><td aria-label={label(a)}>{cell(a)}</td><td class="pr" aria-label={label(b)}>{cell(b)}</td></tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="sec wrap cta">
+    <h2>{copy.helpT}</h2>
+    <p class="lead">{copy.helpP}</p>
+    <div class="row"><a class="btn" href={routes.help[lang]}>{copy.helpB}</a><a class="btn ghost" href={routes.privacy[lang]}>{copy.privB}</a></div>
+  </section>
+</Base>
+
+<style is:global>
+.ride { --heat: 0; position: relative; height: 760svh; color: #f5f2ea; background: color-mix(in oklab, #0b0c0e, #7a160b calc(var(--heat) * 100%)); }
+.stick { position: sticky; top: 0; height: 100svh; overflow: hidden; display: flex; flex-direction: column; }
+.ride canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.stage { position: relative; flex: 1; min-height: 0; width: var(--wrap); margin: 0 auto; padding-top: 84px; display: grid; grid-template-columns: minmax(0, 1.25fr) auto; gap: 40px; align-items: center; }
+.chapters { position: relative; height: 62svh; }
+.ch { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; gap: 18px; opacity: 0; translate: 0 26px; transition: opacity .4s, translate .5s cubic-bezier(.2,.8,.2,1); pointer-events: none; }
+.ch.on { opacity: 1; translate: 0 0; pointer-events: auto; }
+.ch .eyebrow { color: #ff8d81; }
+.ch h1 { font-size: clamp(2.7rem, 6.8vw, 5.9rem); }
+.ch p { font-size: clamp(1.02rem, 1.5vw, 1.28rem); max-width: 46ch; color: #c6c4bc; }
+.hero-foot { display: flex; flex-wrap: wrap; gap: 14px 22px; align-items: center; margin-top: 6px; }
+.soon { background: #d7ff3e; color: #15170a; font-weight: 600; font-size: .95rem; padding: 10px 16px; border-radius: 12px; }
+.scrollhint { font-size: .85rem; color: #a3a29b; }
+.dev { --h: min(70svh, 650px); }
+.dev .phone { height: var(--h); width: calc(var(--h) * 9 / 19); }
+.track { position: relative; height: 13svh; min-height: 74px; flex: 0 0 auto; }
+.track span { position: absolute; left: max(20px, calc((100% - 1180px) / 2)); top: 0; font-size: .85rem; color: #d9d6cd; z-index: 1; }
+.profile { width: 100%; height: 100%; }
+.p-fill { fill: rgba(255,80,64,.13); }
+.p-line { fill: none; stroke: #3a3c42; stroke-width: 2; vector-effect: non-scaling-stroke; }
+.p-done { stroke: #ff5040; stroke-width: 3; }
+.p-dot { position: absolute; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%; background: #d7ff3e; box-shadow: 0 0 0 4px rgba(215,255,62,.25); }
+@media (max-width: 860px) {
+  .stage { grid-template-columns: 1fr; grid-template-rows: auto minmax(0, 1fr); gap: 12px; padding-top: 76px; justify-items: center; }
+  .dev { --h: 45svh; order: -1; }
+  .chapters { height: 100%; width: 100%; }
+  .ch { justify-content: flex-start; gap: 8px; }
+  .ch h1, .ch h2 { font-size: clamp(1.75rem, 8vw, 2.5rem); }
+  .ch p { font-size: .98rem; }
+  .track { height: 9svh; min-height: 52px; }
+  .track span { left: auto; right: 20px; }
+  .scrollhint { display: none; }
+  table { table-layout: fixed; }
+  th, td { padding: 11px 6px; font-size: .84rem; overflow-wrap: anywhere; }
+  thead th { font-size: .95rem !important; }
+  tbody th { padding-left: 14px; }
+  thead td, tbody th { width: 46%; }
+}
+html:not(.js) .ride { height: auto; }
+html:not(.js) .stick { position: static; height: auto; }
+html:not(.js) .chapters { height: auto; }
+html:not(.js) .ch { position: static; opacity: 1; translate: none; padding: 30px 0; }
+html:not(.js) .track, html:not(.js) .dev { display: none; }
+@media (prefers-reduced-motion: reduce) { .ch { transition: none; translate: none; } }
+
+.sec { padding-top: 130px; }
+.sec h2 { margin-top: 10px; }
+.lead { font-size: 1.2rem; margin-top: 16px; max-width: 58ch; }
+.bento { margin-top: 44px; display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
+.b { position: relative; grid-column: span 2; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; min-height: 200px; display: flex; flex-direction: column; justify-content: flex-end; gap: 8px; transition: translate .25s, border-color .25s; }
+.b:hover { translate: 0 -3px; border-color: var(--accent-text); }
+.b.big { grid-column: span 4; }
+.b.big h3 { font-size: clamp(1.7rem, 3vw, 2.5rem); }
+.rec { position: absolute; top: 28px; left: 26px; right: 26px; width: calc(100% - 52px); }
+.tag { position: absolute; top: 18px; right: 18px; background: var(--volt); color: var(--on-volt); font: 600 .72rem var(--mono); padding: 4px 9px; border-radius: 7px; }
+.b:nth-child(n+5) { grid-column: span 2; }
+@media (max-width: 860px) { .b, .b.big, .b:nth-child(n+5) { grid-column: span 6; min-height: 150px; } }
+
+.cfg { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 50px; align-items: center; }
+.cfg fieldset { border: 0; padding: 0; margin: 24px 0 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.cfg legend { font: 500 .82rem var(--mono); color: var(--muted); margin-bottom: 8px; padding: 0; }
+.cfg fieldset label { cursor: pointer; }
+.cfg fieldset input { position: absolute; opacity: 0; }
+.cfg fieldset span { display: block; padding: 9px 15px; border: 1px solid var(--line); border-radius: 12px; font-size: .95rem; transition: background .15s; }
+.cfg fieldset label:hover span { background: var(--surface-2); }
+.cfg fieldset input:checked + span { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.cfg fieldset input:focus-visible + span { outline: 2px solid var(--accent-text); outline-offset: 2px; }
+.sp { display: grid; gap: 8px; margin-top: 26px; max-width: 420px; }
+.sp input { accent-color: var(--coral); }
+.note { font-size: .9rem; margin-top: 20px; max-width: 48ch; }
+.cfg-dev { --h: 620px; }
+.cfg-dev .phone { height: var(--h); width: calc(var(--h) * 9 / 19); }
+@media (max-width: 860px) { .cfg { grid-template-columns: 1fr; } .cfg-dev { --h: 520px; justify-self: center; } }
+
+.tbl { margin-top: 36px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: 12px 20px; text-align: center; border-top: 1px solid var(--line); font-weight: 400; }
+thead td, thead th { border-top: 0; font: 600 1.1rem var(--display); padding-block: 18px; }
+tbody th { text-align: left; }
+td.pr, thead th.pr { color: var(--accent-text); font-weight: 600; }
+.cta { text-align: center; display: grid; justify-items: center; }
+.row { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 26px; }
+</style>
+
+<script>
+  import './../scripts/ride';
+  import { applyPhone } from '../scripts/phone';
+  const phone = document.getElementById('cfgphone');
+  if (phone) {
+    const decimal = document.documentElement.lang === 'pl' ? ',' : '.';
+    const range = document.getElementById('cfgs') as HTMLInputElement;
+    const out = document.getElementById('cfgv')!;
+    const paint = () => {
+      const speed = Number(range.value);
+      out.textContent = String(speed);
+      applyPhone(phone, { speed, grade: 2, hr: 142, cad: 88, ele: 312, km: 24.6, progress: 0.42, decimal });
+    };
+    range.addEventListener('input', paint);
+    paint();
+    document.querySelectorAll<HTMLFieldSetElement>('.cfg fieldset').forEach((set) => {
+      set.addEventListener('change', (e) => { phone.dataset[set.dataset.group!] = (e.target as HTMLInputElement).value; });
+    });
+  }
+</script>

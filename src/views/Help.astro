@@ -1,0 +1,141 @@
+---
+import Base from '../layouts/Base.astro';
+import { company, ui, type Lang } from '../site';
+import pl from '../../content/help/pl.json';
+import en from '../../content/help/en.json';
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const help = { pl, en }[lang];
+type Article = { id: string; q: string; a: string[]; keywords?: string; tags?: string[]; platforms?: string[] };
+const count = help.sections.reduce((n, s) => n + s.articles.length, 0);
+const c = {
+  pl: { title: 'Pomoc: Rydee', desc: 'Odpowiedzi na pytania o aplikację Rydee: nagrywanie, widgety, czujniki, nawigacja i dane.', h: 'Jak możemy pomóc?', ph: 'Szukaj, np. autopauza, radar, GPX', label: 'Szukaj w pomocy', all: 'Wszystko', hint: `${count} odpowiedzi. Naciśnij / aby szukać.`, found: (n: number) => `Znaleziono: ${n}`, none: 'Nic nie znaleziono.', noneB: 'Napisz do nas, a dopiszemy odpowiedź:', contactT: 'Nie ma tu Twojego pytania?', contactP: 'Napisz do nas:', android: 'Android' },
+  en: { title: 'Help: Rydee', desc: 'Answers about the Rydee app: recording, widgets, sensors, navigation and your data.', h: 'How can we help?', ph: 'Search, e.g. auto-pause, radar, GPX', label: 'Search help', all: 'All', hint: `${count} answers. Press / to search.`, found: (n: number) => `Found: ${n}`, none: 'Nothing found.', noneB: 'Write to us and we’ll add an answer:', contactT: 'Question not here?', contactP: 'Write to us:', android: 'Android' },
+}[lang];
+const foundTpl = c.found(0);
+---
+<Base lang={lang} route="help" title={c.title} description={c.desc}>
+  <section class="page-hero wrap">
+    <h1>{c.h}</h1>
+    <div class="search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+      <input id="q" type="search" placeholder={c.ph} aria-label={c.label} autocomplete="off" />
+    </div>
+    <p id="status" class="muted mono st" role="status" data-found={foundTpl}>{c.hint}</p>
+    <div class="chips" id="chips">
+      <button type="button" class="on" data-s="">{c.all}</button>
+      {help.sections.map((s) => <button type="button" data-s={s.id}>{s.title}</button>)}
+    </div>
+  </section>
+  <div class="wrap hlist">
+    {help.sections.map((s) => (
+      <section class="hsec" data-sec={s.id}>
+        <h2>{s.title}</h2>
+        <div class="arts">
+          {(s.articles as Article[]).map((a) => (
+            <details id={a.id} data-t={[a.q, ...a.a, a.keywords ?? ''].join(' ')}>
+              <summary><span class="q">{a.q}</span>{a.tags?.includes('premium') && <span class="pt">Premium</span>}{a.platforms?.includes('android') && <span class="pt g">{c.android}</span>}</summary>
+              <div class="ans">{a.a.map((p) => <p>{p}</p>)}</div>
+            </details>
+          ))}
+        </div>
+      </section>
+    ))}
+    <p id="none" class="none" hidden>{c.none}</p>
+    <aside class="contact">
+      <h2>{c.contactT}</h2>
+      <p>{c.contactP} {company.email ? <a href={`mailto:${company.email}`}>{company.email}</a> : <mark class="fill">e-mail: {ui[lang].fill}</mark>}</p>
+    </aside>
+  </div>
+</Base>
+<style is:global>
+.search { position: relative; margin-top: 30px; max-width: 720px; }
+.search svg { position: absolute; left: 20px; top: 50%; translate: 0 -50%; width: 24px; height: 24px; color: var(--muted); }
+.search input { width: 100%; height: 66px; padding: 0 22px 0 58px; font-size: 1.2rem; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; outline: none; }
+.search input:focus { border-color: var(--accent-text); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-text) 25%, transparent); }
+.st { font-size: .85rem !important; margin-top: 12px !important; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 18px; }
+.chips button { padding: 8px 14px; min-height: 40px; border-radius: 12px; border: 1px solid var(--line); background: none; cursor: pointer; font-size: .92rem; }
+.chips button:hover { background: var(--surface-2); }
+.chips button.on { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.hlist { max-width: 860px; margin-left: max(20px, calc((100% - 1180px) / 2)); }
+.hsec { margin-top: 44px; }
+.hsec h2 { font-size: 1.7rem; margin-bottom: 14px; }
+.arts { border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); overflow: hidden; }
+details + details { border-top: 1px solid var(--line); }
+details:target summary { background: color-mix(in srgb, var(--accent-text) 12%, transparent); }
+summary { display: flex; gap: 8px; align-items: center; cursor: pointer; padding: 16px 20px; min-height: 56px; list-style: none; font-weight: 500; }
+summary::-webkit-details-marker { display: none; }
+summary:hover { background: var(--surface-2); }
+summary .q { flex: 1; }
+summary::after { content: '+'; font: 400 1.4rem/1 var(--mono); color: var(--muted); }
+details[open] summary::after { content: '−'; }
+.pt { font: 600 .68rem var(--mono); background: var(--volt); color: var(--on-volt); padding: 3px 7px; border-radius: 6px; }
+.pt.g { background: var(--surface-2); color: var(--ink); }
+.ans { padding: 0 20px 18px; color: var(--muted); display: grid; gap: 10px; max-width: 66ch; }
+.hl { background: var(--volt); color: var(--on-volt); border-radius: 3px; padding: 0 2px; }
+.none { margin-top: 40px; font-size: 1.3rem; }
+.contact { margin-top: 56px; padding: 28px; border-radius: var(--radius); background: var(--surface-2); }
+.contact h2 { font-size: 1.6rem; margin-bottom: 8px; }
+</style>
+<script>
+  // Wyszukiwanie po tekście pytań i odpowiedzi; bez znaków diakrytycznych.
+  const norm = (t: string) => t.toLowerCase().replace(/ł/g, 'l').normalize('NFD').replace(/[̀-ͯ]/g, '');
+  const q = document.getElementById('q') as HTMLInputElement;
+  const status = document.getElementById('status')!;
+  const none = document.getElementById('none')!;
+  const hint = status.textContent;
+  const label = (status.dataset.found ?? '').replace(/0$/, '');
+  const secs = [...document.querySelectorAll<HTMLElement>('.hsec')];
+  const items = [...document.querySelectorAll<HTMLDetailsElement>('.hsec details')].map((el) => ({ el, text: norm(el.dataset.t ?? ''), q: el.querySelector<HTMLElement>('.q')! }));
+  const raw = new Map(items.map((i) => [i, i.q.textContent ?? '']));
+  let section = '';
+
+  function mark(i: (typeof items)[number], words: string[]) {
+    const src = raw.get(i)!;
+    i.q.textContent = '';
+    const n = norm(src);
+    if (n.length !== src.length || !words.length) { i.q.textContent = src; return; }
+    let pos = 0;
+    const re = new RegExp(words.map((w) => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|'), 'g');
+    for (const m of n.matchAll(re)) {
+      i.q.append(src.slice(pos, m.index));
+      const s = document.createElement('span');
+      s.className = 'hl';
+      s.textContent = src.slice(m.index, m.index + m[0].length);
+      i.q.append(s);
+      pos = m.index + m[0].length;
+    }
+    i.q.append(src.slice(pos));
+  }
+
+  function run() {
+    const words = norm(q.value).split(/\s+/).filter(Boolean);
+    let shown = 0;
+    for (const i of items) {
+      const inSec = !section || i.el.closest<HTMLElement>('.hsec')!.dataset.sec === section;
+      const hit = inSec && words.every((w) => i.text.includes(w));
+      i.el.hidden = !hit;
+      if (words.length) i.el.open = hit && shown < 3;
+      if (hit) shown++;
+      mark(i, words);
+    }
+    secs.forEach((s) => { s.hidden = !s.querySelector('details:not([hidden])'); });
+    none.hidden = shown > 0;
+    status.textContent = words.length ? `${label}${shown}` : hint;
+  }
+  q.addEventListener('input', run);
+  addEventListener('keydown', (e) => {
+    if (e.key === '/' && document.activeElement !== q) { e.preventDefault(); q.focus(); }
+  });
+  document.getElementById('chips')!.addEventListener('click', (e) => {
+    const b = (e.target as HTMLElement).closest('button');
+    if (!b) return;
+    section = b.dataset.s ?? '';
+    document.querySelectorAll('#chips button').forEach((x) => x.classList.toggle('on', x === b));
+    run();
+  });
+  const open = () => { const d = document.getElementById(decodeURIComponent(location.hash.slice(1))); if (d instanceof HTMLDetailsElement) d.open = true; };
+  open();
+  addEventListener('hashchange', open);
+</script>

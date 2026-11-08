@@ -1,0 +1,74 @@
+---
+import '../styles/global.css';
+import { ui, routes, type Lang, type Route } from '../site';
+interface Props { lang: Lang; route: Route; title: string; description: string; }
+const { lang, route, title, description } = Astro.props;
+const t = ui[lang];
+const other: Lang = lang === 'pl' ? 'en' : 'pl';
+const r = (name: Route) => routes[name][lang];
+const home = r('home');
+const site = Astro.site!;
+const url = (l: Lang) => new URL(routes[route][l], site).href;
+---
+<!doctype html>
+<html lang={lang}>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <meta name="theme-color" content="#0b0c0e" />
+  <link rel="icon" href="/icon.png" type="image/png" />
+  <link rel="canonical" href={url(lang)} />
+  <link rel="alternate" hreflang="pl" href={url('pl')} />
+  <link rel="alternate" hreflang="en" href={url('en')} />
+  <link rel="alternate" hreflang="x-default" href={url('en')} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={url(lang)} />
+  <meta property="og:image" content={new URL('/icon.png', site).href} />
+  <script is:inline>
+    try { var s = localStorage.getItem('theme'); if (s) document.documentElement.dataset.theme = s; } catch (e) {}
+    document.documentElement.classList.add('js');
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">{t.skip}</a>
+  <header class="nav">
+    <a class="brand" href={home}><img src="/icon.png" alt="" width="30" height="30" />Rydee</a>
+    <nav class="nav-links" aria-label={t.menu}>
+      <a class="l opt" href={`${home}#features`}>{t.features}</a>
+      <a class="l opt" href={`${home}#premium`}>{t.premium}</a>
+      <a class="l" href={r('help')} aria-current={route === 'help' ? 'page' : undefined}>{t.help}</a>
+    </nav>
+    <a class="l lang" href={routes[route][other]} hreflang={other} lang={other} aria-label={t.other}>{t.otherShort}</a>
+    <button class="ib" id="theme" type="button" aria-label={t.theme}>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></svg>
+    </button>
+  </header>
+  <main id="main"><slot /></main>
+  <footer class="foot">
+    <div class="wrap">
+      <div class="foot-grid">
+        <div><a class="brand" href={home}><img src="/icon.png" alt="" width="30" height="30" />Rydee</a><p class="muted" style="margin-top:10px">{t.tagline}</p></div>
+        <nav aria-label={t.menu}>
+          <a href={r('help')}>{t.help}</a>
+          <a href={r('privacy')}>{t.privacy}</a>
+          <a href={r('licenses')}>{t.licenses}</a>
+        </nav>
+      </div>
+      <small class="muted">{t.credits}</small>
+      <small class="muted" style="margin-top:8px">{t.legal}</small>
+    </div>
+  </footer>
+  <script>
+    const root = document.documentElement;
+    document.getElementById('theme')?.addEventListener('click', () => {
+      const dark = root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+      root.dataset.theme = dark ? 'light' : 'dark';
+      try { localStorage.setItem('theme', root.dataset.theme); } catch {}
+    });
+  </script>
+</body>
+</html>
