@@ -1,0 +1,233 @@
+---
+// Studio: duży podgląd ekranu głównego z wyborem stylu, wskaźnika i trybu.
+import type { Lang } from '../site';
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const t = {
+  pl: {
+    eyebrow: 'Sprawdź sam', title: 'Twój ekran, Twoje zasady', lead: 'Zmień styl, wskaźnik i tryb, a potem ruszaj w trasę.',
+    style: 'Styl', styles: [['minimal', 'Minimalistyczny'], ['material', 'Material'], ['ios', 'Cupertino'], ['sport', 'Sportowy']],
+    mode: 'Tryb', dark: 'Noc', light: 'Dzień',
+    gauge: 'Wskaźnik prędkości', gauges: [['segments', 'Pasek'], ['arc', 'Łuk'], ['dial', 'Tarcza'], ['ring', 'Pierścień'], ['scale', 'Skala'], ['history', 'Historia']],
+    aria: 'Podgląd ekranu głównego aplikacji Rydee', free: 'Ten zestaw: wersja darmowa', premium: 'Ten zestaw wymaga Premium', see: 'Zobacz wersje',
+    go: 'Jedź', pause: 'Pauza', road: 'Pozycja na trasie, przeciągnij, aby zmienić prędkość', km: 'km', ele: 'm n.p.m.', grade: 'nachylenie',
+    time: 'Czas', dist: 'Dystans', hr: 'Tętno', cad: 'Kadencja',
+  },
+  en: {
+    eyebrow: 'Try it', title: 'Your screen, your rules', lead: 'Change the style, gauge and mode, then hit the road.',
+    style: 'Style', styles: [['minimal', 'Minimal'], ['material', 'Material'], ['ios', 'Cupertino'], ['sport', 'Sport']],
+    mode: 'Mode', dark: 'Night', light: 'Day',
+    gauge: 'Speed gauge', gauges: [['segments', 'Bar'], ['arc', 'Arc'], ['dial', 'Dial'], ['ring', 'Ring'], ['scale', 'Scale'], ['history', 'History']],
+    aria: 'Preview of the Rydee main screen', free: 'This setup: Free edition', premium: 'This setup requires Premium', see: 'See editions',
+    go: 'Ride', pause: 'Pause', road: 'Position on the route, drag to change speed', km: 'km', ele: 'm elevation', grade: 'gradient',
+    time: 'Time', dist: 'Distance', hr: 'Heart rate', cad: 'Cadence',
+  },
+}[lang];
+const tiles = [['time', t.time, '1:00', '#ff9f0a'], ['dist', t.dist, '24.6', '#30d158'], ['hr', t.hr, '142', '#ff453a'], ['cad', t.cad, '88', '#0a84ff']];
+const trail = 'M18 186C60 170 62 118 112 112s70 34 104 12 22-74 56-104';
+const premiumStyles = (v: string) => v !== 'minimal';
+const premiumGauges = (v: string) => v !== 'segments' && v !== 'arc';
+---
+<section class="studio" id="studio" data-mode="dark" aria-labelledby="studio-t">
+  <canvas class="st-fx" aria-hidden="true"></canvas>
+  <div class="st-ghost" aria-hidden="true">34</div>
+  <header class="wrap st-head">
+    <div class="eyebrow">{t.eyebrow}</div>
+    <h2 id="studio-t">{t.title}</h2>
+    <p>{t.lead}</p>
+  </header>
+  <div class="wrap st-grid">
+    <div class="st-side st-left">
+      <fieldset data-group="style">
+        <legend>{t.style}</legend>
+        <div class="st-styles">
+          {t.styles.map(([v, l], i) => (
+            <label class="st-style">
+              <input type="radio" name="st-style" value={v} checked={i === 0} />
+              <span class="st-box">
+                <span class="st-mini" data-look={v} aria-hidden="true"><b>34</b><span class="mt"><i></i><i></i><i></i><i></i></span></span>
+                <span class="st-name">{l}</span>
+                {premiumStyles(v) && <span class="st-tag">Premium</span>}
+              </span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
+      <fieldset data-group="mode">
+        <legend>{t.mode}</legend>
+        <div class="st-modes">
+          <label><input type="radio" name="st-mode" value="dark" checked /><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg>{t.dark}</span></label>
+          <label><input type="radio" name="st-mode" value="light" /><span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>{t.light}</span></label>
+        </div>
+      </fieldset>
+    </div>
+
+    <div class="st-dev">
+      <div class="sd" data-look="minimal" role="img" aria-label={t.aria}>
+        <div class="sd-screen">
+          <div class="sd-top" aria-hidden="true"><span>9:41</span><span class="sd-rec">● REC</span></div>
+          <div class="sd-speed"><canvas data-main></canvas></div>
+          <div class="sd-tiles">
+            {tiles.map(([k, label, v, c]) => <div class="sd-tile"><span><i style={`background:${c}`}></i>{label}</span><b data-v={k}>{v}</b></div>)}
+          </div>
+          <div class="sd-map">
+            <svg viewBox="0 0 280 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <g class="sd-roads"><path d="M-10 52 300 112M70-10 124 220M226-10 180 220M-10 164 300 44"/></g>
+              <path class="sd-way" d={trail} pathLength="100"/><path class="sd-done" d={trail} pathLength="100"/>
+              <circle class="sd-pin" r="6"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="st-side st-right">
+      <fieldset data-group="gauge">
+        <legend>{t.gauge}</legend>
+        <div class="st-gauges">
+          {t.gauges.map(([v, l], i) => (
+            <label class="st-gauge">
+              <input type="radio" name="st-gauge" value={v} checked={i === 0} />
+              <span class="st-box">
+                <canvas data-thumb={v} aria-hidden="true"></canvas>
+                <span class="st-name">{l}</span>
+                {premiumGauges(v) && <span class="st-tag">Premium</span>}
+              </span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
+      <p class="st-status" data-status data-free={t.free} data-premium={t.premium} aria-live="polite"><span data-status-text>{t.free}</span> <a href="#premium" data-status-link hidden>{t.see} →</a></p>
+    </div>
+  </div>
+  <div class="wrap st-road">
+    <button class="st-play" type="button" aria-pressed="false" data-play={t.go} data-pause={t.pause} data-on="false">
+      <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg>
+      <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
+      <span data-label>{t.go}</span>
+    </button>
+    <div class="st-track">
+      <svg viewBox="0 0 1000 90" preserveAspectRatio="none" aria-hidden="true">
+        <defs><clipPath id="st-done"><rect class="st-clip" x="0" y="0" width="0" height="90"/></clipPath></defs>
+        <path class="st-fill"/><path class="st-line"/><path class="st-line st-on" clip-path="url(#st-done)"/>
+      </svg>
+      <input class="st-range" type="range" min="10" max="990" step="1" value="340" aria-label={t.road} />
+      <i class="st-dot"></i>
+    </div>
+    <dl class="st-read">
+      <div><dd class="mono" data-read="km">0</dd><dt>{t.km}</dt></div>
+      <div><dd class="mono" data-read="ele">0</dd><dt>{t.ele}</dt></div>
+      <div><dd class="mono" data-read="grade">0%</dd><dt>{t.grade}</dt></div>
+    </dl>
+  </div>
+</section>
+
+<style is:global>
+.studio { --hot: 0; --d-bg:#0C0D0F; --d-card:transparent; --d-speed:transparent; --d-ink:#fff; --d-label:#8D9096; --d-tile:#8D9096; --d-line:#2A2C31; --d-acc:#fff; --d-r:0; --d-gap:0; --st-glow:#ff5040;
+  position: relative; margin-top: 130px; padding: 100px 0 56px; overflow: clip; background: var(--d-bg); color: var(--d-ink); view-transition-name: studio; transition: background .35s, color .35s; }
+.studio::before { content: ''; position: absolute; inset: 0; pointer-events: none; opacity: calc(.2 + var(--hot) * .35); background: radial-gradient(60% 55% at 50% 48%, var(--st-glow), transparent 72%); transition: background .35s; }
+.st-fx { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.st-ghost { position: absolute; left: 50%; top: 44%; translate: -50% -50%; font: 800 clamp(20rem, 52vw, 48rem)/.8 var(--display); letter-spacing: -.06em; font-variant-numeric: tabular-nums; color: transparent; -webkit-text-stroke: 1.5px color-mix(in srgb, var(--d-ink) 13%, transparent); pointer-events: none; user-select: none; }
+.studio.hot .st-ghost { -webkit-text-stroke-color: var(--st-glow); }
+.st-head { position: relative; text-align: center; display: grid; justify-items: center; gap: 12px; }
+.studio .eyebrow { color: var(--d-label); }
+.st-head p { color: var(--d-label); font-size: 1.15rem; }
+.st-grid { position: relative; margin-top: 48px; display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: clamp(24px, 4vw, 60px); align-items: center; }
+.st-side { display: grid; gap: 26px; }
+.studio fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
+.studio legend { padding: 0; margin-bottom: 10px; font: 500 .82rem var(--mono); color: var(--d-label); }
+.studio label { cursor: pointer; display: block; position: relative; }
+.studio fieldset input { position: absolute; opacity: 0; }
+.st-box { position: relative; display: block; height: 100%; padding: 8px; border-radius: 14px; border: 1px solid color-mix(in srgb, var(--d-ink) 16%, transparent); background: color-mix(in srgb, var(--d-bg) 72%, var(--d-ink) 5%); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); transition: border-color .15s, translate .2s, background .35s; }
+label:hover > .st-box { translate: 0 -2px; border-color: color-mix(in srgb, var(--d-ink) 40%, transparent); }
+input:checked + .st-box { border-color: var(--d-acc); box-shadow: inset 0 0 0 1px var(--d-acc); }
+input:focus-visible + .st-box, input:focus-visible + span { outline: 2px solid var(--d-acc); outline-offset: 2px; }
+.st-name { display: block; margin-top: 7px; font-size: .9rem; font-weight: 500; line-height: 1.2; padding: 0 2px 2px; }
+.st-tag { position: absolute; right: 6px; top: 6px; z-index: 1; padding: 2px 6px; border-radius: 5px; background: var(--volt); color: var(--on-volt); font: 600 .66rem var(--mono); }
+.st-styles { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.st-mini { display: grid; gap: 3px; padding: 6px; height: 74px; border-radius: 8px; background: var(--d-bg); color: var(--d-ink); align-content: center; transition: background .3s; }
+.st-mini b { font: 500 1.65rem/1 var(--sans); text-align: center; background: var(--d-speed); border-radius: calc(var(--d-r) * .5px); padding: 2px; }
+.st-mini[data-look='ios'] b { font-weight: 300; }
+.st-mini .mt { display: grid; grid-template-columns: 1fr 1fr; gap: calc(var(--d-gap) * .5px); }
+.st-mini .mt i { height: 11px; background: var(--d-card); border-radius: calc(var(--d-r) * .3px); }
+.st-mini[data-look='minimal'] .mt i { border-top: 1px solid var(--d-line); }
+.st-mini[data-look='sport'] b { border-bottom: 2px solid var(--d-acc); }
+.st-modes { display: inline-flex; padding: 3px; gap: 3px; border-radius: 13px; border: 1px solid color-mix(in srgb, var(--d-ink) 16%, transparent); }
+.st-modes span { display: inline-flex; align-items: center; gap: 7px; min-height: 40px; padding: 0 15px; border-radius: 10px; font-size: .92rem; transition: background .2s, color .2s; }
+.st-modes svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.st-modes input:checked + span { background: var(--d-ink); color: var(--d-bg); }
+.st-gauges { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.st-gauge canvas { display: block; width: 100%; height: 74px; }
+.st-status { font-size: .95rem; padding-left: 2px; color: var(--d-label); min-height: 1.6em; }
+.st-status.needs span { color: var(--d-ink); }
+.st-status a { color: var(--d-ink); font-weight: 500; }
+
+.st-dev { --h: min(66svh, 640px); }
+.sd { height: var(--h); aspect-ratio: 9/19; padding: 8px; border-radius: 46px; background: #050506; border: 1px solid #3a3c42; box-shadow: 0 50px 110px -30px rgba(0,0,0,.7), 0 0 calc(40px + var(--hot) * 90px) -10px var(--st-glow); container-type: size; }
+.sd-screen { height: 100%; border-radius: 38px; overflow: hidden; background: var(--d-bg); color: var(--d-ink); display: grid; grid-template-rows: auto 3fr 2fr 5fr; gap: calc(var(--d-gap) * .26cqw + 1.2cqw); padding: 3.4cqw 3cqw 3cqw; transition: background .3s; font-family: var(--sans); }
+.sd-top { display: flex; justify-content: space-between; padding: 0 3.5cqw; font: 500 3.4cqw var(--sans); color: var(--d-label); }
+.sd-rec { color: #e24b4a; font-weight: 600; }
+.sd-speed { min-height: 0; position: relative; background: var(--d-speed); border-radius: calc(var(--d-r) * .26cqw); transition: background .3s; }
+.sd-speed canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.sd[data-look='sport'] .sd-speed { border-bottom: .8cqw solid var(--d-acc); }
+.sd-tiles { min-height: 0; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: calc(var(--d-gap) * .26cqw); }
+.sd-tile { min-width: 0; min-height: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: .4cqw; background: var(--d-card); border-radius: calc(var(--d-r) * .26cqw); padding: 1cqw 2.4cqw; transition: background .3s; }
+.sd-tile span { display: flex; align-items: center; gap: 1.2cqw; font-size: 3.1cqw; color: var(--d-tile); white-space: nowrap; }
+.sd-tile span i { display: none; width: 2.6cqw; height: 2.6cqw; border-radius: 50%; }
+.sd-tile b { font: 500 8.6cqw/1 var(--sans); font-variant-numeric: tabular-nums; color: var(--d-ink); }
+.sd[data-look='minimal'] .sd-tile, .sd[data-look='sport'] .sd-tile { font-stretch: 85%; }
+.sd[data-look='minimal'] .sd-tile span, .sd[data-look='sport'] .sd-tile span { text-transform: uppercase; letter-spacing: .03em; font-size: 2.8cqw; }
+.sd[data-look='minimal'] .sd-tile { border-top: 1px solid var(--d-line); }
+.sd[data-look='minimal'] .sd-tile:nth-child(odd) { border-right: 1px solid var(--d-line); }
+.sd[data-look='sport'] .sd-tile b { font-weight: 700; }
+.sd[data-look='ios'] .sd-tile { align-items: flex-start; padding-left: 3.4cqw; }
+.sd[data-look='ios'] .sd-tile span i { display: block; }
+.sd[data-look='ios'] .sd-tile b { font-weight: 400; }
+.sd-map { min-height: 0; background: var(--d-map); border-radius: calc(var(--d-r) * .26cqw); overflow: hidden; transition: background .3s; }
+.sd-map svg { width: 100%; height: 100%; }
+.sd-roads path { stroke: var(--d-road); stroke-width: 7; fill: none; }
+.sd-way, .sd-done { fill: none; stroke-width: 4; stroke-linecap: round; }
+.sd-way { stroke: #378ADD55; }
+.sd-done { stroke: #378ADD; stroke-dasharray: 0 100; }
+.sd-pin { fill: #378ADD; stroke: #fff; stroke-width: 2.5; }
+
+.st-road { position: relative; margin-top: 36px; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 24px; align-items: center; }
+.st-play { display: inline-flex; align-items: center; gap: 9px; min-height: 52px; padding: 0 22px; border-radius: 15px; border: 0; background: var(--d-ink); color: var(--d-bg); font-weight: 600; cursor: pointer; }
+.st-play svg { width: 18px; height: 18px; fill: currentColor; }
+.st-play[data-on='true'] .i-play, .st-play[data-on='false'] .i-pause { display: none; }
+.st-play:focus-visible { outline-color: var(--d-acc); }
+.st-track { position: relative; height: 84px; }
+.st-track svg { width: 100%; height: 100%; }
+.st-fill { fill: color-mix(in srgb, var(--st-glow) 18%, transparent); }
+.st-line { fill: none; stroke: color-mix(in srgb, var(--d-ink) 26%, transparent); stroke-width: 2; vector-effect: non-scaling-stroke; }
+.st-on { stroke: var(--st-glow); stroke-width: 3; }
+.st-range { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; touch-action: none; }
+.st-dot { position: absolute; width: 22px; height: 22px; margin: -11px 0 0 -11px; border-radius: 50%; background: var(--d-ink); border: 4px solid var(--d-bg); box-shadow: 0 0 0 2px var(--st-glow); pointer-events: none; }
+.st-range:focus-visible ~ .st-dot { outline: 2px solid var(--d-acc); outline-offset: 3px; }
+.st-read { margin: 0; display: flex; gap: 22px; }
+.st-read div { display: grid; }
+.st-read dd { margin: 0; font-size: 1.35rem; font-weight: 500; line-height: 1.1; }
+.st-read dt { font-size: .76rem; color: var(--d-label); white-space: nowrap; }
+html:not(.js) .studio { display: none; }
+::view-transition-old(root), ::view-transition-new(root) { animation: none; }
+::view-transition-old(studio), ::view-transition-new(studio) { animation: none; mix-blend-mode: normal; }
+
+@media (max-width: 1040px) {
+  .studio { padding-top: 76px; }
+  .st-grid { grid-template-columns: minmax(0, 1fr); margin-top: 26px; gap: 22px; }
+  .st-dev { order: -1; position: sticky; top: 64px; z-index: 3; --h: 46svh; display: flex; justify-content: center; margin-inline: -20px; padding: 8px 0 12px; background: var(--d-bg); transition: background .35s; }
+  .st-road { order: 0; margin-top: 18px; grid-template-columns: auto minmax(0, 1fr); gap: 12px 14px; }
+  .st-read { grid-column: 1 / -1; justify-content: space-between; }
+  .st-styles, .st-gauges { grid-template-columns: repeat(4, minmax(128px, 1fr)); overflow-x: auto; scrollbar-width: none; margin-inline: -20px; padding: 3px 20px; scroll-snap-type: x proximity; }
+  .st-gauges { grid-template-columns: repeat(6, minmax(128px, 1fr)); }
+  .st-style, .st-gauge { scroll-snap-align: center; }
+  .st-ghost { top: 26%; }
+  .sd { border-radius: 30px; padding: 5px; }
+  .sd-screen { border-radius: 25px; }
+}
+@media (prefers-reduced-motion: reduce) { label:hover > .st-box { translate: none; } }
+</style>
+
+<script>
+  import '../scripts/studio';
+</script>

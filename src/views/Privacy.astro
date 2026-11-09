@@ -10,29 +10,23 @@ const names: Record<string, string> = lang === 'pl'
   ? { name: 'nazwa firmy', address: 'adres', taxId: 'NIP', email: 'e-mail' }
   : { name: 'company name', address: 'address', taxId: 'tax ID', email: 'e-mail' };
 const render = (html: string) => html.replace(/\{\{(\w+)\}\}/g, (_, k: keyof typeof company) => company[k] ?? fill(names[k]));
+const num = (i: number) => (lang === 'pl' ? `§ ${i + 1}` : `${i + 1}.`);
 ---
 <Base lang={lang} route="privacy" title={p.meta} description={p.desc}>
-  <section class="page-hero wrap">
+  <section class="page-hero wrap legal-hero">
     <h1>{p.h}</h1>
-    <p class="muted">{p.lead}</p>
-    <p class="mono muted" style="font-size:.85rem">{p.updated}</p>
-  </section>
-  <section class="wrap">
-    <h2 class="dm">{p.mapTitle}</h2>
-    <div class="flows">
-      <div class="fr fh muted"><span>{p.head[0]}</span><span>{p.head[1]}</span><span>{p.head[2]}</span></div>
-      {p.map.map(([a, b, c]) => <div class="fr"><b>{a}</b><span>{b}</span><span class="to">{c}</span></div>)}
-    </div>
+    <p>{p.lead}</p>
+    <p class="muted when">{p.updated}</p>
   </section>
   <section class="wrap legal">
     <nav class="toc" aria-label={p.legalTitle}>
-      <div class="eyebrow">{p.legalTitle}</div>
-      {p.sections.map((s) => <a href={`#${s.id}`}>{s.title}</a>)}
+      <div class="toc-t">{p.legalTitle}</div>
+      {p.sections.map((s, i) => <a href={`#${s.id}`}>{num(i)} {s.title}</a>)}
     </nav>
     <div class="doc">
       {p.sections.map((s, i) => (
-        <section id={s.id}>
-          <h2><span class="mono n">{String(i + 1).padStart(2, '0')}</span>{s.title}</h2>
+        <section id={s.id} style={`--sec:${i + 1}`}>
+          <h2><span class="n">{num(i)}</span> {s.title}</h2>
           <div set:html={render(s.body)} />
         </section>
       ))}
@@ -40,25 +34,22 @@ const render = (html: string) => html.replace(/\{\{(\w+)\}\}/g, (_, k: keyof typ
   </section>
 </Base>
 <style is:global>
-.dm { font-size: 1.9rem; margin: 24px 0 18px; }
-.flows { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 6px 24px; }
-.fr { display: grid; grid-template-columns: 1.1fr 1.5fr 1.1fr; gap: 18px; padding: 14px 0; border-top: 1px solid var(--line); font-size: .98rem; }
-.fr b { font-weight: 600; }
-.fh { border-top: 0; font: 500 .82rem var(--mono); padding-bottom: 8px; }
-.to { color: var(--accent-text); }
-.fh .to { color: inherit; }
-@media (max-width: 720px) { .fh { display: none; } .fr { grid-template-columns: 1fr; gap: 2px; } .fr:nth-child(2) { border-top: 0; } }
-.legal { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 60px; margin-top: 90px; }
-.toc { position: sticky; top: 100px; align-self: start; display: grid; gap: 3px; font-size: .92rem; max-height: calc(100svh - 120px); overflow-y: auto; }
-.toc .eyebrow { margin-bottom: 8px; }
+.legal-hero h1 { font-size: clamp(2.4rem, 5.4vw, 3.8rem); }
+.legal-hero p { font-size: 1.05rem; }
+.legal-hero .when { font-size: .95rem; margin-top: 10px; }
+.legal { display: grid; grid-template-columns: 270px minmax(0, 1fr); gap: 60px; margin-top: 30px; border-top: 1px solid var(--line); padding-top: 40px; }
+.toc { position: sticky; top: 100px; align-self: start; display: grid; gap: 3px; font-size: .9rem; line-height: 1.35; max-height: calc(100svh - 120px); overflow-y: auto; }
+.toc-t { font-weight: 600; margin-bottom: 8px; }
 .toc a { text-decoration: none; color: var(--muted); padding: 4px 0; }
 .toc a:hover { color: var(--ink); }
-.doc { max-width: 72ch; display: grid; gap: 44px; }
-.doc h2 { font-size: 1.6rem; margin-bottom: 12px; display: flex; gap: 12px; align-items: baseline; line-height: 1.15; }
-.doc .n { font-size: .85rem; color: var(--accent-text); letter-spacing: 0; }
-.doc p + p { margin-top: 12px; }
-.doc ul { padding-left: 20px; margin: 0; display: grid; gap: 8px; }
+.doc { max-width: 76ch; display: grid; gap: 34px; }
+.doc section { counter-reset: pt; scroll-margin-top: 96px; }
+.doc h2 { font: 600 1.25rem/1.25 var(--sans); letter-spacing: 0; margin-bottom: 12px; }
+.doc .n { font-variant-numeric: tabular-nums; }
 .doc b { font-weight: 600; }
-#health-connect, #strava { padding: 22px 24px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
-@media (max-width: 860px) { .legal { grid-template-columns: 1fr; gap: 34px; } .toc { position: static; max-height: none; } }
+.doc ol { list-style: none; padding: 0; margin: 0; display: grid; gap: 9px; }
+.doc ol > li { position: relative; padding-left: 40px; counter-increment: pt; }
+.doc ol > li::before { content: counter(pt) "."; position: absolute; left: 0; color: var(--muted); font-variant-numeric: tabular-nums; }
+.doc ul { list-style: lower-alpha; padding-left: 22px; margin: 9px 0 0; display: grid; gap: 7px; }
+@media (max-width: 860px) { .legal { grid-template-columns: minmax(0, 1fr); gap: 34px; } .toc { position: static; max-height: none; } }
 </style>

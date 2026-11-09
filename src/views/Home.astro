@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Phone from '../components/Phone.astro';
+import Studio from '../components/Studio.astro';
 import { routes, type Lang } from '../site';
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
@@ -13,7 +14,7 @@ const copy = {
     soon: 'Wkrótce w Google Play i App Store',
     scroll: 'Przewiń i ruszaj',
     chapters: [
-      { at: 0, w: 'map', k: 'km 0, start', h: 'Telefon na kierownicy. Cała reszta po Twojemu.', p: 'Rydee to licznik rowerowy z GPS, który układasz pod swoją jazdę. Bez konta, bez reklam i bez abonamentu.' },
+      { at: 0, w: 'map', k: 'km 0, start', h: 'Telefon na kierownicy. Cała reszta po Twojemu.', p: 'Rydee to licznik rowerowy z GPS, który układasz pod swoją jazdę. Bez konta i bez reklam.' },
       { at: 0.13, w: 'map', k: 'Ekran', h: 'Tylko to, na co patrzysz', p: 'Wybierasz kafelki, widgety i wskaźnik prędkości. Przeciągnięciem zmieniasz proporcje. Cztery style, tryb jasny i ciemny.' },
       { at: 0.26, w: 'hr', radar: true, k: 'Czujniki', h: 'Tętno, kadencja, moc i to, co nadjeżdża z tyłu', p: 'Rydee łączy się z czujnikami Bluetooth. Radar rowerowy pokazuje pojazdy na pasku przy krawędzi ekranu i ostrzega dźwiękiem.' },
       { at: 0.38, w: 'climb', k: 'Podjazd', h: 'Podjazd liczy się sam', p: 'Nachylenie, VAM i profil. Na znanym podjeździe widzisz, ile tracisz albo zyskujesz względem własnego rekordu.' },
@@ -27,16 +28,14 @@ const copy = {
       ['Nawigacja rowerowa', 'Szukanie celu, punkt z mapy, trasa z GPX. Wskazówki i sygnał przed skrętem.', 'premium'],
       ['Wiatr względem jazdy', 'Czerwony pod wiatr, zielony z wiatrem. Prognoza MET Norway.', 'premium'],
       ['Okrążenia', 'Co 1, 2, 3, 5 albo 10 km, z różnicą do poprzedniego.', ''],
-      ['Strava za darmo', 'Wysyłanie przejazdów z pełnymi danymi i ulubione segmenty, w każdej wersji.', ''],
+      ['Strava', 'Wysyłanie przejazdów z pełnymi danymi i ulubione segmenty.', ''],
       ['Muzyka bez wychodzenia', 'Tytuł i okładka z innej aplikacji. Sterowanie w Premium. Android.', ''],
       ['Wiele rowerów', 'Osobny profil dla każdego roweru i jego typu trasy.', 'premium'],
     ],
-    cfgEyebrow: 'Sprawdź sam', cfgTitle: 'Ułóż swój ekran', cfgNote: 'Uproszczony podgląd. W wersji darmowej styl minimalistyczny oraz wskaźnik paskowy i łuk.',
-    style: 'Styl', styles: [['minimal', 'Minimalistyczny'], ['material', 'Material'], ['cupertino', 'Cupertino'], ['sport', 'Sportowy']],
-    mode: 'Tryb', modes: [['dark', 'Ciemny'], ['light', 'Jasny']],
-    gauge: 'Wskaźnik', gauges: [['segments', 'Pasek'], ['arc', 'Łuk'], ['ring', 'Pierścień']],
-    speed: 'Prędkość',
-    pEyebrow: 'Wersje', pTitle: 'Płacisz raz albo wcale', pLead: 'Premium to jednorazowy zakup. Żadnej subskrypcji. Cenę podamy przed premierą.',
+    pEyebrow: 'Wersje', pTitle: 'Zacznij od wersji darmowej. Premium, kiedy zechcesz.', pLead: 'Premium możesz mieć w subskrypcji albo kupić jednorazowo. Ceny podamy przed premierą.',
+    planFree: ['Licznik, nagrywanie i autopauza', 'Przejazdy, eksport i import GPX', 'Strava', 'Tętno i kadencja', 'Widgety Teren, Tętno, Okrążenia'],
+    planPremium: ['Nawigacja i trasy z GPX', 'Radar rowerowy i czujnik mocy', 'Podjazdy i rekordy', 'Strefy i pełna analiza', 'Wszystkie style i wskaźniki'],
+    waysT: 'Wybierz, jak wolisz', ways: [['Subskrypcja', 'Płatność cykliczna. Możesz zrezygnować w dowolnej chwili w Google Play lub App Store.'], ['Zakup jednorazowy', 'Płacisz raz, a Premium zostaje z Tobą.']], waysNote: 'Obie formy odblokowują te same funkcje.', compare: 'Porównanie wersji',
     free: 'Darmowa', premium: 'Premium', yes: 'tak', no: 'nie',
     rows: [
       ['Licznik, nagrywanie, autopauza', 1, 1], ['Lista przejazdów, eksport GPX, import GPX', 1, 1], ['Strava: wysyłanie i ulubione segmenty', 1, 1], ['Tętno i kadencja z czujników', 1, 1], ['Widgety Teren, Tętno, Okrążenia', 1, 1],
@@ -52,7 +51,7 @@ const copy = {
     soon: 'Coming soon to Google Play and the App Store',
     scroll: 'Scroll to ride',
     chapters: [
-      { at: 0, w: 'map', k: 'km 0, start', h: 'Phone on the bars. Everything else your way.', p: 'Rydee is a GPS bike computer you shape around your riding. No account, no ads and no subscription.' },
+      { at: 0, w: 'map', k: 'km 0, start', h: 'Phone on the bars. Everything else your way.', p: 'Rydee is a GPS bike computer you shape around your riding. No account and no ads.' },
       { at: 0.13, w: 'map', k: 'Screen', h: 'Only what you actually look at', p: 'Pick your tiles, widgets and speed gauge. Drag to change the proportions. Four styles, light and dark.' },
       { at: 0.26, w: 'hr', radar: true, k: 'Sensors', h: 'Heart rate, cadence, power and what’s coming from behind', p: 'Rydee connects to Bluetooth sensors. A bike radar shows vehicles on a bar at the screen edge and warns you with a sound.' },
       { at: 0.38, w: 'climb', k: 'Climb', h: 'Climbs count themselves', p: 'Gradient, VAM and profile. On a climb you know, see how you compare to your own record.' },
@@ -66,16 +65,14 @@ const copy = {
       ['Cycling navigation', 'Search, pick a point on the map, or follow a GPX route. Turn guidance and sound alerts.', 'premium'],
       ['Wind relative to you', 'Red for headwind, green for tailwind. Forecast by MET Norway.', 'premium'],
       ['Laps', 'Every 1, 2, 3, 5 or 10 km, with the difference to the previous one.', ''],
-      ['Strava, free', 'Upload rides with full data and see starred segments, in every edition.', ''],
+      ['Strava', 'Upload rides with full data and see starred segments.', ''],
       ['Music on screen', 'Title and cover from another app. Controls in Premium. Android.', ''],
       ['Multiple bikes', 'A profile for each bike and its route type.', 'premium'],
     ],
-    cfgEyebrow: 'Try it', cfgTitle: 'Build your screen', cfgNote: 'Simplified preview. The free edition includes the minimal style, plus the bar and arc gauges.',
-    style: 'Style', styles: [['minimal', 'Minimal'], ['material', 'Material'], ['cupertino', 'Cupertino'], ['sport', 'Sport']],
-    mode: 'Mode', modes: [['dark', 'Dark'], ['light', 'Light']],
-    gauge: 'Gauge', gauges: [['segments', 'Bar'], ['arc', 'Arc'], ['ring', 'Ring']],
-    speed: 'Speed',
-    pEyebrow: 'Editions', pTitle: 'Pay once or not at all', pLead: 'Premium is a one-time purchase, with no subscription. We’ll announce the price before launch.',
+    pEyebrow: 'Editions', pTitle: 'Start with Free. Go Premium when you want.', pLead: 'Get Premium as a subscription or as a one-time purchase. We’ll announce prices before launch.',
+    planFree: ['Computer, recording and auto-pause', 'Rides, GPX export and import', 'Strava', 'Heart rate and cadence', 'Terrain, Heart rate and Laps widgets'],
+    planPremium: ['Navigation and GPX routes', 'Bike radar and power meter', 'Climbs and records', 'Zones and full analysis', 'All styles and gauges'],
+    waysT: 'Choose how you prefer', ways: [['Subscription', 'Recurring payment. Cancel anytime in Google Play or the App Store.'], ['One-time purchase', 'Pay once and Premium stays with you.']], waysNote: 'Both options unlock the same features.', compare: 'Compare editions',
     free: 'Free', premium: 'Premium', yes: 'yes', no: 'no',
     rows: [
       ['Computer, recording, auto-pause', 1, 1], ['Ride list, GPX export, GPX import', 1, 1], ['Strava: uploads and starred segments', 1, 1], ['Heart rate and cadence sensors', 1, 1], ['Terrain, Heart rate and Laps widgets', 1, 1],
@@ -85,11 +82,6 @@ const copy = {
     helpT: 'Something unclear?', helpP: 'Help answers the most common questions. The same content is in the app, even without internet.', helpB: 'Open help', privB: 'Privacy policy',
   },
 }[lang];
-const groups = [
-  { key: 'style', label: copy.style, items: copy.styles },
-  { key: 'mode', label: copy.mode, items: copy.modes },
-  { key: 'gauge', label: copy.gauge, items: copy.gauges },
-];
 const cell = (v: string | number) => (v === 1 ? '●' : v === 0 ? '–' : v);
 const label = (v: string | number) => (v === 1 ? copy.yes : v === 0 ? copy.no : undefined);
 ---
@@ -136,29 +128,27 @@ const label = (v: string | number) => (v === 1 ? copy.yes : v === 0 ? copy.no : 
     </div>
   </section>
 
-  <section class="sec wrap cfg">
-    <div>
-      <div class="eyebrow">{copy.cfgEyebrow}</div>
-      <h2>{copy.cfgTitle}</h2>
-      {groups.map((g) => (
-        <fieldset data-group={g.key}>
-          <legend>{g.label}</legend>
-          {g.items.map(([v, l], i) => (
-            <label><input type="radio" name={g.key} value={v} checked={i === 0} /><span>{l}</span></label>
-          ))}
-        </fieldset>
-      ))}
-      <label class="sp"><span>{copy.speed}: <b class="mono" id="cfgv">34</b> km/h</span><input id="cfgs" type="range" min="0" max="60" step="1" value="34" /></label>
-      <p class="muted note">{copy.cfgNote}</p>
-    </div>
-    <div class="cfg-dev"><Phone id="cfgphone" labels={copy.phone} /></div>
-  </section>
+  <Studio lang={lang} />
 
   <section class="sec wrap" id="premium">
     <div class="eyebrow">{copy.pEyebrow}</div>
     <h2>{copy.pTitle}</h2>
     <p class="lead muted">{copy.pLead}</p>
-    <div class="tbl" role="region" tabindex="0" aria-label={copy.pEyebrow}>
+    <div class="plans">
+      <article class="plan">
+        <h3>{copy.free}</h3>
+        <ul>{copy.planFree.map((i) => <li>{i}</li>)}</ul>
+      </article>
+      <article class="plan plus">
+        <h3>{copy.premium}</h3>
+        <ul>{copy.planPremium.map((i) => <li>{i}</li>)}</ul>
+        <div class="ways-t mono">{copy.waysT}</div>
+        <div class="ways">{copy.ways.map(([t, p]) => <div class="way"><b>{t}</b><span>{p}</span></div>)}</div>
+        <p class="muted ways-n">{copy.waysNote}</p>
+      </article>
+    </div>
+    <h3 class="cmp">{copy.compare}</h3>
+    <div class="tbl" role="region" tabindex="0" aria-label={copy.compare}>
       <table>
         <thead><tr><td></td><th scope="col">{copy.free}</th><th scope="col" class="pr">{copy.premium}</th></tr></thead>
         <tbody>
@@ -236,23 +226,23 @@ html:not(.js) .track, html:not(.js) .dev { display: none; }
 .b:nth-child(n+5) { grid-column: span 2; }
 @media (max-width: 860px) { .b, .b.big, .b:nth-child(n+5) { grid-column: span 6; min-height: 150px; } }
 
-.cfg { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 50px; align-items: center; }
-.cfg fieldset { border: 0; padding: 0; margin: 24px 0 0; display: flex; flex-wrap: wrap; gap: 6px; }
-.cfg legend { font: 500 .82rem var(--mono); color: var(--muted); margin-bottom: 8px; padding: 0; }
-.cfg fieldset label { cursor: pointer; }
-.cfg fieldset input { position: absolute; opacity: 0; }
-.cfg fieldset span { display: block; padding: 9px 15px; border: 1px solid var(--line); border-radius: 12px; font-size: .95rem; transition: background .15s; }
-.cfg fieldset label:hover span { background: var(--surface-2); }
-.cfg fieldset input:checked + span { background: var(--ink); color: var(--bg); border-color: var(--ink); }
-.cfg fieldset input:focus-visible + span { outline: 2px solid var(--accent-text); outline-offset: 2px; }
-.sp { display: grid; gap: 8px; margin-top: 26px; max-width: 420px; }
-.sp input { accent-color: var(--coral); }
-.note { font-size: .9rem; margin-top: 20px; max-width: 48ch; }
-.cfg-dev { --h: 620px; }
-.cfg-dev .phone { height: var(--h); width: calc(var(--h) * 9 / 19); }
-@media (max-width: 860px) { .cfg { grid-template-columns: 1fr; } .cfg-dev { --h: 520px; justify-self: center; } }
+.plans { margin-top: 40px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr); gap: 12px; }
+.plan { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 30px; }
+.plan h3 { font-size: 2rem; }
+.plan.plus { border: 2px solid var(--accent-text); }
+.plan ul { list-style: none; padding: 0; margin: 20px 0 0; display: grid; gap: 9px; }
+.plan li { position: relative; padding-left: 26px; }
+.plan li::before { content: ''; position: absolute; left: 2px; top: .42em; width: 13px; height: 7px; border-left: 2px solid var(--accent-text); border-bottom: 2px solid var(--accent-text); rotate: -45deg; transform-origin: center; }
+.ways-t { margin-top: 26px; font-size: .82rem; color: var(--muted); }
+.ways { margin-top: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.way { display: grid; gap: 4px; align-content: start; padding: 16px; background: var(--surface-2); border-radius: 14px; }
+.way b { font: 650 1.12rem/1.2 var(--display); }
+.way span { font-size: .92rem; line-height: 1.4; color: var(--muted); }
+.ways-n { margin-top: 12px; font-size: .92rem; }
+.cmp { margin-top: 56px; font-size: 1.6rem; }
+@media (max-width: 860px) { .plans, .ways { grid-template-columns: minmax(0, 1fr); } }
 
-.tbl { margin-top: 36px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); overflow-x: auto; }
+.tbl { margin-top: 18px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); overflow-x: auto; }
 table { width: 100%; border-collapse: collapse; }
 th, td { padding: 12px 20px; text-align: center; border-top: 1px solid var(--line); font-weight: 400; }
 thead td, thead th { border-top: 0; font: 600 1.1rem var(--display); padding-block: 18px; }
@@ -264,21 +254,4 @@ td.pr, thead th.pr { color: var(--accent-text); font-weight: 600; }
 
 <script>
   import './../scripts/ride';
-  import { applyPhone } from '../scripts/phone';
-  const phone = document.getElementById('cfgphone');
-  if (phone) {
-    const decimal = document.documentElement.lang === 'pl' ? ',' : '.';
-    const range = document.getElementById('cfgs') as HTMLInputElement;
-    const out = document.getElementById('cfgv')!;
-    const paint = () => {
-      const speed = Number(range.value);
-      out.textContent = String(speed);
-      applyPhone(phone, { speed, grade: 2, hr: 142, cad: 88, ele: 312, km: 24.6, progress: 0.42, decimal });
-    };
-    range.addEventListener('input', paint);
-    paint();
-    document.querySelectorAll<HTMLFieldSetElement>('.cfg fieldset').forEach((set) => {
-      set.addEventListener('change', (e) => { phone.dataset[set.dataset.group!] = (e.target as HTMLInputElement).value; });
-    });
-  }
 </script>
