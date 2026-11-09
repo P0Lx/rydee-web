@@ -40,8 +40,8 @@
       { "id": "pogoda", "q": "Co oznaczają kolory wiatru?", "a": ["Widget pogody pokazuje wiatr względem kierunku jazdy: czerwony pod wiatr, zielony z wiatrem, szary boczny. W wersji darmowej strzałka pokazuje wiatr względem północy."], "keywords": "wiatr pogoda prognoza met norway" }
     ] },
     { "id": "czujniki", "title": "Czujniki i radar", "icon": "bluetooth", "tint": "indigo", "articles": [
-      { "id": "dodawanie", "q": "Jak dodać czujnik?", "a": ["Otwórz w menu pozycję Czujniki. Obsługiwane są pulsometr, kadencja, moc i radar Garmin Varia. Czujnik mocy i radar wymagają Premium."], "keywords": "bluetooth ble pulsometr kadencja parowanie" },
-      { "id": "radar", "q": "Jak działa radar?", "a": ["Pojazdy z radaru widać na pasku przy prawej krawędzi ekranu. Sygnał dźwiękowy ostrzega o nowym pojeździe."], "keywords": "varia garmin pojazd samochód", "tags": ["premium"] }
+      { "id": "dodawanie", "q": "Jak dodać czujnik?", "a": ["Otwórz w menu pozycję Czujniki. Obsługiwane są pulsometr, kadencja, moc i radar rowerowy. Czujnik mocy i radar wymagają Premium."], "keywords": "bluetooth ble pulsometr kadencja parowanie" },
+      { "id": "radar", "q": "Jak działa radar?", "a": ["Pojazdy z radaru widać na pasku przy prawej krawędzi ekranu. Sygnał dźwiękowy ostrzega o nowym pojeździe."], "keywords": "rowerowy pojazd samochód", "tags": ["premium"] }
     ] },
     { "id": "konto", "title": "Integracje, wersje i dane", "icon": "link", "tint": "orange", "articles": [
       { "id": "strava", "q": "Jak połączyć Stravę?", "a": ["Otwórz Integracje w menu i połącz konto Strava. Możesz wysyłać przejazdy i oglądać ulubione segmenty. Strava jest dostępna za darmo w każdej wersji."], "keywords": "wysyłanie segmenty integracja" },

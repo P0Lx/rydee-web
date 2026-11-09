@@ -40,8 +40,8 @@
       { "id": "weather", "q": "What do the wind colours mean?", "a": ["The weather widget shows wind relative to your direction: red for headwind, green for tailwind, grey for crosswind. In the free edition, the arrow shows wind relative to north."], "keywords": "wind weather forecast met norway color" }
     ] },
     { "id": "sensors", "title": "Sensors and radar", "icon": "bluetooth", "tint": "indigo", "articles": [
-      { "id": "add-sensor", "q": "How do I add a sensor?", "a": ["Open Sensors in the menu. Heart rate monitors, cadence sensors, power meters and the Garmin Varia radar are supported. Power meters and radar require Premium."], "keywords": "bluetooth ble heart rate cadence pairing" },
-      { "id": "radar", "q": "How does the radar work?", "a": ["Vehicles from the radar appear on the bar at the right edge of the screen. A sound warns of a new vehicle."], "keywords": "varia garmin vehicle car", "tags": ["premium"] }
+      { "id": "add-sensor", "q": "How do I add a sensor?", "a": ["Open Sensors in the menu. Heart rate monitors, cadence sensors, power meters and bike radars are supported. Power meters and radar require Premium."], "keywords": "bluetooth ble heart rate cadence pairing" },
+      { "id": "radar", "q": "How does the radar work?", "a": ["Vehicles from the radar appear on the bar at the right edge of the screen. A sound warns of a new vehicle."], "keywords": "bike vehicle car", "tags": ["premium"] }
     ] },
     { "id": "account", "title": "Integrations, editions and data", "icon": "link", "tint": "orange", "articles": [
       { "id": "strava", "q": "How do I connect Strava?", "a": ["Open Integrations in the menu and connect your Strava account. You can upload rides and see starred segments. Strava is free in every edition."], "keywords": "upload segments integration" },

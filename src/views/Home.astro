@@ -15,7 +15,7 @@ const copy = {
     chapters: [
       { at: 0, w: 'map', k: 'km 0, start', h: 'Telefon na kierownicy. Cała reszta po Twojemu.', p: 'Rydee to licznik rowerowy z GPS, który układasz pod swoją jazdę. Bez konta, bez reklam i bez abonamentu.' },
       { at: 0.13, w: 'map', k: 'Ekran', h: 'Tylko to, na co patrzysz', p: 'Wybierasz kafelki, widgety i wskaźnik prędkości. Przeciągnięciem zmieniasz proporcje. Cztery style, tryb jasny i ciemny.' },
-      { at: 0.26, w: 'hr', radar: true, k: 'Czujniki', h: 'Tętno, kadencja, moc i to, co nadjeżdża z tyłu', p: 'Rydee łączy się z czujnikami Bluetooth. Radar Garmin Varia pokazuje pojazdy na pasku przy krawędzi ekranu i ostrzega dźwiękiem.' },
+      { at: 0.26, w: 'hr', radar: true, k: 'Czujniki', h: 'Tętno, kadencja, moc i to, co nadjeżdża z tyłu', p: 'Rydee łączy się z czujnikami Bluetooth. Radar rowerowy pokazuje pojazdy na pasku przy krawędzi ekranu i ostrzega dźwiękiem.' },
       { at: 0.38, w: 'climb', k: 'Podjazd', h: 'Podjazd liczy się sam', p: 'Nachylenie, VAM i profil. Na znanym podjeździe widzisz, ile tracisz albo zyskujesz względem własnego rekordu.' },
       { at: 0.52, w: 'map', k: 'Zjazd, powyżej 50 km/h', h: 'A potem nadświetlna', p: 'Przy dużej prędkości ekran rusza razem z Tobą. Efekt nie ma żadnego uzasadnienia poza tym, że jest fajny.' },
       { at: 0.69, w: 'post', k: 'Po jeździe', h: 'Cała jazda w jednym miejscu', p: 'Mapa, wykresy, strefy i najlepsze odcinki. Przeciągasz palcem po wykresie, a miejsce pokazuje się na mapie. Eksport GPX i FIT, Strava, Health Connect.' },
@@ -41,7 +41,7 @@ const copy = {
     rows: [
       ['Licznik, nagrywanie, autopauza', 1, 1], ['Lista przejazdów, eksport GPX, import GPX', 1, 1], ['Strava: wysyłanie i ulubione segmenty', 1, 1], ['Tętno i kadencja z czujników', 1, 1], ['Widgety Teren, Tętno, Okrążenia', 1, 1],
       ['Style aplikacji', '1', '4'], ['Wskaźniki prędkości', '2', '6'], ['Strony kafelków', '1', 'wiele'], ['Rowery', '1', 'wiele'], ['Muzyka', 'podgląd', 'sterowanie'], ['Mapa', 'OpenFreeMap', 'Stadia Maps'],
-      ['Nawigacja i trasy z GPX', 0, 1], ['Czujnik mocy, widget Moc', 0, 1], ['Radar Varia', 0, 1], ['Podjazdy i rekordy', 0, 1], ['Strefy tętna i mocy, pełna analiza', 0, 1], ['Wiatr względem kierunku jazdy', 0, 1], ['Eksport FIT, Health Connect', 0, 1],
+      ['Nawigacja i trasy z GPX', 0, 1], ['Czujnik mocy, widget Moc', 0, 1], ['Radar rowerowy', 0, 1], ['Podjazdy i rekordy', 0, 1], ['Strefy tętna i mocy, pełna analiza', 0, 1], ['Wiatr względem kierunku jazdy', 0, 1], ['Eksport FIT, Health Connect', 0, 1],
     ],
     helpT: 'Coś niejasnego?', helpP: 'Pomoc odpowiada na najczęstsze pytania. Ta sama treść jest w aplikacji, także bez internetu.', helpB: 'Otwórz pomoc', privB: 'Polityka prywatności',
   },
@@ -54,7 +54,7 @@ const copy = {
     chapters: [
       { at: 0, w: 'map', k: 'km 0, start', h: 'Phone on the bars. Everything else your way.', p: 'Rydee is a GPS bike computer you shape around your riding. No account, no ads and no subscription.' },
       { at: 0.13, w: 'map', k: 'Screen', h: 'Only what you actually look at', p: 'Pick your tiles, widgets and speed gauge. Drag to change the proportions. Four styles, light and dark.' },
-      { at: 0.26, w: 'hr', radar: true, k: 'Sensors', h: 'Heart rate, cadence, power and what’s coming from behind', p: 'Rydee connects to Bluetooth sensors. A Garmin Varia radar shows vehicles on a bar at the screen edge and warns you with a sound.' },
+      { at: 0.26, w: 'hr', radar: true, k: 'Sensors', h: 'Heart rate, cadence, power and what’s coming from behind', p: 'Rydee connects to Bluetooth sensors. A bike radar shows vehicles on a bar at the screen edge and warns you with a sound.' },
       { at: 0.38, w: 'climb', k: 'Climb', h: 'Climbs count themselves', p: 'Gradient, VAM and profile. On a climb you know, see how you compare to your own record.' },
       { at: 0.52, w: 'map', k: 'Descent, above 50 km/h', h: 'Then, hyperspeed', p: 'At high speed the screen moves with you. There is no reason for this effect except that it’s fun.' },
       { at: 0.69, w: 'post', k: 'After the ride', h: 'The whole ride in one place', p: 'Map, charts, zones and best efforts. Drag along a chart and the spot appears on the map. GPX and FIT export, Strava, Health Connect.' },
@@ -80,7 +80,7 @@ const copy = {
     rows: [
       ['Computer, recording, auto-pause', 1, 1], ['Ride list, GPX export, GPX import', 1, 1], ['Strava: uploads and starred segments', 1, 1], ['Heart rate and cadence sensors', 1, 1], ['Terrain, Heart rate and Laps widgets', 1, 1],
       ['App styles', '1', '4'], ['Speed gauges', '2', '6'], ['Tile pages', '1', 'many'], ['Bikes', '1', 'many'], ['Music', 'preview', 'controls'], ['Map', 'OpenFreeMap', 'Stadia Maps'],
-      ['Navigation and GPX routes', 0, 1], ['Power meter, Power widget', 0, 1], ['Varia radar', 0, 1], ['Climbs and records', 0, 1], ['Heart rate and power zones, full analysis', 0, 1], ['Wind relative to your direction', 0, 1], ['FIT export, Health Connect', 0, 1],
+      ['Navigation and GPX routes', 0, 1], ['Power meter, Power widget', 0, 1], ['Bike radar', 0, 1], ['Climbs and records', 0, 1], ['Heart rate and power zones, full analysis', 0, 1], ['Wind relative to your direction', 0, 1], ['FIT export, Health Connect', 0, 1],
     ],
     helpT: 'Something unclear?', helpP: 'Help answers the most common questions. The same content is in the app, even without internet.', helpB: 'Open help', privB: 'Privacy policy',
   },
