@@ -23,14 +23,14 @@ function blend(f: number) {
   return `rgb(${a.map((v, i) => Math.round(v + (b[i] - v) * t)).join(',')})`;
 }
 
-export function drawBlock(c: CanvasRenderingContext2D, w: number, h: number, s: GaugeState) {
+export function drawBlock(c: CanvasRenderingContext2D, w: number, h: number, s: GaugeState, clear = true) {
   const { skin } = s;
   const f = fractionOf(s.kmh);
   const k = Math.max(0.4, w / 340);
   const inkMedium = skin.dark ? 'rgba(255,255,255,.7)' : 'rgba(0,0,0,.7)';
   const inkFaint = skin.dark ? 'rgba(255,255,255,.38)' : 'rgba(0,0,0,.38)';
   const dim = skin.dark ? 0.22 : 0.25;
-  c.clearRect(0, 0, w, h);
+  if (clear) c.clearRect(0, 0, w, h);
   c.lineCap = 'butt';
   c.textAlign = 'left';
   c.textBaseline = 'alphabetic';
