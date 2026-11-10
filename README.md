@@ -15,6 +15,11 @@ npm run build
 - `src/site.ts` - dane firmy i kontakt (`null` jest widoczne na stronie jako pole do uzupełnienia).
 - `src/data/privacy.ts` - polityka prywatności. Przy zmianie przepływu danych w aplikacji zaktualizuj także mapę danych i datę.
 - Domena: `SITE_URL` przy budowaniu (domyślnie `https://rydee.app`, także w `public/robots.txt`).
-- Publikacja: `firebase.json` wskazuje na `dist`.
+- Publikacja: Firebase Hosting, projekt `rydee-cloud`, strona hostingu `rydee-web` (`"site"` w `firebase.json`, folder `dist`). Domyślna strona projektu (`rydee-cloud.web.app`) należy do repozytorium `rydee-cloud` i serwuje `config.json` aplikacji - publikacja bez `"site"` by ją nadpisała.
+  ```bash
+  npm run build
+  firebase hosting:channel:deploy preview --project rydee-cloud   # podgląd na 7 dni
+  firebase deploy --only hosting --project rydee-cloud            # rydee-web.web.app
+  ```
 
 Bez cookies, analityki i zewnętrznych zasobów. Jeśli to się zmieni, trzeba zmienić politykę prywatności.

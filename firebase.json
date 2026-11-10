@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "rydee-web",
     "public": "dist",
     "cleanUrls": true,
     "trailingSlash": false,
