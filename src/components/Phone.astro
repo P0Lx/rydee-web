@@ -60,7 +60,7 @@ const route = 'M20 135C60 120 58 82 100 76s60 30 92 12 26-58 70-70';
 .ph-tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5cqw; flex: 0 0 auto; }
 .tile { background: var(--p-card); border-radius: calc(var(--p-r) * .7); padding: 1.8cqw 2.3cqw; min-width: 0; }
 .tile span { display: block; font-size: 3.1cqw; color: var(--p-mut); white-space: nowrap; }
-.tile b { font: var(--p-w) 6.2cqw/1.2 var(--p-num); font-variant-numeric: tabular-nums; }
+.tile b { display: block; text-align: center; font: var(--p-w) 6.2cqw/1.2 var(--p-num); font-variant-numeric: tabular-nums; }
 .ph-widget { position: relative; flex: 1; min-height: 0; background: var(--p-card); border-radius: var(--p-r); overflow: hidden; }
 .w { position: absolute; inset: 0; opacity: 0; transition: opacity .35s; }
 .w.on { opacity: 1; }
