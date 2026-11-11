@@ -74,6 +74,8 @@ const messages = { errCat: c.errCat, errMsg: c.errMsg, errEmail: c.errEmail, err
 <style is:global>
 .cform-wrap { max-width: 760px; margin-left: max(20px, calc((100% - 1180px) / 2)); }
 .cform { display: grid; gap: 22px; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+/* `display: grid` wygrywa z atrybutem `hidden` - formularz albo podziękowanie. */
+.cform[hidden] { display: none; }
 .cform fieldset { border: 0; padding: 0; margin: 0; }
 .cform legend, .fld > span:first-child { font-weight: 600; margin-bottom: 10px; display: block; }
 .cats { display: flex; flex-wrap: wrap; gap: 8px; }
