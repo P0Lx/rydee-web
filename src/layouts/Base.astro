@@ -41,6 +41,7 @@ const url = (l: Lang) => new URL(routes[route][l], site).href;
       <a class="l opt" href={`${home}#features`}>{t.features}</a>
       <a class="l opt" href={`${home}#premium`}>{t.premium}</a>
       <a class="l" href={r('help')} aria-current={route === 'help' ? 'page' : undefined}>{t.help}</a>
+      <a class="l" href={r('contact')} aria-current={route === 'contact' ? 'page' : undefined}>{t.contact}</a>
     </nav>
     <a class="l lang" href={routes[route][other]} hreflang={other} lang={other} aria-label={t.other}>{t.otherShort}</a>
     <button class="ib" id="theme" type="button" aria-label={t.theme}>
@@ -54,6 +55,7 @@ const url = (l: Lang) => new URL(routes[route][l], site).href;
         <div><a class="brand" href={home}><img src="/icon.png" alt="" width="30" height="30" />Rydee</a><p class="muted" style="margin-top:10px">{t.tagline}</p></div>
         <nav aria-label={t.menu}>
           <a href={r('help')}>{t.help}</a>
+          <a href={r('contact')}>{t.contact}</a>
           <a href={r('privacy')}>{t.privacy}</a>
           <a href={r('licenses')}>{t.licenses}</a>
         </nav>

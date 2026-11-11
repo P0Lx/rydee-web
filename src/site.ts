@@ -4,22 +4,27 @@ export const company = {
   name: null as string | null,
   address: null as string | null,
   taxId: null as string | null,
-  email: null as string | null,
+  email: 'support@rydee.app' as string | null,
 };
 
 export type Lang = 'pl' | 'en';
+
+/** Serwer Rydee (`rydee-cloud`) - formularz kontaktowy wysyła `POST {apiUrl}/feedback`.
+ * Inny adres (np. emulator) przy budowaniu: `PUBLIC_RYDEE_API_URL`. */
+export const apiUrl: string = import.meta.env.PUBLIC_RYDEE_API_URL ?? 'https://europe-central2-rydee-cloud.cloudfunctions.net/api';
 
 export const routes = {
   home: { pl: '/', en: '/en' },
   help: { pl: '/pomoc', en: '/en/help' },
   privacy: { pl: '/prywatnosc', en: '/en/privacy' },
+  contact: { pl: '/kontakt', en: '/en/contact' },
   licenses: { pl: '/licencje', en: '/en/licenses' },
 } as const;
 export type Route = keyof typeof routes;
 
 export const ui = {
   pl: {
-    features: 'Funkcje', premium: 'Premium', help: 'Pomoc', privacy: 'Prywatność', licenses: 'Licencje',
+    features: 'Funkcje', premium: 'Premium', help: 'Pomoc', contact: 'Kontakt', privacy: 'Prywatność', licenses: 'Licencje',
     theme: 'Zmień motyw', menu: 'Nawigacja', skip: 'Przejdź do treści', other: 'English', otherShort: 'EN',
     tagline: 'Licznik rowerowy na telefon. Bez konta.',
     legal: 'Strava, Google Play, Health Connect, App Store i Spotify są znakami towarowymi ich właścicieli. Rydee nie jest z nimi powiązane.',
@@ -27,7 +32,7 @@ export const ui = {
     fill: 'do uzupełnienia',
   },
   en: {
-    features: 'Features', premium: 'Premium', help: 'Help', privacy: 'Privacy', licenses: 'Licenses',
+    features: 'Features', premium: 'Premium', help: 'Help', contact: 'Contact', privacy: 'Privacy', licenses: 'Licenses',
     theme: 'Change theme', menu: 'Navigation', skip: 'Skip to content', other: 'Polski', otherShort: 'PL',
     tagline: 'A bike computer on your phone. No account.',
     legal: 'Strava, Google Play, Health Connect, App Store and Spotify are trademarks of their respective owners. Rydee is not affiliated with them.',

@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { company, ui, type Lang } from '../site';
+import { routes, type Lang } from '../site';
 import pl from '../../content/help/pl.json';
 import en from '../../content/help/en.json';
 interface Props { lang: Lang; }
@@ -9,8 +9,8 @@ const help = { pl, en }[lang];
 type Article = { id: string; q: string; a: string[]; keywords?: string; tags?: string[]; platforms?: string[]; figure?: { type: string; alt?: string } };
 const count = help.sections.reduce((n, s) => n + s.articles.length, 0);
 const c = {
-  pl: { title: 'Pomoc: Rydee', desc: 'Odpowiedzi na pytania o aplikację Rydee: nagrywanie, widgety, czujniki, nawigacja i dane.', h: 'Jak możemy pomóc?', ph: 'Szukaj, np. autopauza, radar, GPX', label: 'Szukaj w pomocy', all: 'Wszystko', hint: `${count} odpowiedzi. Naciśnij / aby szukać.`, found: (n: number) => `Znaleziono: ${n}`, none: 'Nic nie znaleziono.', noneB: 'Napisz do nas, a dopiszemy odpowiedź:', contactT: 'Nie ma tu Twojego pytania?', contactP: 'Napisz do nas:', android: 'Android' },
-  en: { title: 'Help: Rydee', desc: 'Answers about the Rydee app: recording, widgets, sensors, navigation and your data.', h: 'How can we help?', ph: 'Search, e.g. auto-pause, radar, GPX', label: 'Search help', all: 'All', hint: `${count} answers. Press / to search.`, found: (n: number) => `Found: ${n}`, none: 'Nothing found.', noneB: 'Write to us and we’ll add an answer:', contactT: 'Question not here?', contactP: 'Write to us:', android: 'Android' },
+  pl: { title: 'Pomoc: Rydee', desc: 'Odpowiedzi na pytania o aplikację Rydee: nagrywanie, widgety, czujniki, nawigacja i dane.', h: 'Jak możemy pomóc?', ph: 'Szukaj, np. autopauza, radar, GPX', label: 'Szukaj w pomocy', all: 'Wszystko', hint: `${count} odpowiedzi. Naciśnij / aby szukać.`, found: (n: number) => `Znaleziono: ${n}`, none: 'Nic nie znaleziono.', noneB: 'Napisz do nas, a dopiszemy odpowiedź:', contactT: 'Nie ma tu Twojego pytania?', contactP: 'Napisz do nas, a dopiszemy odpowiedź.', bannerT: 'Masz pytanie lub sugestię?', bannerP: 'Pytania, sugestie, uwagi - odpowiadamy e-mailem.', write: 'Napisz do nas', android: 'Android' },
+  en: { title: 'Help: Rydee', desc: 'Answers about the Rydee app: recording, widgets, sensors, navigation and your data.', h: 'How can we help?', ph: 'Search, e.g. auto-pause, radar, GPX', label: 'Search help', all: 'All', hint: `${count} answers. Press / to search.`, found: (n: number) => `Found: ${n}`, none: 'Nothing found.', noneB: 'Write to us and we’ll add an answer:', contactT: 'Question not here?', contactP: 'Write to us and we’ll add an answer.', bannerT: 'Got a question or a suggestion?', bannerP: 'Questions, suggestions, feedback - we reply by email.', write: 'Write to us', android: 'Android' },
 }[lang];
 const foundTpl = c.found(0);
 ---
@@ -28,6 +28,11 @@ const foundTpl = c.found(0);
     </div>
   </section>
   <div class="wrap hlist">
+    <aside class="cbanner">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg>
+      <div><h2>{c.bannerT}</h2><p class="muted">{c.bannerP}</p></div>
+      <a class="btn" href={routes.contact[lang]}>{c.write}</a>
+    </aside>
     {help.sections.map((s) => (
       <section class="hsec" data-sec={s.id}>
         <h2>{s.title}</h2>
@@ -47,7 +52,8 @@ const foundTpl = c.found(0);
     <p id="none" class="none" hidden>{c.none}</p>
     <aside class="contact">
       <h2>{c.contactT}</h2>
-      <p>{c.contactP} {company.email ? <a href={`mailto:${company.email}`}>{company.email}</a> : <mark class="fill">e-mail: {ui[lang].fill}</mark>}</p>
+      <p>{c.contactP}</p>
+      <a class="btn" href={routes.contact[lang]} style="margin-top:16px">{c.write}</a>
     </aside>
   </div>
 </Base>
@@ -80,6 +86,11 @@ details[open] summary::after { content: '−'; }
 html:not(.js) .fig { display: none; }
 .hl { background: var(--volt); color: var(--on-volt); border-radius: 3px; padding: 0 2px; }
 .none { margin-top: 40px; font-size: 1.3rem; }
+.cbanner { display: flex; align-items: center; gap: 18px; margin-top: 8px; padding: 22px 24px; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--line); }
+.cbanner svg { flex: none; width: 52px; height: 52px; padding: 12px; border-radius: 50%; background: var(--volt); color: var(--on-volt); }
+.cbanner div { flex: 1; }
+.cbanner h2 { font-size: 1.45rem; margin-bottom: 4px; }
+@media (max-width: 640px) { .cbanner { flex-wrap: wrap; } .cbanner .btn { width: 100%; justify-content: center; } }
 .contact { margin-top: 56px; padding: 28px; border-radius: var(--radius); background: var(--surface-2); }
 .contact h2 { font-size: 1.6rem; margin-bottom: 8px; }
 </style>

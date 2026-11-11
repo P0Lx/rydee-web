@@ -1,0 +1,160 @@
+---
+// Formularz kontaktowy - ten sam co „Napisz do nas” w aplikacji: kategoria,
+// treść, opcjonalny e-mail; wysyłka `POST {API}/feedback` z `platform: web`.
+import Base from '../layouts/Base.astro';
+import { apiUrl, company, routes, type Lang } from '../site';
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const c = {
+  pl: {
+    title: 'Kontakt: Rydee', desc: 'Napisz do twórców aplikacji Rydee: pytania, sugestie i uwagi.',
+    h: 'Masz pytanie lub sugestię?', lead: 'Pytania, sugestie, uwagi - odpowiadamy e-mailem.',
+    cat: 'Rodzaj wiadomości', cats: { problem: 'Problem', suggestion: 'Propozycja', question: 'Pytanie', opinion: 'Opinia', other: 'Inne' },
+    msg: 'Wiadomość', ph: 'Twoja wiadomość', email: 'E-mail do odpowiedzi', emailHint: 'Opcjonalnie - bez adresu nie możemy odpowiedzieć.',
+    info: 'Razem z wiadomością wysyłamy język strony.', privacy: 'Polityka prywatności', send: 'Wyślij', sending: 'Wysyłanie…',
+    errCat: 'Wybierz rodzaj wiadomości.', errMsg: 'Wiadomość jest za krótka.', errEmail: 'Nieprawidłowy adres e-mail.',
+    errNet: 'Brak połączenia z serwerem. Spróbuj ponownie.', errLimit: 'Za dużo wiadomości. Spróbuj ponownie za godzinę.', errOther: 'Nie udało się wysłać wiadomości.',
+    thanks: 'Dziękujemy!', sent: 'Wiadomość wysłana. Jeśli podano adres, odpowiemy e-mailem.', again: 'Napisz kolejną',
+    direct: 'Możesz też napisać bezpośrednio:',
+  },
+  en: {
+    title: 'Contact: Rydee', desc: 'Write to the makers of the Rydee app: questions, suggestions and feedback.',
+    h: 'Got a question or a suggestion?', lead: 'Questions, suggestions, feedback - we reply by email.',
+    cat: 'Type of message', cats: { problem: 'Problem', suggestion: 'Suggestion', question: 'Question', opinion: 'Opinion', other: 'Other' },
+    msg: 'Message', ph: 'Your message', email: 'Email for reply', emailHint: 'Optional - without an address we cannot reply.',
+    info: 'Along with the message we send the website language.', privacy: 'Privacy policy', send: 'Send', sending: 'Sending…',
+    errCat: 'Choose the type of message.', errMsg: 'The message is too short.', errEmail: 'Invalid email address.',
+    errNet: 'No connection to the server. Please try again.', errLimit: 'Too many messages. Please try again in an hour.', errOther: 'The message could not be sent.',
+    thanks: 'Thank you!', sent: 'Message sent. If you gave an address, we will reply by email.', again: 'Write another',
+    direct: 'You can also write directly:',
+  },
+}[lang];
+const messages = { errCat: c.errCat, errMsg: c.errMsg, errEmail: c.errEmail, errNet: c.errNet, errLimit: c.errLimit, errOther: c.errOther, send: c.send, sending: c.sending };
+---
+<Base lang={lang} route="contact" title={c.title} description={c.desc}>
+  <section class="page-hero wrap">
+    <h1>{c.h}</h1>
+    <p>{c.lead}</p>
+  </section>
+  <section class="wrap cform-wrap">
+    <form id="cform" class="cform" novalidate data-api={apiUrl} data-lang={lang} data-msg={JSON.stringify(messages)}>
+      <fieldset>
+        <legend>{c.cat}</legend>
+        <div class="cats">
+          {Object.entries(c.cats).map(([value, label]) => (
+            <label><input type="radio" name="category" value={value} /><span>{label}</span></label>
+          ))}
+        </div>
+        <p class="err" id="e-cat" hidden></p>
+      </fieldset>
+      <label class="fld">
+        <span>{c.msg}</span>
+        <textarea name="message" rows="7" maxlength="4000" placeholder={c.ph}></textarea>
+        <span class="row2"><span class="err" id="e-msg" hidden></span><span class="muted mono cnt" id="cnt">0/4000</span></span>
+      </label>
+      <label class="fld">
+        <span>{c.email}</span>
+        <input name="email" type="email" autocomplete="email" maxlength="254" />
+        <span class="muted hint">{c.emailHint}</span>
+        <span class="err" id="e-email" hidden></span>
+      </label>
+      <label class="trap" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off" /></label>
+      <p class="muted info">{c.info} <a href={routes.privacy[lang]}>{c.privacy}</a></p>
+      <p class="err big" id="e-send" role="alert" hidden></p>
+      <button class="btn" type="submit" id="send">{c.send}</button>
+    </form>
+    <div id="done" class="cform done" hidden role="status">
+      <h2>{c.thanks}</h2>
+      <p>{c.sent}</p>
+      <button class="btn ghost" type="button" id="again">{c.again}</button>
+    </div>
+    {company.email && <p class="muted direct">{c.direct} <a href={`mailto:${company.email}`}>{company.email}</a></p>}
+  </section>
+</Base>
+<style is:global>
+.cform-wrap { max-width: 760px; margin-left: max(20px, calc((100% - 1180px) / 2)); }
+.cform { display: grid; gap: 22px; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+.cform fieldset { border: 0; padding: 0; margin: 0; }
+.cform legend, .fld > span:first-child { font-weight: 600; margin-bottom: 10px; display: block; }
+.cats { display: flex; flex-wrap: wrap; gap: 8px; }
+.cats label { position: relative; }
+.cats input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.cats span { display: inline-flex; align-items: center; min-height: 42px; padding: 0 16px; border-radius: 12px; border: 1px solid var(--line); }
+.cats label:hover span { background: var(--surface-2); }
+.cats input:checked + span { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.cats input:focus-visible + span { outline: 2px solid var(--accent-text); outline-offset: 3px; }
+.fld { display: grid; gap: 6px; }
+.fld textarea, .fld input { width: 100%; font: inherit; color: inherit; background: var(--bg); border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; outline: none; }
+.fld textarea { resize: vertical; min-height: 160px; }
+.fld textarea:focus, .fld input:focus { border-color: var(--accent-text); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-text) 25%, transparent); }
+.row2 { display: flex; justify-content: space-between; gap: 12px; }
+.cnt { font-size: .82rem; margin-left: auto; }
+.hint, .info { font-size: .9rem; }
+.err { color: var(--accent-text); font-size: .9rem; }
+.err.big { font-size: 1rem; }
+.trap { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+.cform .btn { justify-self: start; }
+.cform .btn[disabled] { opacity: .6; cursor: progress; }
+.done h2 { font-size: 2rem; }
+.direct { margin-top: 18px; }
+</style>
+<script>
+  // Sprawdzenie jak w aplikacji (feedback.dart) i wysyłka na serwer Rydee.
+  const form = document.getElementById('cform') as HTMLFormElement;
+  const done = document.getElementById('done')!;
+  const send = document.getElementById('send') as HTMLButtonElement;
+  const msg = JSON.parse(form.dataset.msg ?? '{}') as Record<string, string>;
+  const text = form.elements.namedItem('message') as HTMLTextAreaElement;
+  const email = form.elements.namedItem('email') as HTMLInputElement;
+  const trap = form.elements.namedItem('website') as HTMLInputElement;
+  const cnt = document.getElementById('cnt')!;
+  const EMAIL = /^[^\s@<>()",;:\\]{1,64}@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)+$/;
+
+  const show = (id: string, value: string | null) => {
+    const el = document.getElementById(id)!;
+    el.textContent = value ?? '';
+    el.hidden = !value;
+  };
+  text.addEventListener('input', () => { cnt.textContent = `${[...text.value].length}/4000`; show('e-msg', null); });
+  email.addEventListener('input', () => show('e-email', null));
+  form.addEventListener('change', (e) => { if ((e.target as HTMLInputElement).name === 'category') show('e-cat', null); });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const category = (form.querySelector('input[name=category]:checked') as HTMLInputElement | null)?.value;
+    const message = text.value.trim();
+    const address = email.value.trim();
+    const length = [...message].length;
+    show('e-cat', category ? null : msg.errCat);
+    show('e-msg', length >= 10 && length <= 4000 ? null : msg.errMsg);
+    show('e-email', !address || (address.length <= 254 && EMAIL.test(address)) ? null : msg.errEmail);
+    show('e-send', null);
+    if (form.querySelector('.err:not([hidden])')) return;
+    send.disabled = true;
+    send.textContent = msg.sending;
+    try {
+      const res = await fetch(`${form.dataset.api}/feedback`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          category, message, ...(address ? { email: address } : {}),
+          platform: 'web', language: form.dataset.lang, ...(trap.value ? { website: trap.value } : {}),
+        }),
+      });
+      if (res.status === 201 || res.status === 200) {
+        form.hidden = true;
+        done.hidden = false;
+        form.reset();
+        cnt.textContent = '0/4000';
+      } else {
+        show('e-send', res.status === 429 ? msg.errLimit : res.status >= 500 ? msg.errNet : `${msg.errOther} (HTTP ${res.status})`);
+      }
+    } catch {
+      show('e-send', msg.errNet);
+    } finally {
+      send.disabled = false;
+      send.textContent = msg.send;
+    }
+  });
+  document.getElementById('again')!.addEventListener('click', () => { done.hidden = true; form.hidden = false; });
+</script>
