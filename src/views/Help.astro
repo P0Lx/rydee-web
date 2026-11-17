@@ -4,9 +4,14 @@ import { href, type Lang } from '../site';
 import { texts } from '../i18n';
 import pl from '../../content/help/pl.json';
 import en from '../../content/help/en.json';
+import de from '../../content/help/de.json';
+import fr from '../../content/help/fr.json';
+import es from '../../content/help/es.json';
+import it from '../../content/help/it.json';
+import nl from '../../content/help/nl.json';
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
-const help = { pl, en }[lang];
+const help = { pl, en, de, fr, es, it, nl }[lang];
 type Article = { id: string; q: string; a: string[]; keywords?: string; tags?: string[]; platforms?: string[]; figure?: { type: string; alt?: string } };
 const count = help.sections.reduce((n, s) => n + s.articles.length, 0);
 const t = texts[lang].help;

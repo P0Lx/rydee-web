@@ -8,14 +8,14 @@ export const company = {
 };
 
 /** Języki strony; pierwszy (EN) jest domyślny - bez przedrostka w adresie. */
-export const langs = ['en', 'pl'] as const;
+export const langs = ['en', 'pl', 'de', 'fr', 'es', 'it', 'nl'] as const;
 export type Lang = (typeof langs)[number];
 export const defaultLang: Lang = 'en';
 /** Języki z przedrostkiem w adresie (`/pl/...`). */
 export const prefixedLangs = langs.filter((l) => l !== defaultLang);
 
 /** Nazwa języka w tym języku (lista w przełączniku). */
-export const langNames: Record<Lang, string> = { en: 'English', pl: 'Polski' };
+export const langNames: Record<Lang, string> = { en: 'English', pl: 'Polski', de: 'Deutsch', fr: 'Français', es: 'Español', it: 'Italiano', nl: 'Nederlands' };
 
 /** Serwer Rydee (`rydee-cloud`) - formularz kontaktowy wysyła `POST {apiUrl}/feedback`.
  * Inny adres (np. emulator) przy budowaniu: `PUBLIC_RYDEE_API_URL`. */

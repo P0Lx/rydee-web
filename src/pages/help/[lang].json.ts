@@ -1,5 +1,4 @@
-// Pomoc dla aplikacji: /help/<język>.json. pl i en to samo źródło co strona;
-// de, fr, es, it, nl tylko dla aplikacji (strona jest po polsku i angielsku).
+// Pomoc dla aplikacji: /help/<język>.json - to samo źródło co strony pomocy.
 import type { APIRoute } from 'astro';
 import pl from '../../../content/help/pl.json';
 import en from '../../../content/help/en.json';
