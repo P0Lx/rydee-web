@@ -41,7 +41,7 @@ if (root) {
   const device = q<HTMLElement>('.sd');
   const main = q<HTMLCanvasElement>('[data-main]');
   const thumbs = [...root.querySelectorAll<HTMLCanvasElement>('[data-thumb]')];
-  const ghost = q<HTMLElement>('.st-ghost');
+  const ghosts = [...root.querySelectorAll<HTMLElement>('.st-ghost')];
   const status = q<HTMLElement>('[data-status]');
   const statusFree = status.dataset.free!, statusPremium = status.dataset.premium!;
   const statusOut = q<HTMLElement>('[data-status-text]');
@@ -89,7 +89,7 @@ if (root) {
         if (t.w && t.h) drawBlock(t.ctx, t.w, t.h, { ...common, gauge: c.dataset.thumb as GaugeId });
       }
     }
-    if (ghost.textContent !== text) ghost.textContent = text;
+    for (const g of ghosts) if (g.textContent !== text) g.textContent = text;
   }
 
   function update(now = 0, force = false) {
