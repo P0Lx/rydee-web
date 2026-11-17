@@ -18,7 +18,7 @@ const en = {
     scroll: 'Scroll to ride',
     chapters: [
       { k: 'km 0, start', h: 'Phone on the bars. Everything else your way.', p: 'Rydee is a GPS bike computer you shape around your riding. No account and no ads.' },
-      { k: 'Screen', h: 'Only what you actually look at', p: 'Pick your tiles, widgets and speed gauge. Drag to change the proportions. Four styles, light and dark.' },
+      { k: 'Screen', h: 'Only what you actually look at', p: 'Pick your tiles, widgets and speed gauge. Drag to change the proportions. Five styles, light and dark.' },
       { k: 'Sensors', h: 'Heart rate, cadence, power and what’s coming from behind', p: 'Rydee connects to Bluetooth sensors. A bike radar shows vehicles on a bar at the screen edge and warns you with a sound.' },
       { k: 'Climb', h: 'Climbs count themselves', p: 'Gradient, VAM and profile. On a climb you know, see how you compare to your own record.' },
       { k: 'Descent, above 50 km/h', h: 'Then, hyperspeed', p: 'At high speed the screen moves with you. There is no reason for this effect except that it’s fun.' },
@@ -50,8 +50,9 @@ const en = {
   },
   studio: {
     eyebrow: 'Try it', title: 'Your screen, your rules', lead: 'Change the style, gauge and mode, then hit the road.',
-    style: 'Style', styles: { minimal: 'Minimal', material: 'Material', ios: 'Cupertino', sport: 'Sport' },
+    style: 'Style', styles: { alrydee: 'Alrydee', minimal: 'Minimal', material: 'Material', ios: 'Cupertino', sport: 'Sport' },
     mode: 'Mode', dark: 'Night', light: 'Day',
+    def: 'Default',
     gauge: 'Speed gauge', gauges: { segments: 'Bar', arc: 'Arc', dial: 'Dial', ring: 'Ring', scale: 'Scale', history: 'History' },
     aria: 'Preview of the Rydee main screen', free: 'This setup: Free edition', premium: 'This setup requires Premium', see: 'See editions',
     go: 'Ride', pause: 'Pause', road: 'Position on the route, drag to change speed', km: 'km', ele: 'm elevation', grade: 'gradient',

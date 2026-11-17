@@ -7,8 +7,10 @@ const { lang } = Astro.props;
 const s = texts[lang].studio;
 const t = { ...s, styles: Object.entries(s.styles), gauges: Object.entries(s.gauges) };
 const tiles = [['time', t.time, '1:00', '#ff9f0a'], ['dist', t.dist, '24.6', '#30d158'], ['hr', t.hr, '142', '#ff453a'], ['cad', t.cad, '88', '#0a84ff']];
+// kolory jak `MapView` w aplikacji: ślad i pozycja koralowe, trasa morska, meta w kolorze nocy
+const finish = { x: 272, y: 20 };
 const trail = 'M18 186C60 170 62 118 112 112s70 34 104 12 22-74 56-104';
-const premiumStyles = (v: string) => v !== 'minimal';
+const premiumStyles = (v: string) => v !== 'minimal' && v !== 'alrydee';
 const premiumGauges = (v: string) => v !== 'segments' && v !== 'arc';
 ---
 <section class="studio" id="studio" data-mode="dark" aria-labelledby="studio-t">
@@ -25,12 +27,13 @@ const premiumGauges = (v: string) => v !== 'segments' && v !== 'arc';
         <legend>{t.style}</legend>
         <div class="st-styles">
           {t.styles.map(([v, l], i) => (
-            <label class="st-style">
+            <label class:list={['st-style', { 'st-wide': v === 'alrydee' }]}>
               <input type="radio" name="st-style" value={v} checked={i === 0} />
               <span class="st-box">
-                <span class="st-mini" data-look={v} aria-hidden="true"><b>34</b><span class="mt"><i></i><i></i><i></i><i></i></span></span>
+                <span class="st-mini" data-look={v} aria-hidden="true"><b>34<u></u></b><span class="mt"><i></i><i></i><i></i><i></i></span></span>
                 <span class="st-name">{l}</span>
                 {premiumStyles(v) && <span class="st-tag">Premium</span>}
+                {v === 'alrydee' && <span class="st-tag st-def">{t.def}</span>}
               </span>
             </label>
           ))}
@@ -46,18 +49,26 @@ const premiumGauges = (v: string) => v !== 'segments' && v !== 'arc';
     </div>
 
     <div class="st-dev">
-      <div class="sd" data-look="minimal" role="img" aria-label={t.aria}>
+      <div class="sd" data-look="alrydee" role="img" aria-label={t.aria}>
         <div class="sd-screen">
           <div class="sd-top" aria-hidden="true"><span>9:41</span><span class="sd-rec">● REC</span></div>
-          <div class="sd-speed"><canvas data-main></canvas></div>
+          <div class="sd-speed"><canvas data-main></canvas>
+            <span class="sd-btn sd-menu" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></span>
+            <span class="sd-btn sd-pause" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 6v12M15 6v12"/></svg></span>
+          </div>
           <div class="sd-tiles">
-            {tiles.map(([k, label, v, c]) => <div class="sd-tile"><span><i style={`background:${c}`}></i>{label}</span><b data-v={k}>{v}</b></div>)}
+            {tiles.map(([k, label, v, c]) => <div class="sd-tile"><span><i style={`--c:${c}`}></i>{label}</span><b data-v={k}>{v}</b></div>)}
           </div>
           <div class="sd-map">
             <svg viewBox="0 0 280 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
               <g class="sd-roads"><path d="M-10 52 300 112M70-10 124 220M226-10 180 220M-10 164 300 44"/></g>
+              <g transform="translate(140 104) scale(.6) translate(-140 -104)">
               <path class="sd-way" d={trail} pathLength="100"/><path class="sd-done" d={trail} pathLength="100"/>
-              <circle class="sd-pin" r="6"/>
+              <circle class="sd-start" cx="18" cy="186" r="6"/>
+              <g class="sd-finish" transform={`translate(${finish.x} ${finish.y}) scale(1.35)`}><circle r="8"/><path d="M-2.5 4.5v-9h6l-1.4 2.2 1.4 2.3h-6"/></g>
+              <defs><radialGradient id="sd-cone"><stop offset="0" stop-color="#F2553F" stop-opacity=".55"/><stop offset="1" stop-color="#F2553F" stop-opacity="0"/></radialGradient></defs>
+              <g class="sd-pos"><path class="sd-cone" d="M0 0L-17-34A38 38 0 0 1 17-34Z"/><circle class="sd-pin" r="8.5"/><path class="sd-head" d="M0-4.6 3.6 3.4 0 1.6-3.6 3.4Z"/></g>
+              </g>
             </svg>
           </div>
         </div>
@@ -68,9 +79,9 @@ const premiumGauges = (v: string) => v !== 'segments' && v !== 'arc';
       <fieldset data-group="gauge">
         <legend>{t.gauge}</legend>
         <div class="st-gauges">
-          {t.gauges.map(([v, l], i) => (
+          {t.gauges.map(([v, l]) => (
             <label class="st-gauge">
-              <input type="radio" name="st-gauge" value={v} checked={i === 0} />
+              <input type="radio" name="st-gauge" value={v} checked={v === 'arc'} />
               <span class="st-box">
                 <canvas data-thumb={v} aria-hidden="true"></canvas>
                 <span class="st-name">{l}</span>
@@ -128,6 +139,9 @@ input:focus-visible + .st-box, input:focus-visible + span { outline: 2px solid v
 .st-name { display: block; margin-top: 7px; font-size: .9rem; font-weight: 500; line-height: 1.2; padding: 0 2px 2px; }
 .st-tag { position: absolute; right: 6px; top: 6px; z-index: 1; padding: 2px 6px; border-radius: 5px; background: var(--volt); color: var(--on-volt); font: 600 .66rem var(--mono); }
 .st-styles { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.st-wide { grid-column: 1 / -1; }
+.st-wide .st-mini { grid-template-columns: 1.1fr 1fr; align-items: center; gap: 6px; }
+.st-def { background: #F2553F; color: #fff; }
 .st-mini { display: grid; gap: 3px; padding: 6px; height: 74px; border-radius: 8px; background: var(--d-bg); color: var(--d-ink); align-content: center; transition: background .3s; }
 .st-mini b { font: 500 1.65rem/1 var(--sans); text-align: center; background: var(--d-speed); border-radius: calc(var(--d-r) * .5px); padding: 2px; }
 .st-mini[data-look='ios'] b { font-weight: 300; }
@@ -135,6 +149,10 @@ input:focus-visible + .st-box, input:focus-visible + span { outline: 2px solid v
 .st-mini .mt i { height: 11px; background: var(--d-card); border-radius: calc(var(--d-r) * .3px); }
 .st-mini[data-look='minimal'] .mt i { border-top: 1px solid var(--d-line); }
 .st-mini[data-look='sport'] b { border-bottom: 2px solid var(--d-acc); }
+.st-mini b { position: relative; }
+.st-mini[data-look='alrydee'] b u { position: absolute; left: 5px; top: 5px; width: 7px; height: 7px; border-radius: 50%; background: color-mix(in srgb, var(--d-acc) 30%, transparent); }
+.st-mini[data-look='alrydee'] .mt i { position: relative; }
+.st-mini[data-look='alrydee'] .mt i::before { content: ''; position: absolute; left: 4px; top: 4px; width: 3px; height: 3px; border-radius: 50%; background: var(--d-acc); }
 .st-modes { display: inline-flex; padding: 3px; gap: 3px; border-radius: 13px; border: 1px solid color-mix(in srgb, var(--d-ink) 16%, transparent); }
 .st-modes span { display: inline-flex; align-items: center; gap: 7px; min-height: 40px; padding: 0 15px; border-radius: 10px; font-size: .92rem; transition: background .2s, color .2s; }
 .st-modes svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
@@ -156,22 +174,33 @@ input:focus-visible + .st-box, input:focus-visible + span { outline: 2px solid v
 .sd-tiles { min-height: 0; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: calc(var(--d-gap) * .26cqw); }
 .sd-tile { min-width: 0; min-height: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: .4cqw; background: var(--d-card); border-radius: calc(var(--d-r) * .26cqw); padding: 1cqw 2.4cqw; transition: background .3s; }
 .sd-tile span { display: flex; align-items: center; gap: 1.2cqw; font-size: 3.1cqw; color: var(--d-tile); white-space: nowrap; }
-.sd-tile span i { display: none; width: 2.6cqw; height: 2.6cqw; border-radius: 50%; }
+.sd-tile span i { display: none; width: 2.6cqw; height: 2.6cqw; border-radius: 50%; background: var(--d-dot, var(--c)); }
 .sd-tile b { font: 500 8.6cqw/1 var(--sans); font-variant-numeric: tabular-nums; color: var(--d-ink); }
 .sd[data-look='minimal'] .sd-tile, .sd[data-look='sport'] .sd-tile { font-stretch: 85%; }
 .sd[data-look='minimal'] .sd-tile span, .sd[data-look='sport'] .sd-tile span { text-transform: uppercase; letter-spacing: .03em; font-size: 2.8cqw; }
 .sd[data-look='minimal'] .sd-tile { border-top: 1px solid var(--d-line); }
 .sd[data-look='minimal'] .sd-tile:nth-child(odd) { border-right: 1px solid var(--d-line); }
 .sd[data-look='sport'] .sd-tile b { font-weight: 700; }
-.sd[data-look='ios'] .sd-tile span i { display: block; }
+.sd[data-look='ios'] .sd-tile span i, .sd[data-look='alrydee'] .sd-tile span i { display: block; }
+.sd[data-look='alrydee'] { --d-dot: var(--d-acc); }
+.sd[data-look='alrydee'] .sd-tile { font-stretch: 85%; }
+.sd-btn { position: absolute; top: 2.2cqw; width: 10cqw; height: 10cqw; display: grid; place-items: center; border-radius: 50%; background: var(--d-tonal); color: var(--d-btn); transition: background .3s, color .3s; }
+.sd-menu { left: 2.2cqw; }
+.sd-pause { right: 2.2cqw; }
+.sd-btn svg { width: 6.4cqw; height: 6.4cqw; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; }
 .sd[data-look='ios'] .sd-tile b { font-weight: 400; }
 .sd-map { min-height: 0; background: var(--d-map); border-radius: calc(var(--d-r) * .26cqw); overflow: hidden; transition: background .3s; }
 .sd-map svg { width: 100%; height: 100%; }
 .sd-roads path { stroke: var(--d-road); stroke-width: 7; fill: none; }
 .sd-way, .sd-done { fill: none; stroke-width: 4; stroke-linecap: round; }
-.sd-way { stroke: #378ADD55; }
-.sd-done { stroke: #378ADD; stroke-dasharray: 0 100; }
-.sd-pin { fill: #378ADD; stroke: #fff; stroke-width: 2.5; }
+.sd-way { stroke: #1E9C9A; stroke-width: 5; }
+.sd-done { stroke: #F2553F; stroke-width: 6.5; stroke-dasharray: 0 100; }
+.sd-start { fill: #fff; stroke: #F2553F; stroke-width: 3.5; }
+.sd-finish circle { fill: #22263A; stroke: #fff; stroke-width: 2; }
+.sd-finish path { fill: #fff; stroke: #fff; stroke-width: 1; stroke-linejoin: round; }
+.sd-cone { fill: url(#sd-cone); }
+.sd-pin { fill: #F2553F; stroke: #fff; stroke-width: 3; filter: drop-shadow(0 1px 2px rgba(0,0,0,.45)); }
+.sd-head { fill: #fff; }
 
 .st-road { position: relative; margin-top: 36px; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 24px; align-items: center; }
 .st-play { display: inline-flex; align-items: center; gap: 9px; min-height: 52px; padding: 0 22px; border-radius: 15px; border: 0; background: var(--d-ink); color: var(--d-bg); font-weight: 600; cursor: pointer; }
@@ -200,7 +229,9 @@ html:not(.js) .studio { display: none; }
   .st-dev { order: -1; position: sticky; top: 64px; z-index: 3; --h: 46svh; display: flex; justify-content: center; margin-inline: -20px; padding: 8px 0 12px; background: var(--d-bg); transition: background .35s; }
   .st-road { order: 0; margin-top: 18px; grid-template-columns: auto minmax(0, 1fr); gap: 12px 14px; }
   .st-read { grid-column: 1 / -1; justify-content: space-between; }
-  .st-styles, .st-gauges { grid-template-columns: repeat(4, minmax(128px, 1fr)); overflow-x: auto; scrollbar-width: none; margin-inline: -20px; padding: 3px 20px; scroll-snap-type: x proximity; }
+  .st-wide { grid-column: auto; }
+  .st-wide .st-mini { grid-template-columns: none; gap: 3px; }
+  .st-styles, .st-gauges { grid-template-columns: repeat(5, minmax(128px, 1fr)); overflow-x: auto; scrollbar-width: none; margin-inline: -20px; padding: 3px 20px; scroll-snap-type: x proximity; }
   .st-gauges { grid-template-columns: repeat(6, minmax(128px, 1fr)); }
   .st-style, .st-gauge { scroll-snap-align: center; }
   .st-ghost { top: 26%; }

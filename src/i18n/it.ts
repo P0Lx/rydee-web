@@ -17,7 +17,7 @@ const it: Texts = {
     scroll: 'Scorri e parti',
     chapters: [
       { k: 'km 0, partenza', h: 'Telefono sul manubrio. Tutto il resto, a modo tuo.', p: 'Rydee è un ciclocomputer GPS che adatti al tuo modo di pedalare. Senza account e senza pubblicità.' },
-      { k: 'Schermo', h: 'Solo quello che guardi davvero', p: 'Scegli riquadri, widget e indicatore di velocità. Trascina per cambiare le proporzioni. Quattro stili, chiaro e scuro.' },
+      { k: 'Schermo', h: 'Solo quello che guardi davvero', p: 'Scegli riquadri, widget e indicatore di velocità. Trascina per cambiare le proporzioni. Cinque stili, chiaro e scuro.' },
       { k: 'Sensori', h: 'Frequenza cardiaca, cadenza, potenza e ciò che arriva da dietro', p: 'Rydee si collega ai sensori Bluetooth. Un radar per bici mostra i veicoli su una barra al bordo dello schermo e avvisa con un suono.' },
       { k: 'Salita', h: 'Le salite si contano da sole', p: 'Pendenza, VAM e profilo. Su una salita che conosci, vedi come vai rispetto al tuo record.' },
       { k: 'Discesa, oltre 50 km/h', h: 'E poi, velocità della luce', p: 'Ad alta velocità lo schermo si muove con te. Questo effetto non ha altro motivo se non che è divertente.' },
@@ -49,8 +49,9 @@ const it: Texts = {
   },
   studio: {
     eyebrow: 'Provalo', title: 'Il tuo schermo, le tue regole', lead: 'Cambia stile, indicatore e modalità, poi mettiti in strada.',
-    style: 'Stile', styles: { minimal: 'Minimalista', material: 'Material', ios: 'Cupertino', sport: 'Sportivo' },
+    style: 'Stile', styles: { alrydee: 'Alrydee', minimal: 'Minimalista', material: 'Material', ios: 'Cupertino', sport: 'Sportivo' },
     mode: 'Modalità', dark: 'Notte', light: 'Giorno',
+    def: 'Predefinito',
     gauge: 'Indicatore di velocità', gauges: { segments: 'Barra', arc: 'Arco', dial: 'Quadrante', ring: 'Anello', scale: 'Scala', history: 'Cronologia' },
     aria: 'Anteprima della schermata principale di Rydee', free: 'Questa configurazione: versione gratuita', premium: 'Questa configurazione richiede Premium', see: 'Vedi le versioni',
     go: 'Pedala', pause: 'Pausa', road: 'Posizione sul percorso, trascina per cambiare la velocità', km: 'km', ele: 'm di altitudine', grade: 'pendenza',

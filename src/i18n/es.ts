@@ -17,7 +17,7 @@ const es: Texts = {
     scroll: 'Desplázate y a rodar',
     chapters: [
       { k: 'km 0, salida', h: 'El móvil en el manillar. Todo lo demás, a tu manera.', p: 'Rydee es un ciclocomputador GPS que adaptas a tu forma de rodar. Sin cuenta y sin anuncios.' },
-      { k: 'Pantalla', h: 'Solo lo que de verdad miras', p: 'Elige mosaicos, widgets e indicador de velocidad. Arrastra para cambiar las proporciones. Cuatro estilos, claro y oscuro.' },
+      { k: 'Pantalla', h: 'Solo lo que de verdad miras', p: 'Elige mosaicos, widgets e indicador de velocidad. Arrastra para cambiar las proporciones. Cinco estilos, claro y oscuro.' },
       { k: 'Sensores', h: 'Pulso, cadencia, potencia y lo que viene por detrás', p: 'Rydee se conecta a sensores Bluetooth. Un radar para bici muestra los vehículos en una barra en el borde de la pantalla y avisa con un sonido.' },
       { k: 'Subida', h: 'Las subidas se cuentan solas', p: 'Pendiente, VAM y perfil. En una subida conocida, ves cómo vas respecto a tu propio récord.' },
       { k: 'Descenso, más de 50 km/h', h: 'Y luego, velocidad luz', p: 'A gran velocidad, la pantalla se mueve contigo. Este efecto no tiene otra razón que ser divertido.' },
@@ -49,8 +49,9 @@ const es: Texts = {
   },
   studio: {
     eyebrow: 'Pruébalo', title: 'Tu pantalla, tus reglas', lead: 'Cambia el estilo, el indicador y el modo, y sal a la carretera.',
-    style: 'Estilo', styles: { minimal: 'Minimalista', material: 'Material', ios: 'Cupertino', sport: 'Deportivo' },
+    style: 'Estilo', styles: { alrydee: 'Alrydee', minimal: 'Minimalista', material: 'Material', ios: 'Cupertino', sport: 'Deportivo' },
     mode: 'Modo', dark: 'Noche', light: 'Día',
+    def: 'Predeterminado',
     gauge: 'Indicador de velocidad', gauges: { segments: 'Barra', arc: 'Arco', dial: 'Esfera', ring: 'Anillo', scale: 'Escala', history: 'Historial' },
     aria: 'Vista previa de la pantalla principal de Rydee', free: 'Esta configuración: versión gratuita', premium: 'Esta configuración requiere Premium', see: 'Ver versiones',
     go: 'Rodar', pause: 'Pausa', road: 'Posición en la ruta, arrastra para cambiar la velocidad', km: 'km', ele: 'm de altitud', grade: 'pendiente',

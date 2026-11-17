@@ -17,7 +17,7 @@ const nl: Texts = {
     scroll: 'Scroll en rijden maar',
     chapters: [
       { k: 'km 0, start', h: 'Telefoon op het stuur. De rest zoals jij het wilt.', p: 'Rydee is een GPS-fietscomputer die je afstemt op jouw manier van rijden. Zonder account en zonder advertenties.' },
-      { k: 'Scherm', h: 'Alleen waar je echt naar kijkt', p: 'Kies tegels, widgets en snelheidsmeter. Sleep om de verhoudingen te wijzigen. Vier stijlen, licht en donker.' },
+      { k: 'Scherm', h: 'Alleen waar je echt naar kijkt', p: 'Kies tegels, widgets en snelheidsmeter. Sleep om de verhoudingen te wijzigen. Vijf stijlen, licht en donker.' },
       { k: 'Sensoren', h: 'Hartslag, cadans, vermogen en wat er van achteren komt', p: 'Rydee maakt verbinding met Bluetooth-sensoren. Een fietsradar toont voertuigen op een balk aan de rand van het scherm en waarschuwt met een geluid.' },
       { k: 'Klim', h: 'Klimmen tellen zichzelf', p: 'Helling, VAM en profiel. Op een bekende klim zie je hoe je ervoor staat ten opzichte van je eigen record.' },
       { k: 'Afdaling, boven 50 km/h', h: 'En dan: lichtsnelheid', p: 'Bij hoge snelheid beweegt het scherm met je mee. Dit effect heeft geen enkele reden behalve dat het leuk is.' },
@@ -49,8 +49,9 @@ const nl: Texts = {
   },
   studio: {
     eyebrow: 'Probeer het', title: 'Jouw scherm, jouw regels', lead: 'Wijzig stijl, meter en modus en ga dan de weg op.',
-    style: 'Stijl', styles: { minimal: 'Minimalistisch', material: 'Material', ios: 'Cupertino', sport: 'Sportief' },
+    style: 'Stijl', styles: { alrydee: 'Alrydee', minimal: 'Minimalistisch', material: 'Material', ios: 'Cupertino', sport: 'Sportief' },
     mode: 'Modus', dark: 'Nacht', light: 'Dag',
+    def: 'Standaard',
     gauge: 'Snelheidsmeter', gauges: { segments: 'Balk', arc: 'Boog', dial: 'Wijzerplaat', ring: 'Ring', scale: 'Schaal', history: 'Verloop' },
     aria: 'Voorbeeld van het hoofdscherm van Rydee', free: 'Deze instelling: gratis versie', premium: 'Deze instelling vereist Premium', see: 'Versies bekijken',
     go: 'Rijden', pause: 'Pauze', road: 'Positie op de route, sleep om de snelheid te wijzigen', km: 'km', ele: 'm hoogte', grade: 'helling',

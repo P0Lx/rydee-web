@@ -7,7 +7,7 @@ const tiles = [['time', t.time, '0:00'], ['dist', t.dist, '0'], ['hr', t.hr, '11
 const bars = Array.from({ length: 26 }, (_, i) => 38 + Math.round(30 * Math.abs(Math.sin(i * 0.6)) + 18 * Math.abs(Math.sin(i * 0.23))));
 const route = 'M20 135C60 120 58 82 100 76s60 30 92 12 26-58 70-70';
 ---
-<div class="phone" id={id} data-style="minimal" data-mode="dark" data-gauge="segments" role="img" aria-label={t.aria}>
+<div class="phone" id={id} data-style="alrydee" data-mode="dark" data-gauge="arc" role="img" aria-label={t.aria}>
   <div class="ph-screen">
     <div class="ph-speed">
       <div class="ph-num"><b data-v="speed">27</b><small>km/h</small></div>
@@ -32,6 +32,9 @@ const route = 'M20 135C60 120 58 82 100 76s60 30 92 12 26-58 70-70';
   width: 300px; max-width: 100%; aspect-ratio: 9/19; padding: 8px; border-radius: 42px; background: #000; border: 1px solid #383a41; box-shadow: 0 40px 90px -30px rgba(0,0,0,.8); container-type: inline-size; }
 .ph-screen { height: 100%; border-radius: 34px; overflow: hidden; background: var(--p-bg); color: var(--p-ink); display: flex; flex-direction: column; gap: 2cqw; padding: 7cqw 3.4cqw 3.4cqw; position: relative; transition: background .3s; font-family: var(--sans); }
 .phone[data-mode='light'] { --p-bg:#f1f2f4; --p-card:#fff; --p-ink:#111214; --p-mut:#62656c; --p-line:#d4d6db; --p-acc:#df3b2c; }
+/* Alrydee - domyślny styl aplikacji (noc / piasek, karty, koral) */
+.phone[data-style='alrydee'] { --p-bg:#15171D; --p-card:#23262E; --p-mut:#9C9AA6; --p-line:#343844; --p-acc:#F2553F; --p-r:16px; --p-w:500; --p-num:var(--sans); }
+.phone[data-style='alrydee'][data-mode='light'] { --p-bg:#FFF5EF; --p-card:#fff; --p-ink:#1E1A18; --p-mut:#8A7F78; --p-line:#EBDDD5; }
 .phone[data-style='material'] { --p-acc:#4ea1ff; --p-r:24px; --p-w:500; --p-num:var(--sans); }
 .phone[data-style='cupertino'] { --p-acc:#0a84ff; --p-r:18px; --p-w:400; --p-num:var(--sans); }
 .phone[data-style='sport'] { --p-acc:#d7ff3e; --p-r:5px; --p-w:750; --p-num:var(--display); }
@@ -68,8 +71,9 @@ const route = 'M20 135C60 120 58 82 100 76s60 30 92 12 26-58 70-70';
 .w em { position: absolute; left: 3.4cqw; top: 2.6cqw; font: 500 3.4cqw var(--sans); color: var(--p-mut); }
 .m-roads path { stroke: var(--p-line); stroke-width: 7; fill: none; }
 .m-track, .m-done { fill: none; stroke-width: 3.5; stroke-linecap: round; }
-.m-track { stroke: color-mix(in srgb, var(--p-acc) 30%, transparent); }
-.m-done { stroke: var(--p-acc); stroke-dasharray: 0 100; }
+/* jak `MapView` w aplikacji: trasa morska, ślad koralowy we wszystkich stylach */
+.m-track { stroke: #1E9C9A; }
+.m-done { stroke: #F2553F; stroke-dasharray: 0 100; }
 .bars { position: absolute; inset: 22% 3cqw 3cqw; display: flex; align-items: end; gap: .8cqw; }
 .bars i { flex: 1; background: var(--p-acc); border-radius: 2px 2px 0 0; }
 .c-area { fill: var(--p-acc); opacity: .75; }

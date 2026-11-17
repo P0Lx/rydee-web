@@ -5,17 +5,23 @@ import { KM, ele, grade, speed, profilePath } from './route';
 import { createStreaks } from './streaks';
 
 type Mode = 'dark' | 'light';
-interface Skin { bg: string; card: string; speed: string; ink: string; label: string; tile: string; line: string; acc: string; glow: string; r: number; gap: number; weight: number; }
+// tonal / btn - tło i kolor przycisków w rogach bloku prędkości (`buttonTonal`; bez - zwykła ikona w kolorze etykiet)
+interface Skin { bg: string; card: string; speed: string; ink: string; label: string; tile: string; line: string; acc: string; glow: string; r: number; gap: number; weight: number; tonal?: string; btn?: string; map?: [string, string]; }
 
 const base = {
   dark: { bg: '#0C0D0F', card: 'transparent', speed: 'transparent', ink: '#FFFFFF', label: '#8D9096', tile: '#8D9096', line: '#2A2C31', acc: '#FFFFFF', glow: '#ff5040', r: 0, gap: 0, weight: 500 },
   light: { bg: '#F3F4F6', card: 'transparent', speed: 'transparent', ink: '#111214', label: '#63666D', tile: '#63666D', line: '#D3D5DA', acc: '#111214', glow: '#ff5040', r: 0, gap: 0, weight: 500 },
 };
 const skins: Record<string, Record<Mode, Skin>> = {
+  // Alrydee: wygląd ekranów wprowadzenia (`OnboardingColors`) - noc / piasek, karty, koral
+  alrydee: {
+    dark: { ...base.dark, bg: '#15171D', card: '#23262E', speed: '#23262E', ink: '#FFFFFF', label: '#9C9AA6', tile: '#9C9AA6', line: '#343844', acc: '#F2553F', glow: '#F2553F', r: 20, gap: 8, tonal: 'rgba(242,85,63,.2)', btn: '#F2553F', map: ['#1D2029', '#2C303B'] },
+    light: { ...base.light, bg: '#FFF5EF', card: '#FFFFFF', speed: '#FFFFFF', ink: '#1E1A18', label: '#8A7F78', tile: '#8A7F78', line: '#EBDDD5', acc: '#F2553F', glow: '#F2553F', r: 20, gap: 8, tonal: 'rgba(242,85,63,.14)', btn: '#F2553F', map: ['#FBF1EA', '#EBDDD5'] },
+  },
   minimal: base,
   material: {
-    dark: { ...base.dark, bg: '#111318', card: '#1E2129', speed: '#1E2129', ink: '#E6E6EA', label: '#99A0AA', tile: '#99A0AA', line: '#2C303A', acc: '#8FB8FF', glow: '#8FB8FF', r: 12, gap: 4 },
-    light: { ...base.light, bg: '#F7F8FC', card: '#FFFFFF', speed: '#FFFFFF', ink: '#1A1C20', label: '#5D6270', tile: '#5D6270', line: '#DDE1EA', acc: '#2F5BB8', glow: '#2F5BB8', r: 12, gap: 4 },
+    dark: { ...base.dark, bg: '#111318', card: '#1E2129', speed: '#1E2129', ink: '#E6E6EA', label: '#99A0AA', tile: '#99A0AA', line: '#2C303A', acc: '#8FB8FF', glow: '#8FB8FF', r: 12, gap: 4, tonal: '#2B3550', btn: '#8FB8FF' },
+    light: { ...base.light, bg: '#F7F8FC', card: '#FFFFFF', speed: '#FFFFFF', ink: '#1A1C20', label: '#5D6270', tile: '#5D6270', line: '#DDE1EA', acc: '#2F5BB8', glow: '#2F5BB8', r: 12, gap: 4, tonal: '#DBE4FB', btn: '#2F5BB8' },
   },
   ios: {
     dark: { ...base.dark, bg: '#000000', card: '#1C1C1E', speed: 'transparent', ink: '#FFFFFF', label: '#8E8E93', tile: '#8E8E93', line: '#38383A', acc: '#0A84FF', glow: '#0A84FF', r: 14, gap: 8, weight: 300 },
@@ -44,7 +50,7 @@ if (root) {
   const play = q<HTMLButtonElement>('.st-play');
   const dot = q<HTMLElement>('.st-dot');
   const route = q<SVGPathElement>('.sd-done');
-  const pin = q<SVGCircleElement>('.sd-pin');
+  const pos = q<SVGGElement>('.sd-pos');
   const readKm = q<HTMLElement>('[data-read="km"]');
   const readEle = q<HTMLElement>('[data-read="ele"]');
   const readGrade = q<HTMLElement>('[data-read="grade"]');
@@ -57,13 +63,14 @@ if (root) {
   const clip = q<SVGRectElement>('.st-clip');
   const length = route.getTotalLength();
 
-  const state = { style: 'minimal', mode: 'dark' as Mode, gauge: 'segments' as GaugeId };
+  const state = { style: 'alrydee', mode: 'dark' as Mode, gauge: 'arc' as GaugeId };
   let x = 0.34, shown = speed(x), playing = false, visible = false, lastThumb = 0;
 
   const paint = (el: HTMLElement, s: Skin) => {
     const set = (k: string, v: string) => el.style.setProperty(k, v);
     set('--d-bg', s.bg); set('--d-card', s.card); set('--d-speed', s.speed); set('--d-ink', s.ink); set('--d-label', s.label);
     set('--d-tile', s.tile); set('--d-line', s.line); set('--d-acc', s.acc); set('--d-r', String(s.r)); set('--d-gap', String(s.gap));
+    set('--d-tonal', s.tonal ?? 'transparent'); set('--d-btn', s.btn ?? s.label);
   };
 
   const gaugeSkin = (s: Skin, mode: Mode): GaugeSkin => ({ dark: mode === 'dark', number: s.ink, label: s.label, divider: s.line, ink: s.ink, weight: s.weight });
@@ -108,9 +115,10 @@ if (root) {
     dot.style.left = `${x * 100}%`;
     dot.style.top = `${(y(ele(x)) / H) * 100}%`;
     route.style.strokeDasharray = `${x * 100} 100`;
-    const p = route.getPointAtLength(x * length);
-    pin.setAttribute('cx', p.x.toFixed(1));
-    pin.setAttribute('cy', p.y.toFixed(1));
+    // znacznik pozycji: grot i stożek w kierunku jazdy (styczna do śladu)
+    const at = x * length, p = route.getPointAtLength(at), n = route.getPointAtLength(Math.min(length, at + 2));
+    const heading = (Math.atan2(n.y - p.y, n.x - p.x) * 180) / Math.PI + 90;
+    pos.setAttribute('transform', `translate(${p.x.toFixed(1)} ${p.y.toFixed(1)}) rotate(${heading.toFixed(1)})`);
     const hot = motion && shown >= 50 ? Math.min(1, (shown - 48) / 6) : 0;
     root!.classList.toggle('hot', shown >= 50);
     root!.style.setProperty('--hot', hot.toFixed(3));
@@ -130,11 +138,11 @@ if (root) {
     device.dataset.look = state.style;
     paint(root!, skin);
     root!.style.setProperty('--st-glow', skin.glow);
-    const [land, road] = maps[state.mode];
+    const [land, road] = skin.map ?? maps[state.mode];
     device.style.setProperty('--d-map', land);
     device.style.setProperty('--d-road', road);
     root!.querySelectorAll<HTMLElement>('.st-mini').forEach((m) => paint(m, skins[m.dataset.look!][state.mode]));
-    const free = state.style === 'minimal' && (state.gauge === 'segments' || state.gauge === 'arc');
+    const free = (state.style === 'alrydee' || state.style === 'minimal') && (state.gauge === 'segments' || state.gauge === 'arc');
     status.classList.toggle('needs', !free);
     statusOut.textContent = free ? statusFree : statusPremium;
     statusLink.hidden = free;

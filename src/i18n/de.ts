@@ -17,7 +17,7 @@ const de: Texts = {
     scroll: 'Scrollen und losfahren',
     chapters: [
       { k: 'km 0, Start', h: 'Handy an den Lenker. Alles andere nach deinen Regeln.', p: 'Rydee ist ein GPS-Fahrradcomputer, den du an deine Fahrten anpasst. Ohne Konto und ohne Werbung.' },
-      { k: 'Bildschirm', h: 'Nur das, worauf du wirklich schaust', p: 'Wähle Kacheln, Widgets und Tachoanzeige. Ziehen ändert die Proportionen. Vier Stile, hell und dunkel.' },
+      { k: 'Bildschirm', h: 'Nur das, worauf du wirklich schaust', p: 'Wähle Kacheln, Widgets und Tachoanzeige. Ziehen ändert die Proportionen. Fünf Stile, hell und dunkel.' },
       { k: 'Sensoren', h: 'Herzfrequenz, Trittfrequenz, Leistung und was von hinten kommt', p: 'Rydee verbindet sich mit Bluetooth-Sensoren. Ein Fahrradradar zeigt Fahrzeuge auf einer Leiste am Bildschirmrand und warnt mit einem Ton.' },
       { k: 'Anstieg', h: 'Anstiege zählen sich selbst', p: 'Steigung, VAM und Profil. Auf einem bekannten Anstieg siehst du, wie du im Vergleich zu deinem eigenen Rekord liegst.' },
       { k: 'Abfahrt, über 50 km/h', h: 'Und dann: Warp-Geschwindigkeit', p: 'Bei hohem Tempo bewegt sich der Bildschirm mit dir. Dieser Effekt hat keinen anderen Grund, als dass er Spaß macht.' },
@@ -49,8 +49,9 @@ const de: Texts = {
   },
   studio: {
     eyebrow: 'Probier es aus', title: 'Dein Bildschirm, deine Regeln', lead: 'Ändere Stil, Anzeige und Modus, dann ab auf die Straße.',
-    style: 'Stil', styles: { minimal: 'Minimalistisch', material: 'Material', ios: 'Cupertino', sport: 'Sportlich' },
+    style: 'Stil', styles: { alrydee: 'Alrydee', minimal: 'Minimalistisch', material: 'Material', ios: 'Cupertino', sport: 'Sportlich' },
     mode: 'Modus', dark: 'Nacht', light: 'Tag',
+    def: 'Standard',
     gauge: 'Tachoanzeige', gauges: { segments: 'Balken', arc: 'Bogen', dial: 'Zifferblatt', ring: 'Ring', scale: 'Skala', history: 'Verlauf' },
     aria: 'Vorschau des Rydee-Hauptbildschirms', free: 'Diese Auswahl: kostenlose Version', premium: 'Diese Auswahl erfordert Premium', see: 'Versionen ansehen',
     go: 'Fahren', pause: 'Pause', road: 'Position auf der Strecke, ziehen, um die Geschwindigkeit zu ändern', km: 'km', ele: 'm ü. NN', grade: 'Steigung',

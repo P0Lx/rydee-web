@@ -17,7 +17,7 @@ const fr: Texts = {
     scroll: 'Faites défiler pour rouler',
     chapters: [
       { k: 'km 0, départ', h: 'Le téléphone sur le guidon. Tout le reste, à votre façon.', p: 'Rydee est un compteur vélo GPS que vous adaptez à votre pratique. Sans compte et sans publicité.' },
-      { k: 'Écran', h: 'Seulement ce que vous regardez vraiment', p: 'Choisissez les tuiles, les widgets et le compteur de vitesse. Faites glisser pour changer les proportions. Quatre styles, clair et sombre.' },
+      { k: 'Écran', h: 'Seulement ce que vous regardez vraiment', p: 'Choisissez les tuiles, les widgets et le compteur de vitesse. Faites glisser pour changer les proportions. Cinq styles, clair et sombre.' },
       { k: 'Capteurs', h: 'Fréquence cardiaque, cadence, puissance et ce qui arrive par derrière', p: 'Rydee se connecte aux capteurs Bluetooth. Un radar vélo affiche les véhicules sur une barre au bord de l’écran et vous avertit par un son.' },
       { k: 'Montée', h: 'Les montées se comptent toutes seules', p: 'Pente, VAM et profil. Sur une montée que vous connaissez, voyez où vous en êtes par rapport à votre propre record.' },
       { k: 'Descente, au-delà de 50 km/h', h: 'Puis, la vitesse lumière', p: 'À grande vitesse, l’écran bouge avec vous. Cet effet n’a aucune justification, si ce n’est qu’il est amusant.' },
@@ -49,8 +49,9 @@ const fr: Texts = {
   },
   studio: {
     eyebrow: 'Essayez', title: 'Votre écran, vos règles', lead: 'Changez le style, le compteur et le mode, puis prenez la route.',
-    style: 'Style', styles: { minimal: 'Minimaliste', material: 'Material', ios: 'Cupertino', sport: 'Sport' },
+    style: 'Style', styles: { alrydee: 'Alrydee', minimal: 'Minimaliste', material: 'Material', ios: 'Cupertino', sport: 'Sport' },
     mode: 'Mode', dark: 'Nuit', light: 'Jour',
+    def: 'Par défaut',
     gauge: 'Compteur de vitesse', gauges: { segments: 'Barre', arc: 'Arc', dial: 'Cadran', ring: 'Anneau', scale: 'Échelle', history: 'Historique' },
     aria: 'Aperçu de l’écran principal de Rydee', free: 'Cette configuration : version gratuite', premium: 'Cette configuration nécessite Premium', see: 'Voir les versions',
     go: 'Rouler', pause: 'Pause', road: 'Position sur le parcours, faites glisser pour changer la vitesse', km: 'km', ele: 'm d’altitude', grade: 'pente',

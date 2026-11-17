@@ -17,7 +17,7 @@ const pl: Texts = {
     scroll: 'Przewiń i ruszaj',
     chapters: [
       { k: 'km 0, start', h: 'Telefon na kierownicy. Cała reszta po Twojemu.', p: 'Rydee to licznik rowerowy z GPS, który układasz pod swoją jazdę. Bez konta i bez reklam.' },
-      { k: 'Ekran', h: 'Tylko to, na co patrzysz', p: 'Wybierasz kafelki, widgety i wskaźnik prędkości. Przeciągnięciem zmieniasz proporcje. Cztery style, tryb jasny i ciemny.' },
+      { k: 'Ekran', h: 'Tylko to, na co patrzysz', p: 'Wybierasz kafelki, widgety i wskaźnik prędkości. Przeciągnięciem zmieniasz proporcje. Pięć stylów, tryb jasny i ciemny.' },
       { k: 'Czujniki', h: 'Tętno, kadencja, moc i to, co nadjeżdża z tyłu', p: 'Rydee łączy się z czujnikami Bluetooth. Radar rowerowy pokazuje pojazdy na pasku przy krawędzi ekranu i ostrzega dźwiękiem.' },
       { k: 'Podjazd', h: 'Podjazd liczy się sam', p: 'Nachylenie, VAM i profil. Na znanym podjeździe widzisz, ile tracisz albo zyskujesz względem własnego rekordu.' },
       { k: 'Zjazd, powyżej 50 km/h', h: 'A potem nadświetlna', p: 'Przy dużej prędkości ekran rusza razem z Tobą. Efekt nie ma żadnego uzasadnienia poza tym, że jest fajny.' },
@@ -49,8 +49,9 @@ const pl: Texts = {
   },
   studio: {
     eyebrow: 'Sprawdź sam', title: 'Twój ekran, Twoje zasady', lead: 'Zmień styl, wskaźnik i tryb, a potem ruszaj w trasę.',
-    style: 'Styl', styles: { minimal: 'Minimalistyczny', material: 'Material', ios: 'Cupertino', sport: 'Sportowy' },
+    style: 'Styl', styles: { alrydee: 'Alrydee', minimal: 'Minimalistyczny', material: 'Material', ios: 'Cupertino', sport: 'Sportowy' },
     mode: 'Tryb', dark: 'Noc', light: 'Dzień',
+    def: 'Domyślny',
     gauge: 'Wskaźnik prędkości', gauges: { segments: 'Pasek', arc: 'Łuk', dial: 'Tarcza', ring: 'Pierścień', scale: 'Skala', history: 'Historia' },
     aria: 'Podgląd ekranu głównego aplikacji Rydee', free: 'Ten zestaw: wersja darmowa', premium: 'Ten zestaw wymaga Premium', see: 'Zobacz wersje',
     go: 'Jedź', pause: 'Pauza', road: 'Pozycja na trasie, przeciągnij, aby zmienić prędkość', km: 'km', ele: 'm n.p.m.', grade: 'nachylenie',
