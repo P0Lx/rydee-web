@@ -23,6 +23,16 @@ function blend(f: number) {
   return `rgb(${a.map((v, i) => Math.round(v + (b[i] - v) * t)).join(',')})`;
 }
 
+/** Płótno w rozmiarze elementu (gęstość ekranu do 2); kontekst w pikselach CSS. */
+export function fitCanvas(el: HTMLCanvasElement) {
+  const ratio = Math.min(2, devicePixelRatio || 1);
+  const w = el.clientWidth, h = el.clientHeight;
+  if (el.width !== Math.round(w * ratio) || el.height !== Math.round(h * ratio)) { el.width = Math.round(w * ratio); el.height = Math.round(h * ratio); }
+  const ctx = el.getContext('2d')!;
+  ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+  return { ctx, w, h };
+}
+
 export function drawBlock(c: CanvasRenderingContext2D, w: number, h: number, s: GaugeState, clear = true) {
   const { skin } = s;
   const f = fractionOf(s.kmh);
@@ -35,10 +45,13 @@ export function drawBlock(c: CanvasRenderingContext2D, w: number, h: number, s: 
   c.textAlign = 'left';
   c.textBaseline = 'alphabetic';
 
-  // liczba wpasowana w pole, jak FittedBox w aplikacji
+  // liczba wpasowana w pole, jak FittedBox w aplikacji - ale według
+  // najszerszej wartości tej długości („88”), nie bieżącej: wysokość cyfr
+  // stała, niezależna od wartości
+  const widest = '8'.repeat(Math.max(2, s.text.length));
   const fit = (weight: number, maxW: number, maxH: number, extra = 0) => {
     c.font = font(weight, 100);
-    const textW = c.measureText(s.text).width;
+    const textW = c.measureText(widest).width;
     return Math.min(maxH / 0.74, maxW / ((textW + extra) / 100));
   };
 

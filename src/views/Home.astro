@@ -11,7 +11,7 @@ const t = texts[lang].home;
 // Rozdziały przewijanej jazdy: miejsce na profilu (0-1), widget telefonu, radar.
 const stops: { at: number; w: string; radar?: boolean }[] = [
   { at: 0, w: 'map' }, { at: 0.13, w: 'map' }, { at: 0.26, w: 'hr', radar: true }, { at: 0.38, w: 'climb' },
-  { at: 0.52, w: 'map' }, { at: 0.69, w: 'post' }, { at: 0.86, w: 'post' },
+  { at: 0.52, w: 'map' }, { at: 0.69, w: 'details' }, { at: 0.86, w: 'rides' },
 ];
 const kinds = ['big', 'premium', 'premium', '', '', '', 'premium'];
 // Wartości tabeli wersji (1 - tak, 0 - nie), w kolejności `rows`.
@@ -44,7 +44,7 @@ const label = (v: string | number) => (v === 1 ? copy.yes : v === 0 ? copy.no : 
             </article>
           ))}
         </div>
-        <div class="dev"><Phone labels={copy.phone} /></div>
+        <div class="dev"><Phone labels={copy.phone} lang={lang} /></div>
       </div>
       <div class="track" aria-hidden="true">
         <span class="mono" data-km>0 km</span>

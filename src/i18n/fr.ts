@@ -12,7 +12,7 @@ const fr: Texts = {
   home: {
     title: 'Rydee : un compteur vélo sur votre téléphone',
     desc: 'Rydee transforme votre téléphone en compteur vélo : tuiles et widgets configurables, capteurs Bluetooth, radar, navigation et analyse des sorties. Sans compte.',
-    phone: { aria: 'Aperçu de l’écran principal de Rydee', time: 'Temps', dist: 'Distance', hr: 'Fréq. cardiaque', cad: 'Cadence', ele: 'Altitude', grade: 'Pente', map: 'Carte', hrw: 'Fréquence cardiaque', climb: 'Montée', after: 'Résumé' },
+    phone: { aria: 'Aperçu de l’écran principal de Rydee', time: 'Temps', dist: 'Distance', hr: 'Fréq. cardiaque', cad: 'Cadence', ele: 'Altitude', grade: 'Pente', map: 'Carte', hrw: 'Fréquence cardiaque', climb: 'Montée', rides: 'Sorties', moving: 'Temps en mouv.', local: 'Enregistré uniquement sur ce téléphone' },
     soon: 'Bientôt sur Google Play et l’App Store',
     scroll: 'Faites défiler pour rouler',
     chapters: [

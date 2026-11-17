@@ -12,7 +12,7 @@ const nl: Texts = {
   home: {
     title: 'Rydee: een fietscomputer op je telefoon',
     desc: 'Rydee maakt van je telefoon een fietscomputer: instelbare tegels en widgets, Bluetooth-sensoren, radar, navigatie en ritanalyse. Zonder account.',
-    phone: { aria: 'Voorbeeld van het hoofdscherm van Rydee', time: 'Tijd', dist: 'Afstand', hr: 'Hartslag', cad: 'Cadans', ele: 'Hoogte', grade: 'Helling', map: 'Kaart', hrw: 'Hartslag', climb: 'Klim', after: 'Samenvatting' },
+    phone: { aria: 'Voorbeeld van het hoofdscherm van Rydee', time: 'Tijd', dist: 'Afstand', hr: 'Hartslag', cad: 'Cadans', ele: 'Hoogte', grade: 'Helling', map: 'Kaart', hrw: 'Hartslag', climb: 'Klim', rides: 'Ritten', moving: 'Tijd in beweging', local: 'Alleen op deze telefoon opgeslagen' },
     soon: 'Binnenkort in Google Play en de App Store',
     scroll: 'Scroll en rijden maar',
     chapters: [

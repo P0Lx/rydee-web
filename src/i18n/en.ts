@@ -13,7 +13,7 @@ const en = {
   home: {
     title: 'Rydee: a bike computer on your phone',
     desc: 'Rydee turns your phone into a bike computer: configurable tiles and widgets, Bluetooth sensors, radar, navigation and ride analysis. No account.',
-    phone: { aria: 'Preview of the Rydee main screen', time: 'Time', dist: 'Distance', hr: 'Heart rate', cad: 'Cadence', ele: 'Elevation', grade: 'Gradient', map: 'Map', hrw: 'Heart rate', climb: 'Climb', after: 'Summary' },
+    phone: { aria: 'Preview of the Rydee main screen', time: 'Time', dist: 'Distance', hr: 'Heart rate', cad: 'Cadence', ele: 'Elevation', grade: 'Gradient', map: 'Map', hrw: 'Heart rate', climb: 'Climb', rides: 'Rides', moving: 'Moving time', local: 'Saved only on this phone' },
     soon: 'Coming soon to Google Play and the App Store',
     scroll: 'Scroll to ride',
     chapters: [

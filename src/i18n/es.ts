@@ -12,7 +12,7 @@ const es: Texts = {
   home: {
     title: 'Rydee: un ciclocomputador en tu móvil',
     desc: 'Rydee convierte tu móvil en un ciclocomputador: mosaicos y widgets configurables, sensores Bluetooth, radar, navegación y análisis de salidas. Sin cuenta.',
-    phone: { aria: 'Vista previa de la pantalla principal de Rydee', time: 'Tiempo', dist: 'Distancia', hr: 'Pulso', cad: 'Cadencia', ele: 'Altitud', grade: 'Pendiente', map: 'Mapa', hrw: 'Frecuencia cardíaca', climb: 'Subida', after: 'Resumen' },
+    phone: { aria: 'Vista previa de la pantalla principal de Rydee', time: 'Tiempo', dist: 'Distancia', hr: 'Pulso', cad: 'Cadencia', ele: 'Altitud', grade: 'Pendiente', map: 'Mapa', hrw: 'Frecuencia cardíaca', climb: 'Subida', rides: 'Salidas', moving: 'Tiempo en mov.', local: 'Guardado solo en este teléfono' },
     soon: 'Próximamente en Google Play y App Store',
     scroll: 'Desplázate y a rodar',
     chapters: [

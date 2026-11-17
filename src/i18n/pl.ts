@@ -12,7 +12,7 @@ const pl: Texts = {
   home: {
     title: 'Rydee: licznik rowerowy na telefon',
     desc: 'Rydee zamienia telefon w licznik rowerowy: konfigurowalne kafelki i widgety, czujniki Bluetooth, radar, nawigacja i analiza przejazdów. Bez konta.',
-    phone: { aria: 'Podgląd ekranu głównego aplikacji Rydee', time: 'Czas', dist: 'Dystans', hr: 'Tętno', cad: 'Kadencja', ele: 'Wysokość', grade: 'Nachylenie', map: 'Mapa', hrw: 'Tętno', climb: 'Podjazd', after: 'Podsumowanie' },
+    phone: { aria: 'Podgląd ekranu głównego aplikacji Rydee', time: 'Czas', dist: 'Dystans', hr: 'Tętno', cad: 'Kadencja', ele: 'Wysokość', grade: 'Nachylenie', map: 'Mapa', hrw: 'Tętno', climb: 'Podjazd', rides: 'Przejazdy', moving: 'Czas w ruchu', local: 'Zapisane tylko w telefonie' },
     soon: 'Wkrótce w Google Play i App Store',
     scroll: 'Przewiń i ruszaj',
     chapters: [

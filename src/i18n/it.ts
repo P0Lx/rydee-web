@@ -12,7 +12,7 @@ const it: Texts = {
   home: {
     title: 'Rydee: un ciclocomputer sul tuo telefono',
     desc: 'Rydee trasforma il telefono in un ciclocomputer: riquadri e widget configurabili, sensori Bluetooth, radar, navigazione e analisi delle uscite. Senza account.',
-    phone: { aria: 'Anteprima della schermata principale di Rydee', time: 'Tempo', dist: 'Distanza', hr: 'Frequenza cardiaca', cad: 'Cadenza', ele: 'Altitudine', grade: 'Pendenza', map: 'Mappa', hrw: 'Frequenza cardiaca', climb: 'Salita', after: 'Riepilogo' },
+    phone: { aria: 'Anteprima della schermata principale di Rydee', time: 'Tempo', dist: 'Distanza', hr: 'Frequenza cardiaca', cad: 'Cadenza', ele: 'Altitudine', grade: 'Pendenza', map: 'Mappa', hrw: 'Frequenza cardiaca', climb: 'Salita', rides: 'Uscite', moving: 'Tempo in mov.', local: 'Salvato solo su questo telefono' },
     soon: 'Presto su Google Play e App Store',
     scroll: 'Scorri e parti',
     chapters: [

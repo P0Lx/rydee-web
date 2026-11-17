@@ -1,6 +1,6 @@
 // Sekcja „przejazd”: przewijanie strony prowadzi wymyśloną trasę (dane
 // syntetyczne, nie z prawdziwego przejazdu) i steruje podglądem ekranu.
-import { applyPhone } from './phone';
+import { applyPhone, setupDetails, scrubDetails } from './phone';
 import { KM, ele, grade, speed, profilePath } from './route';
 import { createStreaks } from './streaks';
 
@@ -18,6 +18,7 @@ if (stage) {
   const dot = stage.querySelector<HTMLElement>('.p-dot')!;
   const kmLabel = stage.querySelector<HTMLElement>('[data-km]')!;
   const decimal = document.documentElement.lang === 'en' ? '.' : ',';
+  setupDetails(phone);
 
   const streaks = createStreaks(stage.querySelector<HTMLCanvasElement>('canvas')!, (w, h) => [w * (w > 900 ? 0.72 : 0.5), h * 0.42], () => ['215,255,62', '255,110,92']);
 
@@ -32,8 +33,15 @@ if (stage) {
     let active = 0;
     starts.forEach((s, i) => { if (p >= s) active = i; });
     chapters.forEach((c, i) => c.classList.toggle('on', i === active));
+    // `details` / `rides` - osobny ekran aplikacji, pozostałe - widget na ekranie głównym
     const widget = chapters[active].dataset.w!;
+    const screen = widget === 'details' || widget === 'rides' ? widget : 'ride';
+    if (phone.dataset.screen !== screen) phone.dataset.screen = screen;
     phone.querySelectorAll<HTMLElement>('.w').forEach((w) => w.classList.toggle('on', w.dataset.w === widget));
+    if (screen === 'details') {
+      const from = starts[active], to = starts[active + 1] ?? 1;
+      scrubDetails(phone, 0.04 + 0.92 * Math.min(1, Math.max(0, (p - from) / (to - from))));
+    }
     phone.classList.toggle('radar', chapters[active].dataset.radar !== undefined);
     const v = speed(x), gr = grade(x), km = x * KM;
     const cars = phone.querySelectorAll<HTMLElement>('.ph-radar i');
@@ -52,4 +60,5 @@ if (stage) {
   addEventListener('scroll', tick, { passive: true });
   addEventListener('resize', tick);
   update();
+  document.fonts?.ready.then(tick);
 }

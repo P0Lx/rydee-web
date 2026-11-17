@@ -12,7 +12,7 @@ const de: Texts = {
   home: {
     title: 'Rydee: ein Fahrradcomputer auf deinem Handy',
     desc: 'Rydee macht dein Handy zum Fahrradcomputer: anpassbare Kacheln und Widgets, Bluetooth-Sensoren, Radar, Navigation und Fahrtanalyse. Ohne Konto.',
-    phone: { aria: 'Vorschau des Rydee-Hauptbildschirms', time: 'Zeit', dist: 'Distanz', hr: 'Herzfrequenz', cad: 'Trittfrequenz', ele: 'Höhe', grade: 'Steigung', map: 'Karte', hrw: 'Herzfrequenz', climb: 'Anstieg', after: 'Zusammenfassung' },
+    phone: { aria: 'Vorschau des Rydee-Hauptbildschirms', time: 'Zeit', dist: 'Distanz', hr: 'Herzfrequenz', cad: 'Trittfrequenz', ele: 'Höhe', grade: 'Steigung', map: 'Karte', hrw: 'Herzfrequenz', climb: 'Anstieg', rides: 'Fahrten', moving: 'Zeit in Bewegung', local: 'Nur auf diesem Telefon gespeichert' },
     soon: 'Bald bei Google Play und im App Store',
     scroll: 'Scrollen und losfahren',
     chapters: [

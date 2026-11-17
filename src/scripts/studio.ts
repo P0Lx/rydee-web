@@ -1,6 +1,6 @@
 // Studio: podgląd ekranu głównego ze stylami i wskaźnikami z aplikacji, na
 // wymyślonej trasie. Kolory jak w `rydee-app/lib/app_colors.dart`.
-import { drawBlock, type GaugeId, type GaugeSkin } from './gauges';
+import { drawBlock, fitCanvas, type GaugeId, type GaugeSkin } from './gauges';
 import { KM, ele, grade, speed, profilePath } from './route';
 import { createStreaks } from './streaks';
 
@@ -74,15 +74,6 @@ if (root) {
   };
 
   const gaugeSkin = (s: Skin, mode: Mode): GaugeSkin => ({ dark: mode === 'dark', number: s.ink, label: s.label, divider: s.line, ink: s.ink, weight: s.weight });
-
-  function fitCanvas(c: HTMLCanvasElement) {
-    const ratio = Math.min(2, devicePixelRatio || 1);
-    const w = c.clientWidth, h = c.clientHeight;
-    if (c.width !== Math.round(w * ratio) || c.height !== Math.round(h * ratio)) { c.width = Math.round(w * ratio); c.height = Math.round(h * ratio); }
-    const ctx = c.getContext('2d')!;
-    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-    return { ctx, w, h };
-  }
 
   function draw(now = 0, force = false) {
     const skin = skins[state.style][state.mode];
