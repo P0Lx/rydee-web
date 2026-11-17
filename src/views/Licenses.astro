@@ -1,13 +1,11 @@
 ---
 import Base from '../layouts/Base.astro';
 import { type Lang } from '../site';
+import { texts } from '../i18n';
 import data from '../data/licenses.json';
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
-const c = {
-  pl: { meta: 'Licencje: Rydee', desc: 'Licencje oprogramowania open source oraz autorzy danych używanych w Rydee.', h: 'Na ramionach open source', lead: (n: number) => `Rydee korzysta z ${n} bibliotek open source oraz z otwartych danych. Dziękujemy ich autorom. W aplikacji ta sama lista jest w Pomoc > Licencje.`, data: 'Dane i usługi', native: 'Biblioteki natywne', pkgs: 'Pakiety Dart i Flutter', fonts: 'Czcionki tej strony', big: 'Pełny tekst jest dostępny w aplikacji, w Pomoc > Licencje.', sdk: 'Składnik Flutter SDK (BSD-3-Clause).' },
-  en: { meta: 'Licenses: Rydee', desc: 'Open source licenses and data credits for Rydee.', h: 'Standing on open source', lead: (n: number) => `Rydee uses ${n} open source libraries and open data. Thank you to their authors. In the app, the same list is under Help > Licenses.`, data: 'Data and services', native: 'Native libraries', pkgs: 'Dart and Flutter packages', fonts: 'Fonts on this site', big: 'The full text is available in the app, under Help > Licenses.', sdk: 'Part of the Flutter SDK (BSD-3-Clause).' },
-}[lang];
+const c = texts[lang].licenses;
 const credits: [string, string, string][] = [
   ['OpenStreetMap', '© OpenStreetMap contributors, ODbL 1.0', 'https://www.openstreetmap.org/copyright'],
   ['OpenFreeMap', '© OpenFreeMap', 'https://openfreemap.org'],

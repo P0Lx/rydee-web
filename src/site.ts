@@ -7,36 +7,26 @@ export const company = {
   email: 'support@rydee.app' as string | null,
 };
 
-export type Lang = 'pl' | 'en';
+/** Języki strony; pierwszy (EN) jest domyślny - bez przedrostka w adresie. */
+export const langs = ['en', 'pl'] as const;
+export type Lang = (typeof langs)[number];
+export const defaultLang: Lang = 'en';
+/** Języki z przedrostkiem w adresie (`/pl/...`). */
+export const prefixedLangs = langs.filter((l) => l !== defaultLang);
+
+/** Nazwa języka w tym języku (lista w przełączniku). */
+export const langNames: Record<Lang, string> = { en: 'English', pl: 'Polski' };
 
 /** Serwer Rydee (`rydee-cloud`) - formularz kontaktowy wysyła `POST {apiUrl}/feedback`.
  * Inny adres (np. emulator) przy budowaniu: `PUBLIC_RYDEE_API_URL`. */
 export const apiUrl: string = import.meta.env.PUBLIC_RYDEE_API_URL ?? 'https://europe-central2-rydee-cloud.cloudfunctions.net/api';
 
-export const routes = {
-  home: { pl: '/', en: '/en' },
-  help: { pl: '/pomoc', en: '/en/help' },
-  privacy: { pl: '/prywatnosc', en: '/en/privacy' },
-  contact: { pl: '/kontakt', en: '/en/contact' },
-  licenses: { pl: '/licencje', en: '/en/licenses' },
-} as const;
-export type Route = keyof typeof routes;
+/** Ścieżki stron, takie same we wszystkich językach. Stare adresy
+ * (`/en/...`, `/pomoc`, `/prywatnosc`...) przekierowuje `firebase.json`. */
+const paths = { home: '', help: '/help', privacy: '/privacy', contact: '/contact', licenses: '/licenses' } as const;
+export type Route = keyof typeof paths;
 
-export const ui = {
-  pl: {
-    features: 'Funkcje', premium: 'Premium', help: 'Pomoc', contact: 'Kontakt', privacy: 'Prywatność', licenses: 'Licencje',
-    theme: 'Zmień motyw', menu: 'Nawigacja', skip: 'Przejdź do treści', other: 'English', otherShort: 'EN',
-    tagline: 'Licznik rowerowy na telefon. Bez konta.',
-    legal: 'Strava, Google Play, Health Connect, App Store i Spotify są znakami towarowymi ich właścicieli. Rydee nie jest z nimi powiązane.',
-    credits: 'Dane map © OpenStreetMap. Mapy: OpenFreeMap, Stadia Maps, OpenMapTiles. Trasy: openrouteservice.org / HeiGIT. Wyszukiwanie: Photon. Pogoda: MET Norway.',
-    fill: 'do uzupełnienia',
-  },
-  en: {
-    features: 'Features', premium: 'Premium', help: 'Help', contact: 'Contact', privacy: 'Privacy', licenses: 'Licenses',
-    theme: 'Change theme', menu: 'Navigation', skip: 'Skip to content', other: 'Polski', otherShort: 'PL',
-    tagline: 'A bike computer on your phone. No account.',
-    legal: 'Strava, Google Play, Health Connect, App Store and Spotify are trademarks of their respective owners. Rydee is not affiliated with them.',
-    credits: 'Map data © OpenStreetMap. Maps: OpenFreeMap, Stadia Maps, OpenMapTiles. Routing: openrouteservice.org / HeiGIT. Search: Photon. Weather: MET Norway.',
-    fill: 'to be completed',
-  },
-} as const;
+/** Adres strony w danym języku: EN bez przedrostka, pozostałe `/<język>`. */
+export function href(route: Route, lang: Lang): string {
+  return (lang === defaultLang ? '' : `/${lang}`) + paths[route] || '/';
+}

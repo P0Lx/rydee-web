@@ -1,0 +1,8 @@
+---
+// Języki z przedrostkiem w adresie (`/pl/...`); EN - `src/pages/licenses.astro`.
+import Licenses from '../../views/Licenses.astro';
+import { prefixedLangs, type Lang } from '../../site';
+export const getStaticPaths = () => prefixedLangs.map((lang) => ({ params: { lang } }));
+const lang = Astro.params.lang as Lang;
+---
+<Licenses lang={lang} />

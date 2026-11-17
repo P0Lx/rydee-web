@@ -2,35 +2,11 @@
 // Formularz kontaktowy - ten sam co „Napisz do nas” w aplikacji: kategoria,
 // tytuł (temat maila), treść, opcjonalny e-mail; wysyłka `POST {API}/feedback` z `platform: web`.
 import Base from '../layouts/Base.astro';
-import { apiUrl, company, routes, type Lang } from '../site';
+import { apiUrl, company, href, type Lang } from '../site';
+import { texts } from '../i18n';
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
-const c = {
-  pl: {
-    title: 'Kontakt: Rydee', desc: 'Napisz do twórców aplikacji Rydee: pytania, sugestie i uwagi.',
-    h: 'Masz pytanie lub sugestię?', lead: 'Pytania, sugestie, uwagi - odpowiadamy e-mailem.',
-    cat: 'Rodzaj wiadomości', cats: { problem: 'Problem', suggestion: 'Propozycja', question: 'Pytanie', opinion: 'Opinia', other: 'Inne' },
-    subj: 'Tytuł', subjPh: 'W kilku słowach, czego dotyczy wiadomość',
-    msg: 'Wiadomość', ph: 'Twoja wiadomość', email: 'E-mail do odpowiedzi', emailHint: 'Opcjonalnie - bez adresu nie możemy odpowiedzieć.',
-    info: 'Razem z wiadomością wysyłamy język strony.', privacy: 'Polityka prywatności', send: 'Wyślij', sending: 'Wysyłanie…',
-    errCat: 'Wybierz rodzaj wiadomości.', errSubj: 'Tytuł jest za krótki.', errMsg: 'Wiadomość jest za krótka.', errEmail: 'Nieprawidłowy adres e-mail.',
-    errNet: 'Brak połączenia z serwerem. Spróbuj ponownie.', errLimit: 'Za dużo wiadomości. Spróbuj ponownie za godzinę.', errOther: 'Nie udało się wysłać wiadomości.',
-    thanks: 'Dziękujemy!', sent: 'Wiadomość wysłana. Jeśli podano adres, odpowiemy e-mailem.', again: 'Napisz kolejną',
-    direct: 'Możesz też napisać bezpośrednio:',
-  },
-  en: {
-    title: 'Contact: Rydee', desc: 'Write to the makers of the Rydee app: questions, suggestions and feedback.',
-    h: 'Got a question or a suggestion?', lead: 'Questions, suggestions, feedback - we reply by email.',
-    cat: 'Type of message', cats: { problem: 'Problem', suggestion: 'Suggestion', question: 'Question', opinion: 'Opinion', other: 'Other' },
-    subj: 'Subject', subjPh: 'In a few words, what is it about',
-    msg: 'Message', ph: 'Your message', email: 'Email for reply', emailHint: 'Optional - without an address we cannot reply.',
-    info: 'Along with the message we send the website language.', privacy: 'Privacy policy', send: 'Send', sending: 'Sending…',
-    errCat: 'Choose the type of message.', errSubj: 'The subject is too short.', errMsg: 'The message is too short.', errEmail: 'Invalid email address.',
-    errNet: 'No connection to the server. Please try again.', errLimit: 'Too many messages. Please try again in an hour.', errOther: 'The message could not be sent.',
-    thanks: 'Thank you!', sent: 'Message sent. If you gave an address, we will reply by email.', again: 'Write another',
-    direct: 'You can also write directly:',
-  },
-}[lang];
+const c = texts[lang].contact;
 const messages = { errCat: c.errCat, errSubj: c.errSubj, errMsg: c.errMsg, errEmail: c.errEmail, errNet: c.errNet, errLimit: c.errLimit, errOther: c.errOther, send: c.send, sending: c.sending };
 ---
 <Base lang={lang} route="contact" title={c.title} description={c.desc}>
@@ -66,7 +42,7 @@ const messages = { errCat: c.errCat, errSubj: c.errSubj, errMsg: c.errMsg, errEm
         <span class="err" id="e-email" hidden></span>
       </label>
       <label class="trap" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off" /></label>
-      <p class="muted info">{c.info} <a href={routes.privacy[lang]}>{c.privacy}</a></p>
+      <p class="muted info">{c.info} <a href={href('privacy', lang)}>{c.privacy}</a></p>
       <p class="err big" id="e-send" role="alert" hidden></p>
       <button class="btn" type="submit" id="send">{c.send}</button>
     </form>

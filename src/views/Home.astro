@@ -2,86 +2,30 @@
 import Base from '../layouts/Base.astro';
 import Phone from '../components/Phone.astro';
 import Studio from '../components/Studio.astro';
-import { routes, type Lang } from '../site';
+import { href, type Lang } from '../site';
+import { texts } from '../i18n';
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
+const t = texts[lang].home;
 
+// Rozdziały przewijanej jazdy: miejsce na profilu (0-1), widget telefonu, radar.
+const stops: { at: number; w: string; radar?: boolean }[] = [
+  { at: 0, w: 'map' }, { at: 0.13, w: 'map' }, { at: 0.26, w: 'hr', radar: true }, { at: 0.38, w: 'climb' },
+  { at: 0.52, w: 'map' }, { at: 0.69, w: 'post' }, { at: 0.86, w: 'post' },
+];
+const kinds = ['big', 'premium', 'premium', '', '', '', 'premium'];
+// Wartości tabeli wersji (1 - tak, 0 - nie), w kolejności `rows`.
+const values: [string | number, string | number][] = [
+  [1, 1], [1, 1], [1, 1], [1, 1], [1, 1],
+  ['1', '4'], ['2', '6'], ['1', t.many], ['1', t.many], [t.musicFree, t.musicPremium], ['OpenFreeMap', 'Stadia Maps'],
+  [0, 1], [0, 1], [0, 1], [0, 1], [0, 1], [0, 1], [0, 1],
+];
 const copy = {
-  pl: {
-    title: 'Rydee: licznik rowerowy na telefon',
-    desc: 'Rydee zamienia telefon w licznik rowerowy: konfigurowalne kafelki i widgety, czujniki Bluetooth, radar, nawigacja i analiza przejazdów. Bez konta.',
-    phone: { aria: 'Podgląd ekranu głównego aplikacji Rydee', time: 'Czas', dist: 'Dystans', hr: 'Tętno', cad: 'Kadencja', ele: 'Wysokość', grade: 'Nachylenie', map: 'Mapa', hrw: 'Tętno', climb: 'Podjazd', after: 'Podsumowanie' },
-    soon: 'Wkrótce w Google Play i App Store',
-    scroll: 'Przewiń i ruszaj',
-    chapters: [
-      { at: 0, w: 'map', k: 'km 0, start', h: 'Telefon na kierownicy. Cała reszta po Twojemu.', p: 'Rydee to licznik rowerowy z GPS, który układasz pod swoją jazdę. Bez konta i bez reklam.' },
-      { at: 0.13, w: 'map', k: 'Ekran', h: 'Tylko to, na co patrzysz', p: 'Wybierasz kafelki, widgety i wskaźnik prędkości. Przeciągnięciem zmieniasz proporcje. Cztery style, tryb jasny i ciemny.' },
-      { at: 0.26, w: 'hr', radar: true, k: 'Czujniki', h: 'Tętno, kadencja, moc i to, co nadjeżdża z tyłu', p: 'Rydee łączy się z czujnikami Bluetooth. Radar rowerowy pokazuje pojazdy na pasku przy krawędzi ekranu i ostrzega dźwiękiem.' },
-      { at: 0.38, w: 'climb', k: 'Podjazd', h: 'Podjazd liczy się sam', p: 'Nachylenie, VAM i profil. Na znanym podjeździe widzisz, ile tracisz albo zyskujesz względem własnego rekordu.' },
-      { at: 0.52, w: 'map', k: 'Zjazd, powyżej 50 km/h', h: 'A potem nadświetlna', p: 'Przy dużej prędkości ekran rusza razem z Tobą. Efekt nie ma żadnego uzasadnienia poza tym, że jest fajny.' },
-      { at: 0.69, w: 'post', k: 'Po jeździe', h: 'Cała jazda w jednym miejscu', p: 'Mapa, wykresy, strefy i najlepsze odcinki. Przeciągasz palcem po wykresie, a miejsce pokazuje się na mapie. Eksport GPX i FIT, Strava, Health Connect.' },
-      { at: 0.86, w: 'post', k: 'Meta', h: 'Twoje przejazdy to Twoja sprawa', p: 'Przejazdy zostają na telefonie i w jego kopii zapasowej. Żadnego konta w Rydee. Dokładnie opisujemy, co i kiedy opuszcza urządzenie.' },
-    ],
-    fEyebrow: 'Funkcje', fTitle: 'Zbudowany do jazdy, nie do oglądania',
-    features: [
-      ['Nagrywanie odporne na awarie', 'Przejazd trafia do pliku na bieżąco. Autopauza wstrzymuje zapis na postoju i wznawia po ruszeniu.', 'big'],
-      ['Nawigacja rowerowa', 'Szukanie celu, punkt z mapy, trasa z GPX. Wskazówki i sygnał przed skrętem.', 'premium'],
-      ['Wiatr względem jazdy', 'Czerwony pod wiatr, zielony z wiatrem. Prognoza MET Norway.', 'premium'],
-      ['Okrążenia', 'Co 1, 2, 3, 5 albo 10 km, z różnicą do poprzedniego.', ''],
-      ['Strava', 'Wysyłanie przejazdów z pełnymi danymi i ulubione segmenty.', ''],
-      ['Muzyka bez wychodzenia', 'Tytuł i okładka z innej aplikacji. Sterowanie w Premium. Android.', ''],
-      ['Wiele rowerów', 'Osobny profil dla każdego roweru i jego typu trasy.', 'premium'],
-    ],
-    pEyebrow: 'Wersje', pTitle: 'Zacznij od wersji darmowej. Premium, kiedy zechcesz.', pLead: 'Premium możesz mieć w subskrypcji albo kupić jednorazowo. Ceny podamy przed premierą.',
-    planFree: ['Licznik, nagrywanie i autopauza', 'Przejazdy, eksport i import GPX', 'Strava', 'Tętno i kadencja', 'Widgety Teren, Tętno, Okrążenia'],
-    planPremium: ['Nawigacja i trasy z GPX', 'Radar rowerowy i czujnik mocy', 'Podjazdy i rekordy', 'Strefy i pełna analiza', 'Wszystkie style i wskaźniki'],
-    waysT: 'Wybierz, jak wolisz', ways: [['Subskrypcja', 'Płatność cykliczna. Możesz zrezygnować w dowolnej chwili w Google Play lub App Store.'], ['Zakup jednorazowy', 'Płacisz raz, a Premium zostaje z Tobą.']], waysNote: 'Obie formy odblokowują te same funkcje.', compare: 'Porównanie wersji',
-    free: 'Darmowa', premium: 'Premium', yes: 'tak', no: 'nie',
-    rows: [
-      ['Licznik, nagrywanie, autopauza', 1, 1], ['Lista przejazdów, eksport GPX, import GPX', 1, 1], ['Strava: wysyłanie i ulubione segmenty', 1, 1], ['Tętno i kadencja z czujników', 1, 1], ['Widgety Teren, Tętno, Okrążenia', 1, 1],
-      ['Style aplikacji', '1', '4'], ['Wskaźniki prędkości', '2', '6'], ['Strony kafelków', '1', 'wiele'], ['Rowery', '1', 'wiele'], ['Muzyka', 'podgląd', 'sterowanie'], ['Mapa', 'OpenFreeMap', 'Stadia Maps'],
-      ['Nawigacja i trasy z GPX', 0, 1], ['Czujnik mocy, widget Moc', 0, 1], ['Radar rowerowy', 0, 1], ['Podjazdy i rekordy', 0, 1], ['Strefy tętna i mocy, pełna analiza', 0, 1], ['Wiatr względem kierunku jazdy', 0, 1], ['Eksport FIT, Health Connect', 0, 1],
-    ],
-    helpT: 'Coś niejasnego?', helpP: 'Pomoc odpowiada na najczęstsze pytania. Ta sama treść jest w aplikacji, także bez internetu.', helpB: 'Otwórz pomoc', privB: 'Polityka prywatności',
-  },
-  en: {
-    title: 'Rydee: a bike computer on your phone',
-    desc: 'Rydee turns your phone into a bike computer: configurable tiles and widgets, Bluetooth sensors, radar, navigation and ride analysis. No account.',
-    phone: { aria: 'Preview of the Rydee main screen', time: 'Time', dist: 'Distance', hr: 'Heart rate', cad: 'Cadence', ele: 'Elevation', grade: 'Gradient', map: 'Map', hrw: 'Heart rate', climb: 'Climb', after: 'Summary' },
-    soon: 'Coming soon to Google Play and the App Store',
-    scroll: 'Scroll to ride',
-    chapters: [
-      { at: 0, w: 'map', k: 'km 0, start', h: 'Phone on the bars. Everything else your way.', p: 'Rydee is a GPS bike computer you shape around your riding. No account and no ads.' },
-      { at: 0.13, w: 'map', k: 'Screen', h: 'Only what you actually look at', p: 'Pick your tiles, widgets and speed gauge. Drag to change the proportions. Four styles, light and dark.' },
-      { at: 0.26, w: 'hr', radar: true, k: 'Sensors', h: 'Heart rate, cadence, power and what’s coming from behind', p: 'Rydee connects to Bluetooth sensors. A bike radar shows vehicles on a bar at the screen edge and warns you with a sound.' },
-      { at: 0.38, w: 'climb', k: 'Climb', h: 'Climbs count themselves', p: 'Gradient, VAM and profile. On a climb you know, see how you compare to your own record.' },
-      { at: 0.52, w: 'map', k: 'Descent, above 50 km/h', h: 'Then, hyperspeed', p: 'At high speed the screen moves with you. There is no reason for this effect except that it’s fun.' },
-      { at: 0.69, w: 'post', k: 'After the ride', h: 'The whole ride in one place', p: 'Map, charts, zones and best efforts. Drag along a chart and the spot appears on the map. GPX and FIT export, Strava, Health Connect.' },
-      { at: 0.86, w: 'post', k: 'Finish', h: 'Your rides are your business', p: 'Rides stay on your phone and in its backup. There is no Rydee account. We spell out exactly what leaves the device, and when.' },
-    ],
-    fEyebrow: 'Features', fTitle: 'Built for riding, not for looking at',
-    features: [
-      ['Crash-proof recording', 'Your ride is written to a file as you go. Auto-pause stops recording when you stop and resumes when you ride on.', 'big'],
-      ['Cycling navigation', 'Search, pick a point on the map, or follow a GPX route. Turn guidance and sound alerts.', 'premium'],
-      ['Wind relative to you', 'Red for headwind, green for tailwind. Forecast by MET Norway.', 'premium'],
-      ['Laps', 'Every 1, 2, 3, 5 or 10 km, with the difference to the previous one.', ''],
-      ['Strava', 'Upload rides with full data and see starred segments.', ''],
-      ['Music on screen', 'Title and cover from another app. Controls in Premium. Android.', ''],
-      ['Multiple bikes', 'A profile for each bike and its route type.', 'premium'],
-    ],
-    pEyebrow: 'Editions', pTitle: 'Start with Free. Go Premium when you want.', pLead: 'Get Premium as a subscription or as a one-time purchase. We’ll announce prices before launch.',
-    planFree: ['Computer, recording and auto-pause', 'Rides, GPX export and import', 'Strava', 'Heart rate and cadence', 'Terrain, Heart rate and Laps widgets'],
-    planPremium: ['Navigation and GPX routes', 'Bike radar and power meter', 'Climbs and records', 'Zones and full analysis', 'All styles and gauges'],
-    waysT: 'Choose how you prefer', ways: [['Subscription', 'Recurring payment. Cancel anytime in Google Play or the App Store.'], ['One-time purchase', 'Pay once and Premium stays with you.']], waysNote: 'Both options unlock the same features.', compare: 'Compare editions',
-    free: 'Free', premium: 'Premium', yes: 'yes', no: 'no',
-    rows: [
-      ['Computer, recording, auto-pause', 1, 1], ['Ride list, GPX export, GPX import', 1, 1], ['Strava: uploads and starred segments', 1, 1], ['Heart rate and cadence sensors', 1, 1], ['Terrain, Heart rate and Laps widgets', 1, 1],
-      ['App styles', '1', '4'], ['Speed gauges', '2', '6'], ['Tile pages', '1', 'many'], ['Bikes', '1', 'many'], ['Music', 'preview', 'controls'], ['Map', 'OpenFreeMap', 'Stadia Maps'],
-      ['Navigation and GPX routes', 0, 1], ['Power meter, Power widget', 0, 1], ['Bike radar', 0, 1], ['Climbs and records', 0, 1], ['Heart rate and power zones, full analysis', 0, 1], ['Wind relative to your direction', 0, 1], ['FIT export, Health Connect', 0, 1],
-    ],
-    helpT: 'Something unclear?', helpP: 'Help answers the most common questions. The same content is in the app, even without internet.', helpB: 'Open help', privB: 'Privacy policy',
-  },
-}[lang];
+  ...t,
+  chapters: t.chapters.map((c, i) => ({ ...c, ...stops[i] })),
+  features: t.features.map(([a, b], i) => [a, b, kinds[i]]),
+  rows: t.rows.map((n, i) => [n, ...values[i]] as [string, string | number, string | number]),
+};
 const cell = (v: string | number) => (v === 1 ? '●' : v === 0 ? '–' : v);
 const label = (v: string | number) => (v === 1 ? copy.yes : v === 0 ? copy.no : undefined);
 ---
@@ -163,7 +107,7 @@ const label = (v: string | number) => (v === 1 ? copy.yes : v === 0 ? copy.no : 
   <section class="sec wrap cta">
     <h2>{copy.helpT}</h2>
     <p class="lead">{copy.helpP}</p>
-    <div class="row"><a class="btn" href={routes.help[lang]}>{copy.helpB}</a><a class="btn ghost" href={routes.privacy[lang]}>{copy.privB}</a></div>
+    <div class="row"><a class="btn" href={href('help', lang)}>{copy.helpB}</a><a class="btn ghost" href={href('privacy', lang)}>{copy.privB}</a></div>
   </section>
 </Base>
 

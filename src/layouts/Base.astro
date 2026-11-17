@@ -1,14 +1,14 @@
 ---
 import '../styles/global.css';
-import { ui, routes, type Lang, type Route } from '../site';
+import { href, langs, langNames, defaultLang, type Lang, type Route } from '../site';
+import { texts } from '../i18n';
 interface Props { lang: Lang; route: Route; title: string; description: string; }
 const { lang, route, title, description } = Astro.props;
-const t = ui[lang];
-const other: Lang = lang === 'pl' ? 'en' : 'pl';
-const r = (name: Route) => routes[name][lang];
+const t = texts[lang].ui;
+const r = (name: Route) => href(name, lang);
 const home = r('home');
 const site = Astro.site!;
-const url = (l: Lang) => new URL(routes[route][l], site).href;
+const url = (l: Lang) => new URL(href(route, l), site).href;
 ---
 <!doctype html>
 <html lang={lang}>
@@ -20,9 +20,8 @@ const url = (l: Lang) => new URL(routes[route][l], site).href;
   <meta name="theme-color" content="#0b0c0e" />
   <link rel="icon" href="/icon.png" type="image/png" />
   <link rel="canonical" href={url(lang)} />
-  <link rel="alternate" hreflang="pl" href={url('pl')} />
-  <link rel="alternate" hreflang="en" href={url('en')} />
-  <link rel="alternate" hreflang="x-default" href={url('en')} />
+  {langs.map((l) => <link rel="alternate" hreflang={l} href={url(l)} />)}
+  <link rel="alternate" hreflang="x-default" href={url(defaultLang)} />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:type" content="website" />
@@ -43,7 +42,12 @@ const url = (l: Lang) => new URL(routes[route][l], site).href;
       <a class="l" href={r('help')} aria-current={route === 'help' ? 'page' : undefined}>{t.help}</a>
       <a class="l" href={r('contact')} aria-current={route === 'contact' ? 'page' : undefined}>{t.contact}</a>
     </nav>
-    <a class="l lang" href={routes[route][other]} hreflang={other} lang={other} aria-label={t.other}>{t.otherShort}</a>
+    <details class="langs">
+      <summary class="l lang" aria-label={t.language}>{lang.toUpperCase()}</summary>
+      <div class="lang-menu">
+        {langs.map((l) => <a href={href(route, l)} hreflang={l} lang={l} aria-current={l === lang ? 'true' : undefined}><span class="mono">{l.toUpperCase()}</span>{langNames[l]}</a>)}
+      </div>
+    </details>
     <button class="ib" id="theme" type="button" aria-label={t.theme}>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></svg>
     </button>
@@ -71,6 +75,10 @@ const url = (l: Lang) => new URL(routes[route][l], site).href;
       root.dataset.theme = dark ? 'light' : 'dark';
       try { localStorage.setItem('theme', root.dataset.theme); } catch {}
     });
+    // Lista języków zamyka się po kliknięciu obok i klawiszem Esc.
+    const langMenu = document.querySelector<HTMLDetailsElement>('.langs');
+    addEventListener('click', (e) => { if (langMenu?.open && !langMenu.contains(e.target as Node)) langMenu.open = false; });
+    addEventListener('keydown', (e) => { if (e.key === 'Escape' && langMenu?.open) { langMenu.open = false; langMenu.querySelector('summary')?.focus(); } });
   </script>
 </body>
 </html>

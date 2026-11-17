@@ -4,6 +4,14 @@
     "public": "dist",
     "cleanUrls": true,
     "trailingSlash": false,
+    "redirects": [
+      { "source": "/en", "destination": "/", "type": 301 },
+      { "source": "/en/:page", "destination": "/:page", "type": 301 },
+      { "source": "/pomoc", "destination": "/pl/help", "type": 301 },
+      { "source": "/prywatnosc", "destination": "/pl/privacy", "type": 301 },
+      { "source": "/kontakt", "destination": "/pl/contact", "type": 301 },
+      { "source": "/licencje", "destination": "/pl/licenses", "type": 301 }
+    ],
     "headers": [
       { "source": "/help/*.json", "headers": [
         { "key": "Cache-Control", "value": "public, max-age=3600" },

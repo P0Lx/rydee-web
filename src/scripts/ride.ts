@@ -17,7 +17,7 @@ if (stage) {
   const done = svg.querySelector<SVGRectElement>('.p-clip')!;
   const dot = stage.querySelector<HTMLElement>('.p-dot')!;
   const kmLabel = stage.querySelector<HTMLElement>('[data-km]')!;
-  const decimal = document.documentElement.lang === 'pl' ? ',' : '.';
+  const decimal = document.documentElement.lang === 'en' ? '.' : ',';
 
   const streaks = createStreaks(stage.querySelector<HTMLCanvasElement>('canvas')!, (w, h) => [w * (w > 900 ? 0.72 : 0.5), h * 0.42], () => ['215,255,62', '255,110,92']);
 

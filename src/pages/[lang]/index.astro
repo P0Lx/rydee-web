@@ -1,0 +1,8 @@
+---
+// Języki z przedrostkiem w adresie (`/pl/...`); EN - `src/pages/index.astro`.
+import Home from '../../views/Home.astro';
+import { prefixedLangs, type Lang } from '../../site';
+export const getStaticPaths = () => prefixedLangs.map((lang) => ({ params: { lang } }));
+const lang = Astro.params.lang as Lang;
+---
+<Home lang={lang} />

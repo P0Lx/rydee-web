@@ -661,7 +661,7 @@ function palette(): Pal {
 // Podpięcie płócien `canvas.fig[data-fig]`: rysowanie tylko widocznych
 // w otwartych pytaniach, bez animacji przy ograniczeniu ruchu.
 export function mountFigures(root: ParentNode = document) {
-  decimal = document.documentElement.lang === 'pl' ? ',' : '.';
+  decimal = document.documentElement.lang === 'en' ? '.' : ',';
   const motion = matchMedia('(prefers-reduced-motion: no-preference)');
   const items = [...root.querySelectorAll<HTMLCanvasElement>('canvas.fig[data-fig]')].map((el) => {
     let f: Fig | null = null;

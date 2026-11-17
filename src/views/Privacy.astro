@@ -1,11 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
-import { company, ui, type Lang } from '../site';
+import { company, type Lang } from '../site';
+import { texts } from '../i18n';
 import { privacy } from '../data/privacy';
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
 const p = privacy[lang];
-const fill = (key: string) => `<mark class="fill">${key}: ${ui[lang].fill}</mark>`;
+const fill = (key: string) => `<mark class="fill">${key}: ${texts[lang].ui.fill}</mark>`;
 const names: Record<string, string> = lang === 'pl'
   ? { name: 'nazwa firmy', address: 'adres', taxId: 'NIP', email: 'e-mail' }
   : { name: 'company name', address: 'address', taxId: 'tax ID', email: 'e-mail' };

@@ -31,7 +31,7 @@ const maps = { dark: ['#161616', '#2A2A2A'], light: ['#F8F4F0', '#E4DDD3'] };
 const root = document.querySelector<HTMLElement>('.studio');
 if (root) {
   const q = <T extends Element>(s: string) => root.querySelector<T>(s)!;
-  const decimal = document.documentElement.lang === 'pl' ? ',' : '.';
+  const decimal = document.documentElement.lang === 'en' ? '.' : ',';
   const device = q<HTMLElement>('.sd');
   const main = q<HTMLCanvasElement>('[data-main]');
   const thumbs = [...root.querySelectorAll<HTMLCanvasElement>('[data-thumb]')];

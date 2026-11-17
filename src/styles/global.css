@@ -71,9 +71,18 @@ mark.fill { background: var(--volt); color: var(--on-volt); padding: 1px 7px; bo
 .nav a.l:hover, .nav .ib:hover, .nav a.l[aria-current='page'] { background: var(--surface-2); }
 .nav .ib svg { width: 19px; height: 19px; }
 .nav .lang { font-family: var(--mono); font-size: 0.82rem; }
+.langs { position: relative; }
+.langs summary { display: inline-flex; align-items: center; justify-content: center; min-height: 40px; padding: 0 13px; border-radius: 11px; cursor: pointer; list-style: none; }
+.langs summary::-webkit-details-marker { display: none; }
+.langs summary:hover, .langs[open] summary { background: var(--surface-2); }
+.lang-menu { position: absolute; right: 0; top: calc(100% + 8px); min-width: 180px; display: grid; padding: 6px; border-radius: 14px; background: var(--surface); border: 1px solid var(--line); box-shadow: 0 12px 32px rgb(0 0 0 / 0.25); }
+.lang-menu a { display: flex; gap: 12px; align-items: center; min-height: 40px; padding: 0 12px; border-radius: 9px; text-decoration: none; font-size: 0.93rem; }
+.lang-menu a .mono { font-size: 0.78rem; color: var(--muted); width: 22px; }
+.lang-menu a:hover { background: var(--surface-2); }
+.lang-menu a[aria-current] { font-weight: 600; }
 @media (max-width: 720px) {
   .nav a.l.opt { display: none; }
-  .nav a.l, .nav .ib { padding: 0 9px; }
+  .nav a.l, .nav .ib, .langs summary { padding: 0 9px; }
 }
 
 .foot { margin-top: 110px; border-top: 1px solid var(--line); padding: 54px 0 40px; font-size: 0.93rem; }

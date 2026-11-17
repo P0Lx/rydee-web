@@ -1,28 +1,11 @@
 ---
 // Studio: duży podgląd ekranu głównego z wyborem stylu, wskaźnika i trybu.
 import type { Lang } from '../site';
+import { texts } from '../i18n';
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
-const t = {
-  pl: {
-    eyebrow: 'Sprawdź sam', title: 'Twój ekran, Twoje zasady', lead: 'Zmień styl, wskaźnik i tryb, a potem ruszaj w trasę.',
-    style: 'Styl', styles: [['minimal', 'Minimalistyczny'], ['material', 'Material'], ['ios', 'Cupertino'], ['sport', 'Sportowy']],
-    mode: 'Tryb', dark: 'Noc', light: 'Dzień',
-    gauge: 'Wskaźnik prędkości', gauges: [['segments', 'Pasek'], ['arc', 'Łuk'], ['dial', 'Tarcza'], ['ring', 'Pierścień'], ['scale', 'Skala'], ['history', 'Historia']],
-    aria: 'Podgląd ekranu głównego aplikacji Rydee', free: 'Ten zestaw: wersja darmowa', premium: 'Ten zestaw wymaga Premium', see: 'Zobacz wersje',
-    go: 'Jedź', pause: 'Pauza', road: 'Pozycja na trasie, przeciągnij, aby zmienić prędkość', km: 'km', ele: 'm n.p.m.', grade: 'nachylenie',
-    time: 'Czas', dist: 'Dystans', hr: 'Tętno', cad: 'Kadencja',
-  },
-  en: {
-    eyebrow: 'Try it', title: 'Your screen, your rules', lead: 'Change the style, gauge and mode, then hit the road.',
-    style: 'Style', styles: [['minimal', 'Minimal'], ['material', 'Material'], ['ios', 'Cupertino'], ['sport', 'Sport']],
-    mode: 'Mode', dark: 'Night', light: 'Day',
-    gauge: 'Speed gauge', gauges: [['segments', 'Bar'], ['arc', 'Arc'], ['dial', 'Dial'], ['ring', 'Ring'], ['scale', 'Scale'], ['history', 'History']],
-    aria: 'Preview of the Rydee main screen', free: 'This setup: Free edition', premium: 'This setup requires Premium', see: 'See editions',
-    go: 'Ride', pause: 'Pause', road: 'Position on the route, drag to change speed', km: 'km', ele: 'm elevation', grade: 'gradient',
-    time: 'Time', dist: 'Distance', hr: 'Heart rate', cad: 'Cadence',
-  },
-}[lang];
+const s = texts[lang].studio;
+const t = { ...s, styles: Object.entries(s.styles), gauges: Object.entries(s.gauges) };
 const tiles = [['time', t.time, '1:00', '#ff9f0a'], ['dist', t.dist, '24.6', '#30d158'], ['hr', t.hr, '142', '#ff453a'], ['cad', t.cad, '88', '#0a84ff']];
 const trail = 'M18 186C60 170 62 118 112 112s70 34 104 12 22-74 56-104';
 const premiumStyles = (v: string) => v !== 'minimal';
