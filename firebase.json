@@ -10,7 +10,9 @@
       { "source": "/pomoc", "destination": "/pl/help", "type": 301 },
       { "source": "/prywatnosc", "destination": "/pl/privacy", "type": 301 },
       { "source": "/kontakt", "destination": "/pl/contact", "type": 301 },
-      { "source": "/licencje", "destination": "/pl/licenses", "type": 301 }
+      { "source": "/licencje", "destination": "/pl", "type": 301 },
+      { "source": "/licenses", "destination": "/", "type": 301 },
+      { "source": "/:lang/licenses", "destination": "/:lang", "type": 301 }
     ],
     "headers": [
       { "source": "/help/*.json", "headers": [

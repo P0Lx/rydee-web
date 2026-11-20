@@ -3,7 +3,7 @@
 
 const en = {
   ui: {
-    features: 'Features', premium: 'Premium', help: 'Help', contact: 'Contact', privacy: 'Privacy', licenses: 'Licenses',
+    features: 'Features', premium: 'Premium', help: 'Help', contact: 'Contact', privacy: 'Privacy',
     theme: 'Change theme', menu: 'Navigation', skip: 'Skip to content', language: 'Language',
     tagline: 'A bike computer on your phone. No account.',
     legal: 'Strava, Google Play, Health Connect, Apple Health, App Store, intervals.icu, Ride with GPS and Spotify are trademarks of their respective owners. Rydee is not affiliated with them.',
@@ -76,12 +76,6 @@ const en = {
     errNet: 'No connection to the server. Please try again.', errLimit: 'Too many messages. Please try again in an hour.', errOther: 'The message could not be sent.',
     thanks: 'Thank you!', sent: 'Message sent. If you gave an address, we will reply by email.', again: 'Write another',
     direct: 'You can also write directly:',
-  },
-  licenses: {
-    meta: 'Licenses: Rydee', desc: 'Open source licenses and data credits for Rydee.', h: 'Standing on open source',
-    lead: (n: number) => `Rydee uses ${n} open source libraries and open data. Thank you to their authors. In the app, the same list is under Help > Licenses.`,
-    data: 'Data and services', native: 'Native libraries', pkgs: 'Dart and Flutter packages', fonts: 'Fonts on this site',
-    big: 'The full text is available in the app, under Help > Licenses.', sdk: 'Part of the Flutter SDK (BSD-3-Clause).',
   },
 };
 

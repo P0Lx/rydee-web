@@ -1,10 +1,10 @@
 # Rydee: strona internetowa
 
-Statyczna strona (Astro): strona główna, pomoc, polityka prywatności, licencje, kontakt.
+Statyczna strona (Astro): strona główna, pomoc, polityka prywatności, kontakt.
 
-- Języki: `langs` w `src/site.ts`. Domyślny EN jest bez przedrostka (`/`, `/help`, `/privacy`, `/contact`, `/licenses`), pozostałe pod `/<język>/...` (np. `/pl/privacy`), ścieżki takie same we wszystkich językach (`href(route, lang)`). Strony EN - `src/pages/*.astro`, pozostałe - `src/pages/[lang]/*.astro`.
+- Języki: `langs` w `src/site.ts`. Domyślny EN jest bez przedrostka (`/`, `/help`, `/privacy`, `/contact`), pozostałe pod `/<język>/...` (np. `/pl/privacy`), ścieżki takie same we wszystkich językach (`href(route, lang)`). Strony EN - `src/pages/*.astro`, pozostałe - `src/pages/[lang]/*.astro`.
 - Teksty: `src/i18n/<język>.ts` (wzór i typ - `en.ts`), polityka prywatności - `src/data/privacy/<język>.ts` (wiąże `pl.ts`, pozostałe to tłumaczenia z adnotacją `note`). Nowy tekst - we wszystkich 7 językach (EN, PL, DE, FR, ES, IT, NL).
-- Stare adresy (`/en/...`, `/pomoc`, `/prywatnosc`, `/kontakt`, `/licencje`) przekierowuje `firebase.json` (301) - wydana aplikacja i sklepy otwierają `/prywatnosc` i `/en/privacy`, nie usuwać.
+- Stare adresy (`/en/...`, `/pomoc`, `/prywatnosc`, `/kontakt`) przekierowuje `firebase.json` (301) - wydana aplikacja i sklepy otwierają `/prywatnosc` i `/en/privacy`, nie usuwać. Usunięta strona licencji (`/licenses`, `/<język>/licenses`, `/licencje`) przekierowuje na stronę główną.
 
 ```bash
 npm install
@@ -14,8 +14,7 @@ npm run build
 
 - `content/help/<język>.json` - jedyne źródło pomocy. Strona buduje z nich strony pomocy (`/help`, `/pl/help`...), a aplikacja pobiera `/help/<język>.json`. Przy zmianie pytania zmień je we wszystkich językach; `id`, `icon`, `tint`, `tags`, `platforms` i parametry `figure` są takie same jak w `en` (`pl` ma własne `id`), a liczba `labels` - taka sama.
 - Ilustracje w pomocy: pole `figure` pytania (`type`, `alt`, `labels` i parametry typu). Rysuje je `src/scripts/figures.ts`, a w aplikacji `lib/help_figures.dart` - oba w polu 320 × 180, nowy typ trzeba dodać w obu miejscach. Typy: `screen` (`focus`: `all` / `speed` / `tiles` / `handle` / `radar`, `gesture`: `swipe` / `drag` / `hold`), `steps`, `record` (`stage`: `start` / `end`), `autopause`, `listrow` (`mode`: `swipe` / `months`), `scrub`, `trail`, `wind`, `laps`, `climb` (`mode`: `widget` / `list` / `terrain`), `zones` (`kind`: `hr` / `power`), `map` (`mode`: `controls` / `guidance`), `editions`, `local`. Nieznany typ jest pomijany.
-- `npm run sync:app` - kopiuje pomoc i licencje natywne do `../rydee-app/assets` (kopia wbudowana). Uruchom po każdej zmianie pomocy i przed wydaniem aplikacji.
-- `npm run licenses` - odświeża `src/data/licenses.json` z zależności aplikacji. Biblioteki natywne dopisuje się ręcznie w `scripts/native.mjs`.
+- `npm run sync:app` - kopiuje pomoc i licencje natywne do `../rydee-app/assets` (kopia wbudowana). Biblioteki natywne dopisuje się ręcznie w `scripts/native.mjs`; licencje są tylko w aplikacji (Pomoc > Licencje), strona ich nie pokazuje. Uruchom po każdej zmianie pomocy i przed wydaniem aplikacji.
 - `src/site.ts` - dane firmy i kontakt (`null` jest widoczne na stronie jako pole do uzupełnienia).
 - Kontakt (`/contact`, `/pl/contact`, `src/views/Contact.astro`): ten sam formularz co „Napisz do nas” w aplikacji. Wysyła `POST {apiUrl}/feedback` z `platform: "web"` na serwer `rydee-cloud` (kontrakt i CORS - README tamtego repozytorium); `apiUrl` w `src/site.ts`, inny adres przy budowaniu przez `PUBLIC_RYDEE_API_URL`. Adres serwera musi być w `connect-src` nagłówka CSP w `firebase.json`. Ukryte pole `website` to pułapka na boty. Baner z odnośnikiem na górze pomocy.
 - `src/data/privacy/` - polityka prywatności. Przy zmianie przepływu danych w aplikacji zaktualizuj wszystkie języki i datę.

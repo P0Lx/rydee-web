@@ -2,7 +2,7 @@ import type { Texts } from './en';
 
 const fr: Texts = {
   ui: {
-    features: 'Fonctions', premium: 'Premium', help: 'Aide', contact: 'Contact', privacy: 'Confidentialité', licenses: 'Licences',
+    features: 'Fonctions', premium: 'Premium', help: 'Aide', contact: 'Contact', privacy: 'Confidentialité',
     theme: 'Changer de thème', menu: 'Navigation', skip: 'Aller au contenu', language: 'Langue',
     tagline: 'Un compteur vélo sur votre téléphone. Sans compte.',
     legal: 'Strava, Google Play, Health Connect, Apple Santé, App Store, intervals.icu, Ride with GPS et Spotify sont des marques de leurs propriétaires respectifs. Rydee n’est pas affilié à ceux-ci.',
@@ -75,12 +75,6 @@ const fr: Texts = {
     errNet: 'Pas de connexion au serveur. Veuillez réessayer.', errLimit: 'Trop de messages. Veuillez réessayer dans une heure.', errOther: 'Le message n’a pas pu être envoyé.',
     thanks: 'Merci !', sent: 'Message envoyé. Si vous avez indiqué une adresse, nous répondrons par e-mail.', again: 'Écrire un autre message',
     direct: 'Vous pouvez aussi écrire directement :',
-  },
-  licenses: {
-    meta: 'Licences : Rydee', desc: 'Licences open source et sources des données utilisées par Rydee.', h: 'Sur les épaules de l’open source',
-    lead: (n: number) => `Rydee utilise ${n} bibliothèques open source et des données ouvertes. Merci à leurs auteurs. Dans l’application, la même liste se trouve dans Aide > Licences.`,
-    data: 'Données et services', native: 'Bibliothèques natives', pkgs: 'Paquets Dart et Flutter', fonts: 'Polices de ce site',
-    big: 'Le texte complet est disponible dans l’application, dans Aide > Licences.', sdk: 'Composant du Flutter SDK (BSD-3-Clause).',
   },
 };
 

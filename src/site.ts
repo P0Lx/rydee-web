@@ -23,7 +23,7 @@ export const apiUrl: string = import.meta.env.PUBLIC_RYDEE_API_URL ?? 'https://e
 
 /** Ścieżki stron, takie same we wszystkich językach. Stare adresy
  * (`/en/...`, `/pomoc`, `/prywatnosc`...) przekierowuje `firebase.json`. */
-const paths = { home: '', help: '/help', privacy: '/privacy', contact: '/contact', licenses: '/licenses' } as const;
+const paths = { home: '', help: '/help', privacy: '/privacy', contact: '/contact' } as const;
 export type Route = keyof typeof paths;
 
 /** Adres strony w danym języku: EN bez przedrostka, pozostałe `/<język>`. */

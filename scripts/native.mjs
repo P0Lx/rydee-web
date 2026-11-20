@@ -21,8 +21,3 @@ export const native = [
   { name: 'libjpeg-turbo', version: '3.2.0', license: 'BSD-3-Clause, IJG, zlib', platform: 'Android', text: 'This software is based in part on the work of the Independent JPEG Group.\n\nFull terms: https://github.com/libjpeg-turbo/libjpeg-turbo/blob/main/LICENSE.md' },
   { name: 'libusb', version: '', license: 'LGPL-2.1-or-later', platform: 'Android', text: 'Copyright libusb contributors. Licensed under the GNU Lesser General Public License, version 2.1 or later: https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html\n\nSource code: https://github.com/libusb/libusb' },
 ];
-
-export const fonts = [
-  { name: 'Bricolage Grotesque', license: 'OFL-1.1', by: 'The Bricolage Grotesque Project Authors' },
-  { name: 'Geist, Geist Mono', license: 'OFL-1.1', by: 'Vercel, Basement Studio' },
-];

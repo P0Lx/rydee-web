@@ -6,7 +6,6 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "licenses": "node scripts/licenses.mjs",
     "sync:app": "node scripts/sync-app.mjs"
   },
   "dependencies": {
